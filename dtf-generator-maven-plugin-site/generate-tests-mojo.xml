@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+  <properties>
+    <title>dtf-generator:generate-tests</title>
+  </properties>
+  <body>
+    <section name="dtf-generator:generate-tests">
+      <p><strong>Full name</strong>:</p>
+      <p>com.dextratech.dtf:dtf-generator-maven-plugin:1.0-SNAPSHOT:generate-tests</p>
+      <p><strong>Description</strong>:</p>
+      <div>Class used to generator test suites in base of a data set from a
+Excel file and a layout</div>
+      <p><strong>Attributes</strong>:</p>
+      <ul>
+        <li>Requires a Maven project to be executed.</li>
+        <li>Binds by default to the lifecycle phase: <code>process-sources</code>.</li>
+      </ul>
+      <subsection name="Required Parameters">
+        <table border="0">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Since</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><strong><a href="#excelDataSource">excelDataSource</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>(no description)<br/></td>
+          </tr>
+          <tr>
+            <td><strong><a href="#layoutDirectory">layoutDirectory</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The file path of the html layout<br/></td>
+          </tr>
+          <tr>
+            <td><strong><a href="#testSuitesDirectory">testSuitesDirectory</a></strong></td>
+            <td><code>File</code></td>
+            <td><code>-</code></td>
+            <td>The directory path to save the generated tests<br/></td>
+          </tr>
+        </table>
+      </subsection>
+      <subsection name="Optional Parameters">
+        <table border="0">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Since</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><strong><a href="#verbose">verbose</a></strong></td>
+            <td><code>boolean</code></td>
+            <td><code>-</code></td>
+            <td>Define if this will to print logs in system console<br/></td>
+          </tr>
+        </table>
+      </subsection>
+      <subsection name="Parameter Details">
+        <p><strong><a name="excelDataSource">excelDataSource</a>:</strong></p>
+        <div>(no description)</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>Yes</code></li>
+          <li><strong>Expression</strong>: <code>${basedir}/src/test/resources/datasets/dataset.xls</code></li>
+        </ul><hr/><p><strong><a name="layoutDirectory">layoutDirectory</a>:</strong></p>
+        <div>The file path of the html layout</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>Yes</code></li>
+          <li><strong>Expression</strong>: <code>${project.build.directory}/layout/</code></li>
+        </ul><hr/><p><strong><a name="testSuitesDirectory">testSuitesDirectory</a>:</strong></p>
+        <div>The directory path to save the generated tests</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.io.File</code></li>
+          <li><strong>Required</strong>: <code>Yes</code></li>
+          <li><strong>Expression</strong>: <code>${project.build.directory}/testsuites</code></li>
+        </ul><hr/><p><strong><a name="verbose">verbose</a>:</strong></p>
+        <div>Define if this will to print logs in system console</div>
+        <ul>
+          <li><strong>Type</strong>: <code>boolean</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>Expression</strong>: <code>true</code></li>
+        </ul>
+      </subsection>
+    </section>
+  </body>
+</document>

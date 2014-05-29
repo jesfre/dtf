@@ -1,0 +1,96 @@
+<!-- Developed by Dextra Technologies www.dextratech.com -->
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns="http://www.dextratech.com/testsuite"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.dextratech.com/testsuite ../testsuite.xsd ">
+  	
+  	<!-- Names must be valid for [a-zA-Z_$][a-zA-Z_$0-9\s]* -->
+  	
+  	<name>preferencias_asignar_alias</name>
+  	
+	<testcase name="asignar_aliases" url="/mainMenu" run="true" success="true">
+		<include componentName="login"/>
+		<captureScreenshot/>
+		
+		<action actionType="clickAndWait" locatorType="link" locatorValue="PREFERENCIAS"/>
+		<captureScreenshot pngFilename="en asignar alias"/>
+
+		<action actionType="clickAndWait" locatorType="link" locatorValue="Asignar alias"/>
+		<captureScreenshot pngFilename="alias modificado" directory="C:/screenshots/"/>
+
+		<action actionType="clickAndWait" locatorType="id" locatorValue="submitChange"/>
+		<captureScreenshot/>
+
+		<field name="alias1" locatorType="xpath" locatorValue="//table[@id='accountList']/tbody/tr[1]/td[4]/input" validValue="valor valido">
+			<!-- 
+			<validate name="Alias X">Alias X</validate>
+			<validate name="y">Alias Y</validate>
+			<validate name="alIAS Z" valid="true">Alias Z</validate>
+			<validate name="vacio" valid="false"></validate>
+			 -->
+			<validValueDef>
+				<literal><![CDATA[Algo que mostrar .,)(\/&"%$#)]]></literal>
+			</validValueDef>
+		</field>
+		
+		<field name="alias2" locatorType="xpath" locatorValue="//table[@id='accountList']/tbody/tr[1]/td[4]/input" validValue="">
+			<validValueDef>
+				<literal><![CDATA[Algo que mostrar .,)(\/&"%$#)]]></literal>
+			</validValueDef>
+		</field>
+		
+		<field name="alias3" locatorType="xpath" locatorValue="//table[@id='accountList']/tbody/tr[1]/td[4]/input">
+			<validValueDef>
+				<literal><![CDATA[Algo que mostrar .,)(\/&"%$#)]]></literal>
+			</validValueDef>
+		</field>
+		
+		<field name="alias4" locatorType="xpath" locatorValue="//table[@id='accountList']/tbody/tr[1]/td[4]/input">
+			<validValueDef>
+				<function type="string">
+					<length>12</length>
+				</function>
+			</validValueDef>
+		</field>
+		
+		<field name="alias5" locatorType="xpath" locatorValue="//table[@id='accountList']/tbody/tr[1]/td[4]/input">
+			<validValueDef>
+				<function type="string">
+					<pattern>[4]{2,4},[a-z]{3}</pattern>
+				</function>
+			</validValueDef>
+		</field>
+		
+		<field name="alias6" locatorType="xpath" locatorValue="//table[@id='accountList']/tbody/tr[1]/td[4]/input">
+			<validValueDef>
+				<functionRef functionRefId="hoy"/>
+			</validValueDef>
+		</field>
+		
+		<captureScreenshot/>
+		
+		<action actionType="clickAndWait" locatorType="id" locatorValue="submitUpdates"/>
+		<captureScreenshot/>
+		
+		<assert type="assertTextPresent" param1="Alias Z" errorStep="true"/>
+		<captureScreenshot/>
+		
+		<include componentName="logout"/>
+		
+		<afterErrorActions>
+			<include componentName="logout"/>
+		</afterErrorActions>
+	</testcase>
+	
+	<testcase name="bcd" url="/mainMenu" run="true" success="true">
+		<include componentName="login"/>
+		<captureScreenshot/>
+		<include componentName="logout"/>
+	</testcase>
+	
+	<testcase name="abc" url="/mainMenu" run="true" success="true">
+		<include componentName="login"/>
+		<captureScreenshot/>
+		<include componentName="logout"/>
+	</testcase>
+</testsuite>

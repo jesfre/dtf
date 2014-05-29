@@ -1,0 +1,63 @@
+<!-- Developed by Dextra Technologies www.dextratech.com -->
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns="http://www.dextratech.com/testsuite"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.dextratech.com/testsuite ../testsuite.xsd ">
+  	
+  	<!-- Names must be valid for [a-zA-Z_$][a-zA-Z_$0-9\s]* -->
+  	
+  	<name>preferencias_asignar_alias</name>
+  	
+	<testcase name="asignar_aliases" url="/mainMenu" run="true" success="true" runDefault="true" >
+		<include componentName="login"/>
+		<captureScreenshot/>
+		
+		<action actionType="clickAndWait" locatorType="link" locatorValue="PREFERENCIAS"/>
+		<captureScreenshot pngFilename="en asignar alias"/>
+
+		<action actionType="clickAndWait" locatorType="link" locatorValue="Asignar alias"/>
+		<captureScreenshot pngFilename="alias modificado" directory="C:/screenshots/"/>
+
+		<action actionType="clickAndWait" locatorType="id" locatorValue="submitChange"/>
+		<captureScreenshot/>
+
+		<field name="alias" locatorType="xpath" locatorValue="//table[@id='accountList']/tbody/tr[1]/td[4]/input" validValue="valor valido">
+			<!-- 
+			<validate name="Alias X">Alias X</validate>
+			<validate name="y">Alias Y</validate>
+			<validate name="alIAS Z" valid="true">Alias Z</validate>
+			<validate name="vacio" valid="false"></validate>
+			 -->
+			 <validateFunctionRef functionRefId="textoLargo" assertId="assertX"/>
+			 <validateFunctionRef functionRefId="especiales"/>
+			 <validateFunction type="integer" id="fn_num_cuenta_i">
+			 	<minValue>1234567890123000</minValue>
+			 	<maxValue>1234567890125000</maxValue>
+			 </validateFunction>
+			 <validateFunction type="float" id="fn_num_cuenta_f" assertId="assertY">
+			 	<minValue>1234567890123000</minValue>
+			 	<maxValue>1234567890125000</maxValue>
+			 </validateFunction>
+		</field>
+		<captureScreenshot/>
+		
+		<action actionType="clickAndWait" locatorType="id" locatorValue="submitUpdates"/>
+		<captureScreenshot/>
+		
+		<assert type="assertTextPresent" param1="Alias Z" errorStep="true"/>
+			
+		<assert type="assertTextPresent" param1="Alias X" errorStep="true" id="assertX"/>
+		
+		<assert type="assertTextPresent" param1="Alias Default" errorStep="true" id="default"/>
+		<captureScreenshot/>
+		
+		<include componentName="logout"/>
+		
+		<assert type="assertTextPresent" param1="Alias Y" errorStep="true" id="assertY"/>
+		
+		<afterErrorActions>
+			<include componentName="logout"/>
+		</afterErrorActions>
+	</testcase>
+	
+</testsuite>

@@ -1,0 +1,42 @@
+<!-- Developed by Dextra Technologies www.dextratech.com -->
+<?xml version="1.0" encoding="UTF-8"?>
+<validationFunctions xmlns="http://www.dextratech.com/testsuite"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.dextratech.com/testsuite ../testsuite.xsd ">
+	
+	<!-- IDs must be valid for [a-zA-Z_$][a-zA-Z_$0-9\s]* -->
+
+	<function type="string" id="textoLargo">
+		<length>100</length>
+	</function>
+
+	<function type="string" id="especiales">
+		<value><![CDATA[&(-=#$%*)+P:;,.<>/?!"'`~@]]></value>
+	</function>
+	
+	<function type="integer" id="numeroLargo">
+		<length>50</length>
+	</function>
+	
+	<function type="float" id="decimales">
+		<minValue>0</minValue>
+		<maxValue>999</maxValue>
+	</function>
+	
+	<function type="float" id="decimales 2">
+		<minValue>0</minValue>
+		<maxValue>10</maxValue>
+	</function>
+
+	<function type="today" id="hoy">
+		<dateFormat>dd/MM/yyyy</dateFormat>
+	</function>
+	
+	<function type="date" id="cualquier fecha">
+		<customDateFormat>dd.MM.yyyy</customDateFormat>
+	</function>
+	
+	<function type="dateTime" id="cualquier fecha larga">
+		<dateFormat>EEE, d MMM yyyy HH:mm:ss Z</dateFormat>
+	</function>
+</validationFunctions>

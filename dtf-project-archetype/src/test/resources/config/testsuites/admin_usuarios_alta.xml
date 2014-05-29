@@ -1,0 +1,95 @@
+<!-- Developed by Dextra Technologies www.dextratech.com -->
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns="http://www.dextratech.com/testsuite" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dextratech.com/testsuite ../testsuite.xsd ">
+
+	<!-- Names must be valid for [a-zA-Z_$][a-zA-Z_$0-9\s]* -->
+
+	<name>Alta de usuarios</name>
+
+	<testcase name="alta_1" url="/admin/addUsers" run="false" success="true">
+		<include componentName="login" />
+
+		<custom name="open" target="/admin/addUsers" />
+
+		<onload action="closeAlert" />
+
+		<assert type="assertTextPresent" param1="AGREGAR USUARIO" />
+
+		<field name="nombre" locatorType="id" locatorValue="usrNombre" errorStep="false" validValue="test">
+			<!-- 
+			<validate name="algo">usuario2</validate>
+			<validate name="largo" valid="false">ASDASDADADasdasda asd asd asd a er te rt etert e rter ter tetertet e t ert e r te</validate>
+			<validate name="especial" valid="false"></validate>
+			<validateFunctionRef functionRefId="textoLargo" valid="false"/>
+			<validateFunctionRef functionRefId="decimales" valid="false"/>
+			<validateFunctionRef functionRefId="especiales" valid="false"/>
+			<validateFunctionRef functionRefId="fn_en_testsuite" valid="true"/>
+			<validateFunctionRef functionRefId="numeroLargo" valid="false"/>
+			<validateFunction type="string" id="por patron">
+				<pattern><![CDATA[[\w]{3}]]></pattern>
+			</validateFunction>
+			 -->
+		</field>
+
+		<field name="area puesto" locatorType="id" locatorValue="usrAreaPuesto" validValue="test" />
+
+		<field name="correo" locatorType="id" locatorValue="usrCorreoDestino" validValue="test@mail.com" />
+
+		<field name="tel_empresa" locatorType="id" locatorValue="usrTelefonoEmpresa" validValue="1234567890" />
+
+		<field name="tel personal" locatorType="id" locatorValue="usrTelefonoPersonal" validValue="1234567890" />
+
+		<field name="ext" locatorType="id" locatorValue="usrExtensionEmpresa" validValue="123" />
+
+		<field name="rfc" locatorType="id" locatorValue="usrRfc" validValue="FJIA123123FE3" />
+
+		<field name="fecha" locatorType="id" locatorValue="usrFechaNacimiento" validValue="">
+			<validateFunctionRef functionRefId="hoy" name="la fecha de doy" />
+			<!-- 
+			<validateFunctionRef functionRefId="cualquier fecha" />
+			<validateFunctionRef functionRefId="cualquier fecha larga" /> 
+			-->
+		</field>
+		
+		<action actionType="click" locatorType="xpath" locatorValue="//div[@id='dk_container_rolIdPk']/a/span" />
+
+		<action actionType="click" locatorType="link" locatorValue="Administrador" />
+
+		<action actionType="click" locatorType="css" locatorValue="#dk_container_cifIdPk > a.dk_toggle" />
+
+		<action actionType="click" locatorType="link" locatorValue="CAFE MADERO" />
+
+		<action actionType="click" locatorType="css" locatorValue="#dk_container_tokIdPk > a.dk_toggle" />
+
+		<action actionType="click" locatorType="xpath" locatorValue="//div[@id='dk_container_tokIdPk']/div/ul/li[2]/a" />
+
+		<action actionType="click" locatorType="id" locatorValue="btnAgregar" />
+
+		<assert type="waitForTextPresent" param1="Token" />
+
+		<field name="password" locatorType="id" locatorValue="password" validValue="admin" />
+
+		<field name="token" locatorType="id" locatorValue="token" validValue="123456">
+			<validate name="tokenblanco" valid="true"></validate>
+		</field>
+
+		<action actionType="click" locatorType="id" locatorValue="aceptaAutenticar" />
+
+		<assert type="assertAlert" param1="*El usuario fue agregado*" />
+
+		<custom name="waitForPageToLoad" />
+
+		<include componentName="logout" />
+
+		<afterErrorActions>
+			<include componentName="logout" />
+		</afterErrorActions>
+	</testcase>
+
+	<validationRules>
+		<function type="integer" id="fn_en_testsuite">
+			<minValue>2</minValue>
+			<maxValue>4</maxValue>
+		</function>
+	</validationRules>
+</testsuite>

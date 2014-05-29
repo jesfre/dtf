@@ -1,0 +1,20 @@
+<!-- Developed by Dextra Technologies www.dextratech.com -->
+<?xml version="1.0" encoding="UTF-8"?>
+<components xmlns="http://www.dextratech.com/testsuite" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dextratech.com/testsuite testsuite.xsd ">
+  	
+  	<component name="login">
+		<field name="usuario" locatorType="id" locatorValue="j_username" validValue="admin" />
+		<action actionType="click" locatorType="id" locatorValue="entrar1" />
+		<assert type="waitForTextPresent" param1="Token" />
+		<field name="pass" locatorType="id" locatorValue="j_password" validValue="admin" />
+		<field name="token" locatorType="id" locatorValue="j_token" validValue="123456" />
+		<action actionType="clickAndWait" locatorType="id" locatorValue="entrar2" />
+		<assert type="assertTextPresent" param1="BIENVENIDO:" />
+	</component>
+	
+	<component name="logout">
+		<custom name="open" target="/logout"/>
+		<assert type="assertTextPresent" param1="Login"/>
+	</component>
+	
+</components>

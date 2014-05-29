@@ -1,0 +1,24 @@
+//
+// Developed by Dextra Technologies www.dextratech.com
+//
+package $testSuitePackageName;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+public class $testSuiteClassName {
+	
+	public static Test suite() {
+		TestSuite suite = new TestSuite();
+		
+		#foreach( $testClassName in $testClassNameList )
+		suite.addTestSuite($testClassName);
+		#end
+		
+		return suite;
+	}
+
+	public static void main(String[] args) {
+		junit.textui.TestRunner.run(suite());
+	}
+}

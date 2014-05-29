@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>dtf-generator-maven-plugin Maven Mojo - dtf-generator:run-tests</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          </head>
+  <body class="composite">
+    <div id="banner">
+                    <span id="bannerLeft">
+    
+            dtf-generator-maven-plugin Maven Mojo
+    
+            </span>
+                    <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+    
+            <div class="xleft">
+        Last Published: 2012-07-16
+                      </div>
+            <div class="xright">            <a href="http://maven.apache.org" class="externalLink">dtf-generator-maven-plugin Maven Mojo</a>
+            
+  
+
+  
+    
+  
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+    
+                                                          <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2><a name="dtf-generator:run-tests"></a>dtf-generator:run-tests</h2>
+<p><strong>Full name</strong>:</p>
+<p>com.dextratech.dtf:dtf-generator-maven-plugin:1.0-SNAPSHOT:run-tests</p>
+<p><strong>Description</strong>:</p>
+<div>Goal to run all tests located in</div><p><strong>Attributes</strong>:</p>
+<ul><li>Requires a Maven project to be executed.</li>
+<li>Binds by default to the lifecycle phase: <code>process-sources</code>.</li>
+</ul>
+<div class="section"><h3><a name="Required_Parameters"></a>Required Parameters</h3>
+<table class="bodyTable"><tr class="a"><th>Name</th>
+<th>Type</th>
+<th>Since</th>
+<th>Description</th>
+</tr>
+<tr class="b"><td><strong><a href="#baseUrl">baseUrl</a></strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>Base URL of the tested application<br />
+</td>
+</tr>
+<tr class="a"><td><strong><a href="#browser">browser</a></strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>Tested browser *firefox *mock *firefoxproxy *pifirefox *chrome
+*iexploreproxy *iexplore *firefox3 *safariproxy *googlechrome
+*konqueror *firefox2 *safari *piiexplore *firefoxchrome *opera
+*iehta *custom<br />
+</td>
+</tr>
+<tr class="b"><td><strong><a href="#host">host</a></strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>Host of Selenium server<br />
+</td>
+</tr>
+<tr class="a"><td><strong><a href="#port">port</a></strong></td>
+<td><code>int</code></td>
+<td><code>-</code></td>
+<td>Port of Selenium server<br />
+</td>
+</tr>
+<tr class="b"><td><strong><a href="#testSuitesDirectory">testSuitesDirectory</a></strong></td>
+<td><code>File</code></td>
+<td><code>-</code></td>
+<td>The directory path to find the tests files<br />
+</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="Optional_Parameters"></a>Optional Parameters</h3>
+<table class="bodyTable"><tr class="a"><th>Name</th>
+<th>Type</th>
+<th>Since</th>
+<th>Description</th>
+</tr>
+<tr class="b"><td><strong><a href="#globalConfigurationFile">globalConfigurationFile</a></strong></td>
+<td><code>File</code></td>
+<td><code>-</code></td>
+<td>(no description)<br />
+</td>
+</tr>
+<tr class="a"><td><strong><a href="#outputDirectory">outputDirectory</a></strong></td>
+<td><code>File</code></td>
+<td><code>-</code></td>
+<td>The output directory<br />
+</td>
+</tr>
+<tr class="b"><td><strong><a href="#verbose">verbose</a></strong></td>
+<td><code>boolean</code></td>
+<td><code>-</code></td>
+<td>Define if this will to print logs in system console<br />
+</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="Parameter_Details"></a>Parameter Details</h3>
+<p><strong><a name="baseUrl">baseUrl</a>:</strong></p>
+<div>Base URL of the tested application</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+<li><strong>Expression</strong>: <code>http://localhost:8080/</code></li>
+</ul>
+<hr />
+<p><strong><a name="browser">browser</a>:</strong></p>
+<div>Tested browser *firefox *mock *firefoxproxy *pifirefox *chrome
+*iexploreproxy *iexplore *firefox3 *safariproxy *googlechrome
+*konqueror *firefox2 *safari *piiexplore *firefoxchrome *opera
+*iehta *custom</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+<li><strong>Expression</strong>: <code>*firefox</code></li>
+</ul>
+<hr />
+<p><strong><a name="globalConfigurationFile">globalConfigurationFile</a>:</strong></p>
+<div>(no description)</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+<li><strong>Expression</strong>: <code>${basedir}/src/test/resources/config/globalConfiguration.xml</code></li>
+</ul>
+<hr />
+<p><strong><a name="host">host</a>:</strong></p>
+<div>Host of Selenium server</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+<li><strong>Expression</strong>: <code>localhost</code></li>
+</ul>
+<hr />
+<p><strong><a name="outputDirectory">outputDirectory</a>:</strong></p>
+<div>The output directory</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+<li><strong>Expression</strong>: <code>${project.build.directory}</code></li>
+</ul>
+<hr />
+<p><strong><a name="port">port</a>:</strong></p>
+<div>Port of Selenium server</div><ul><li><strong>Type</strong>: <code>int</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+<li><strong>Expression</strong>: <code>4444</code></li>
+</ul>
+<hr />
+<p><strong><a name="testSuitesDirectory">testSuitesDirectory</a>:</strong></p>
+<div>The directory path to find the tests files</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+<li><strong>Expression</strong>: <code>${project.build.directory}/testsuites</code></li>
+</ul>
+<hr />
+<p><strong><a name="verbose">verbose</a>:</strong></p>
+<div>Define if this will to print logs in system console</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+<li><strong>Expression</strong>: <code>true</code></li>
+</ul>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2012
+    
+          
+  
+
+  
+    
+  
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

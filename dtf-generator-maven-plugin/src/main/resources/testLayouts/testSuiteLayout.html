@@ -1,0 +1,12 @@
+<!-- Developed by Dextra Technologies www.dextratech.com -->
+<html>  
+ <head><title>$testSuiteName</title></head>  
+ <body>  
+  <table>  
+   <tr><td><b>$testSuiteName</b></td></tr>  
+   #foreach( $fileName in $fileNameList )
+		<tr><td><a href="./$testSuiteName/$fileName">$fileName</a></td></tr>
+	#end  
+  </table>  
+ </body>  
+</html> 

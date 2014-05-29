@@ -1,0 +1,82 @@
+<!-- Developed by Dextra Technologies www.dextratech.com -->
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns="http://www.dextratech.com/testsuite"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.dextratech.com/testsuite ../testsuite.xsd ">
+
+	<!-- Names must be valid for [a-zA-Z_$][a-zA-Z_$0-9\s]* -->
+
+	<name>cambiar de Empresa</name>
+
+	<testcase name="a" url="preferencias/empresa"
+		run="true" success="true">
+		<include componentName="login" />
+
+		<custom name="open" target="preferencias/empresa" />
+
+		<!-- Como asegurarme que existen radios, checkboxes, y q estan seleccionados? -->
+
+		<assert type="assertTextPresent" param1="CAMBIAR EMPRESA" />
+		<assert type="assertTextPresent" param1="DEXTRA" />
+		<assert type="assertTextPresent" param1="CARLOS" />
+
+		<action actionType="click" locatorType="id" locatorValue="cifRadio2" />
+
+		<action actionType="click" locatorType="id" locatorValue="submitChange" />
+
+		<assert type="waitForAlertPresent" />
+
+		<assert type="assertAlertPresent"
+			param1="La empresa CARLOS ahora es su empresa temporal para su sesion" />
+
+		<include componentName="logout" />
+
+		<afterErrorActions>
+			<include componentName="logout" />
+		</afterErrorActions>
+
+	</testcase>
+
+
+
+	<testcase name="set_default_empresa" url="preferencias/empresa"
+		run="true" success="true">
+
+		<include componentName="login" />
+
+		<custom name="open" target="preferencias/empresa" />
+
+		<assert type="assertTextPresent" param1="CAMBIAR EMPRESA" />
+		<assert type="assertTextPresent" param1="DEXTRA" />
+		<assert type="assertTextPresent" param1="CARLOS" />
+
+		<assert type="assertTextPresent" param1="Cambiar Empresa" />
+		<assert type="assertTextPresent" param1="Establecer Default" />
+
+		<action actionType="click" locatorType="id" locatorValue="cifRadio2" />
+
+		<!-- Como identificar un boton por su texto con CaseInsensitive ?? -->
+		<action actionType="click" locatorType="id" locatorValue="submitDefault" />
+
+		<assert type="waitForAlertPresent" />
+
+		<!-- Como usar expresiones regulares?? -->
+		<assert type="assertAlertPresent"
+			param1="La empresa CARLOS se ha asignado como default correctamente" />
+
+		<include componentName="logout" />
+
+		<afterErrorActions>
+			<include componentName="logout" />
+		</afterErrorActions>
+
+	</testcase>
+
+	<validationRules>
+		<function type="integer" id="fn_en_testsuite">
+			<minValue>2</minValue>
+			<maxValue>4</maxValue>
+		</function>
+	</validationRules>
+
+</testsuite>

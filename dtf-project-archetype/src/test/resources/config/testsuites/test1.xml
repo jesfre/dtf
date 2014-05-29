@@ -1,0 +1,18 @@
+<!-- Developed by Dextra Technologies www.dextratech.com -->
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns="http://www.dextratech.com/testsuite"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.dextratech.com/testsuite ../testsuite.xsd ">
+
+	<!-- Names must be valid for [a-zA-Z_$][a-zA-Z_$0-9\s]* -->
+
+	<name>TestTimeout</name>
+
+	<testcase name="a" url="cuestionarios/consultar"
+		run="true" success="true">
+		
+		<action actionType="type" locatorType="id" locatorValue="cliente" additionalParameter="001"/>
+		<action actionType="clickAndWait" locatorType="id" locatorValue="submit"/>
+	</testcase>
+
+</testsuite>

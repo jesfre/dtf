@@ -1,0 +1,136 @@
+<!-- Developed by Dextra Technologies www.dextratech.com -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.dextratech.dtf</groupId>
+	<artifactId>dtf-api</artifactId>
+  	<version>1.2.0.ALPHA</version>
+  	<packaging>jar</packaging>
+  	<name>API and utils for DTF</name>
+  
+  	<developers>
+		<developer>
+			<id>jruiza</id>
+			<name>Jorge Ruiz Aquino</name>
+			<email>jorge.ruiz.aquino@gmail.com</email>
+		</developer>
+	</developers>
+  
+	<repositories>
+		<repository>
+			<id>local-repo-dep</id>
+			<url>file://${basedir}/lib</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>local-repo-plugin</id>
+			<url>file://${basedir}/lib</url>
+		</pluginRepository>
+	</pluginRepositories>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>copy-to-arch-lib</id>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>==========	Updating archetype local repo in dtf-project-archetype/lib	==========</echo>
+								<echo>Deleting artifact in dextra-application/lib...</echo>
+								<delete dir="${archetype.directory}/lib/com/dextratech/dtf/${project.artifactId}" />
+								<echo>Init copying ${project.artifactId}-${project.version}.jar to dtf-project-archetype/lib...</echo>
+								<copy todir="${archetype.directory}/lib/com/dextratech/dtf/${project.artifactId}/${project.version}"
+									overwrite="true">
+									<fileset dir="${project.build.directory}/" includes="${project.artifactId}-${project.version}.jar" />
+								</copy>
+								<echo>Init copying pom.xml to dextra-application/lib...</echo>
+								<copy todir="${archetype.directory}/lib/com/dextratech/dtf/${project.artifactId}/${project.version}"
+									overwrite="true">
+									<fileset dir="${basedir}/">
+										<include name="pom.xml" />
+									</fileset>
+									<globmapper from="pom.xml" to="${project.artifactId}-${project.version}.pom"/>
+								</copy>
+								<echo>...end copy</echo>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.3</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>xercesImpl</artifactId>
+					<groupId>xerces</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-collections</artifactId>
+					<groupId>commons-collections</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
+			<version>2.4.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+	</dependencies>
+	
+	<properties>
+		<spring.version>3.0.5.RELEASE</spring.version>
+		<archetype.directory>${basedir}/../dtf-project-archetype</archetype.directory>
+	</properties>
+</project>

@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>dtf-generator-maven-plugin Maven Mojo - dtf-generator:html2java</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          </head>
+  <body class="composite">
+    <div id="banner">
+                    <span id="bannerLeft">
+    
+            dtf-generator-maven-plugin Maven Mojo
+    
+            </span>
+                    <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+    
+            <div class="xleft">
+        Last Published: 2012-07-16
+                      </div>
+            <div class="xright">            <a href="http://maven.apache.org" class="externalLink">dtf-generator-maven-plugin Maven Mojo</a>
+            
+  
+
+  
+    
+  
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+    
+                                                          <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2><a name="dtf-generator:html2java"></a>dtf-generator:html2java</h2>
+<p><strong>Full name</strong>:</p>
+<p>com.dextratech.dtf:dtf-generator-maven-plugin:1.0-SNAPSHOT:html2java</p>
+<p><strong>Description</strong>:</p>
+<div>Utility to convert from HTML Selenese script file to Java source
+code</div><p><strong>Attributes</strong>:</p>
+<ul><li>Requires a Maven project to be executed.</li>
+<li>Binds by default to the lifecycle phase: <code>process-sources</code>.</li>
+</ul>
+<div class="section"><h3><a name="Required_Parameters"></a>Required Parameters</h3>
+<table class="bodyTable"><tr class="a"><th>Name</th>
+<th>Type</th>
+<th>Since</th>
+<th>Description</th>
+</tr>
+<tr class="b"><td><strong><a href="#baseUrl">baseUrl</a></strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>Base URL of the tested application<br />
+</td>
+</tr>
+<tr class="a"><td><strong><a href="#browser">browser</a></strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>Tested browser *firefox *mock *firefoxproxy *pifirefox *chrome
+*iexploreproxy *iexplore *firefox3 *safariproxy *googlechrome
+*konqueror *firefox2 *safari *piiexplore *firefoxchrome *opera
+*iehta *custom<br />
+</td>
+</tr>
+<tr class="b"><td><strong><a href="#format">format</a></strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>The format of the Java test class Supported Formats: - JUnit3RC -
+JUnit4RC - JUnit4WebDriverBacked Unsupported Formats: - TestNGRC -
+JUnit4WebDriver<br />
+</td>
+</tr>
+<tr class="a"><td><strong><a href="#host">host</a></strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>Host of Selenium server<br />
+</td>
+</tr>
+<tr class="b"><td><strong><a href="#javaTestSuitesDirectory">javaTestSuitesDirectory</a></strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>(no description)<br />
+</td>
+</tr>
+<tr class="a"><td><strong><a href="#port">port</a></strong></td>
+<td><code>int</code></td>
+<td><code>-</code></td>
+<td>Port of Selenium server<br />
+</td>
+</tr>
+<tr class="b"><td><strong><a href="#testSuitesBasePackage">testSuitesBasePackage</a></strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>The package to be created to use in the Java test files<br />
+</td>
+</tr>
+<tr class="a"><td><strong><a href="#testSuitesDirectory">testSuitesDirectory</a></strong></td>
+<td><code>File</code></td>
+<td><code>-</code></td>
+<td>The directory path to save the generated tests<br />
+</td>
+</tr>
+<tr class="b"><td><strong><a href="#timeout">timeout</a></strong></td>
+<td><code>int</code></td>
+<td><code>-</code></td>
+<td>The global default timeout for page load wait<br />
+</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="Optional_Parameters"></a>Optional Parameters</h3>
+<table class="bodyTable"><tr class="a"><th>Name</th>
+<th>Type</th>
+<th>Since</th>
+<th>Description</th>
+</tr>
+<tr class="b"><td><strong><a href="#globalConfigurationFile">globalConfigurationFile</a></strong></td>
+<td><code>File</code></td>
+<td><code>-</code></td>
+<td>Location of the file where the global configurations (host,
+tiempoEspera, navegador, url, puertoSelenium, usuario, password,
+listaCasosPrueba) can be found.<br />
+</td>
+</tr>
+<tr class="a"><td><strong><a href="#seleniumApiDocFile">seleniumApiDocFile</a></strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>The XML file with the API doc of Selenese commands<br />
+</td>
+</tr>
+<tr class="b"><td><strong><a href="#seleniumJavascriptSource">seleniumJavascriptSource</a></strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>The javascript file with the functions that generate Java classes
+in base to a HTML script<br />
+</td>
+</tr>
+<tr class="a"><td><strong><a href="#testSuiteTemplatePath">testSuiteTemplatePath</a></strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>The path of the test suite template.
+testLayouts\TestSuiteLayout_JUnit4RC.vm<br />
+</td>
+</tr>
+<tr class="b"><td><strong><a href="#verbose">verbose</a></strong></td>
+<td><code>boolean</code></td>
+<td><code>-</code></td>
+<td>Define if this will to print logs in system console<br />
+</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="Parameter_Details"></a>Parameter Details</h3>
+<p><strong><a name="baseUrl">baseUrl</a>:</strong></p>
+<div>Base URL of the tested application</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+<li><strong>Expression</strong>: <code>http://localhost:8080/</code></li>
+</ul>
+<hr />
+<p><strong><a name="browser">browser</a>:</strong></p>
+<div>Tested browser *firefox *mock *firefoxproxy *pifirefox *chrome
+*iexploreproxy *iexplore *firefox3 *safariproxy *googlechrome
+*konqueror *firefox2 *safari *piiexplore *firefoxchrome *opera
+*iehta *custom</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+<li><strong>Expression</strong>: <code>*firefox</code></li>
+</ul>
+<hr />
+<p><strong><a name="format">format</a>:</strong></p>
+<div>The format of the Java test class Supported Formats: - JUnit3RC -
+JUnit4RC - JUnit4WebDriverBacked Unsupported Formats: - TestNGRC -
+JUnit4WebDriver</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+<li><strong>Expression</strong>: <code>JUnit4RC</code></li>
+</ul>
+<hr />
+<p><strong><a name="globalConfigurationFile">globalConfigurationFile</a>:</strong></p>
+<div>Location of the file where the global configurations (host,
+tiempoEspera, navegador, url, puertoSelenium, usuario, password,
+listaCasosPrueba) can be found.</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+<li><strong>Expression</strong>: <code>${basedir}/src/test/resources/config/globalConfiguration.xml</code></li>
+</ul>
+<hr />
+<p><strong><a name="host">host</a>:</strong></p>
+<div>Host of Selenium server</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+<li><strong>Expression</strong>: <code>localhost</code></li>
+</ul>
+<hr />
+<p><strong><a name="javaTestSuitesDirectory">javaTestSuitesDirectory</a>:</strong></p>
+<div>(no description)</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+<li><strong>Expression</strong>: <code>${basedir}/src/test/java</code></li>
+</ul>
+<hr />
+<p><strong><a name="port">port</a>:</strong></p>
+<div>Port of Selenium server</div><ul><li><strong>Type</strong>: <code>int</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+<li><strong>Expression</strong>: <code>4444</code></li>
+</ul>
+<hr />
+<p><strong><a name="seleniumApiDocFile">seleniumApiDocFile</a>:</strong></p>
+<div>The XML file with the API doc of Selenese commands</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+</ul>
+<hr />
+<p><strong><a name="seleniumJavascriptSource">seleniumJavascriptSource</a>:</strong></p>
+<div>The javascript file with the functions that generate Java classes
+in base to a HTML script</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+</ul>
+<hr />
+<p><strong><a name="testSuiteTemplatePath">testSuiteTemplatePath</a>:</strong></p>
+<div>The path of the test suite template.
+testLayouts\TestSuiteLayout_JUnit4RC.vm</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+</ul>
+<hr />
+<p><strong><a name="testSuitesBasePackage">testSuitesBasePackage</a>:</strong></p>
+<div>The package to be created to use in the Java test files</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+<li><strong>Expression</strong>: <code>test.temp</code></li>
+</ul>
+<hr />
+<p><strong><a name="testSuitesDirectory">testSuitesDirectory</a>:</strong></p>
+<div>The directory path to save the generated tests</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+<li><strong>Expression</strong>: <code>${project.build.directory}/testsuites</code></li>
+</ul>
+<hr />
+<p><strong><a name="timeout">timeout</a>:</strong></p>
+<div>The global default timeout for page load wait</div><ul><li><strong>Type</strong>: <code>int</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+</ul>
+<hr />
+<p><strong><a name="verbose">verbose</a>:</strong></p>
+<div>Define if this will to print logs in system console</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+<li><strong>Expression</strong>: <code>true</code></li>
+</ul>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2012
+    
+          
+  
+
+  
+    
+  
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>
