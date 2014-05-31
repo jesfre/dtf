@@ -1,3 +1,6 @@
+//
+// Developed by Dextra Technologies www.dextratech.com
+//
 package com.dextratech.dtf.ts1.testTimeout.tc1.a;
 
 import junit.framework.Test;

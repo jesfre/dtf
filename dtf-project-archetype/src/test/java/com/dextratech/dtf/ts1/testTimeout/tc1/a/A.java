@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class A extends DextraTestCase {
 	private boolean success = true;
-	private String screenshotDirectory = "D:/dev/projects/DEXTRA-testing-framework/Dextra_Testing_Framework/dtf-project-archetype/src/test/resources/screenshots//";
+	private String screenshotDirectory = "E:/dev/projects/titulacion/sources/dtf2/dtf-project-archetype/src/test/resources/screenshots//";
 
 	@Before
 	public void setUp() throws Exception {

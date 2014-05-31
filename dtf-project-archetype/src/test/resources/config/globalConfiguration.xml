@@ -1,6 +1,10 @@
-<!-- Developed by Dextra Technologies www.dextratech.com -->
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dtfConfig SYSTEM "GlobalConfiguration.dtd" >
+
+<!-- 
+Developed by Dextra Technologies www.dextratech.com 
+-->
+
 <!--
 Browser
 *firefox C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe
