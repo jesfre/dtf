@@ -18,10 +18,6 @@
 	
 	<properties>
 		<!-- NOT_NEEDED_TO_CONFIGURE - START -->
-		<selenium.browser>*googlechrome</selenium.browser>
-		<selenium.suite>src/test/selenium/testSuite1.html</selenium.suite>
-		<selenium.startURL>http://google.com.mx</selenium.startURL>
-		
 		<!-- Default values for dtf-maven-plugin -->
 		<dtf.plugin.verbose>true</dtf.plugin.verbose>
 		<dtf.plugin.seleniumHost>localhost</dtf.plugin.seleniumHost>
@@ -30,7 +26,14 @@
 		<dtf.plugin.baseUrl>http://localhost:8080/</dtf.plugin.baseUrl>
 		<dtf.plugin.timeout>5000</dtf.plugin.timeout>
 		<dtf.plugin.speed>1000</dtf.plugin.speed>
+		<dtf.plugin.format>JUnit4WebDriver</dtf.plugin.format>
+		<!-- 
 		<dtf.plugin.format>JUnit4RC</dtf.plugin.format>
+		 -->
+		
+
+		<selenium.suite>src/test/selenium/testSuite1.html</selenium.suite>
+		<selenium.startURL>http://google.com.mx</selenium.startURL>
 
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<hibernate.version>3.6.1.Final</hibernate.version>
@@ -178,7 +181,7 @@
 				<artifactId>selenium-maven-plugin</artifactId>
 				<version>2.3</version>
 				<configuration>
-					<browser>${selenium.browser}</browser>
+					<browser>${dtf.plugin.browser}</browser>
 					<suite>${selenium.suite}</suite>
 					<startURL>${selenium.startURL}</startURL>
 				</configuration>
@@ -405,6 +408,11 @@
 					<groupId>commons-collections</groupId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
 		</dependency>
 
 		<!-- Test dependencies -->
