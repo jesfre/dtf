@@ -57,7 +57,7 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 	 * Unsupported Formats:
 	 * - TestNGRC
 	 * - JUnit4WebDriver
-	 * @parameter expression="JUnit4RC"
+	 * @parameter expression="${dtf.plugin.format}"
 	 * @required
 	 */
 	protected String format;

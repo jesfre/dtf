@@ -18,7 +18,7 @@ public abstract class DtfAbstractMojo extends AbstractMojo {
 
 	/**
 	 * Define if this will to print logs in system console
-	 * @parameter expression="true"
+	 * @parameter expression="${dtf.plugin.verbose}"
 	 */
 	protected boolean verbose;
 
@@ -30,14 +30,14 @@ public abstract class DtfAbstractMojo extends AbstractMojo {
 
 	/**
 	 * Host of Selenium server
-	 * @parameter expression="localhost"
+	 * @parameter expression="${dtf.plugin.seleniumHost}"
 	 * @required
 	 */
 	protected String seleniumHost;
 
 	/**
 	 * Port of Selenium server
-	 * @parameter expression="4444"
+	 * @parameter expression="${dtf.plugin.seleniumPort}"
 	 * @required
 	 */
 	protected int seleniumPort;
@@ -62,27 +62,27 @@ public abstract class DtfAbstractMojo extends AbstractMojo {
 	 * *opera
 	 * *iehta
 	 * *custom
-	 * @parameter expression="*firefox"
+	 * @parameter expression="${dtf.plugin.browser}"
 	 * @required
 	 */
 	protected String browser;
 
 	/**
 	 * Base URL of the tested application
-	 * @parameter expression="http://localhost:8080/"
+	 * @parameter expression="${dtf.plugin.baseUrl}"
 	 * @required
 	 */
 	protected String baseUrl;
 
 	/**
 	 * The global default timeout for page load wait
-	 * @parameter expression="5000"
+	 * @parameter expression="${dtf.plugin.timeout}"
 	 */
 	protected int timeout;
 
 	/**
 	 * The global default speed of the selenium commands
-	 * @parameter expression="1000"
+	 * @parameter expression="${dtf.plugin.speed}"
 	 */
 	protected int speed;
 
