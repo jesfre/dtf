@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import jxl.CellView;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
@@ -22,7 +25,7 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
-import com.dextratech.dtf.utils.DextraSystemLogger;
+import com.dextratech.dtf.layout.LayoutBuilder;
 
 /**
  * Writes a new Excel file with the structure for a data set
@@ -31,6 +34,8 @@ import com.dextratech.dtf.utils.DextraSystemLogger;
  *         17/07/2012
  */
 public class DatasetExcelWriter {
+	private static Log log = LogFactory.getLog(DatasetExcelWriter.class);
+
 	private WritableWorkbook workbook;
 	private String targetFile;
 	private WritableCellFormat labelFormat;
@@ -58,7 +63,7 @@ public class DatasetExcelWriter {
 			workbook = Workbook.createWorkbook(file, wbSettings);
 			workbook.createSheet("DataPool", 0);
 		} catch (FileNotFoundException e) {
-			DextraSystemLogger.error("File not foud. Check if the file exists or if is used by another process.");
+			log.error("File not foud. Check if the file exists or if is used by another process.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (WriteException e) {

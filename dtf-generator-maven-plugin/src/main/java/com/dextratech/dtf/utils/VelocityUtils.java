@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -25,6 +27,7 @@ import com.dextratech.dtf.Constants;
  *         23/06/2012
  */
 public class VelocityUtils {
+	private static Log log = LogFactory.getLog(VelocityUtils.class);
 
 	/**
 	 * @param vParams
@@ -60,7 +63,7 @@ public class VelocityUtils {
 
 		writer.flush();
 		writer.close();
-		DextraSystemLogger.println("Generated file: " + fileLocation);
+		log.debug("Generated file: " + fileLocation);
 	}
 
 }

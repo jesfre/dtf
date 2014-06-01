@@ -5,15 +5,17 @@
 
     <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%p [%d{HH:mm:ss,SSS}] %c{1}.%M(%L) | %m%n"/>
+            <param name="ConversionPattern"
+                value="%d{HH:mm:ss,SSS} %p [%t] %c{1}.%M(%L) | %m%n"/>
         </layout>
     </appender>
     
-    <logger name="net.sf">
-        <level value="INFO"/>
+    <logger name="net.sf.ehcache">
+        <level value="ERROR"/>
     </logger>
 
-    <logger name="org.springframework">
+    <!-- Suppress success logging from InteractiveAuthenticationSuccessEvent -->
+    <logger name="org.springframework.security">
         <level value="ERROR"/>
     </logger>
 
@@ -25,6 +27,11 @@
         <level value="FATAL"/>
     </logger>
 
+    <!-- Suppress invalid warning messages from JSF -->
+    <logger name="org.apache.myfaces">
+        <level value="ERROR"/>
+    </logger>
+
     <logger name="org.dbunit">
         <level value="WARN"/>
     </logger>
@@ -32,9 +39,17 @@
     <logger name="org.hibernate">
         <level value="WARN"/>
     </logger>
-    
+  
+    <!--logger name="org.hibernate.SQL">
+        <level value="DEBUG"/>
+    </logger-->
+
+    <logger name="org.springframework">
+        <level value="WARN"/>
+    </logger>
+   
     <logger name="com.dextratech.dtf">
-    	<level value="INFO"/>
+        <level value="trace"/>
     </logger>
 
     <root>

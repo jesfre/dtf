@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
-import com.dextratech.dtf.utils.DextraSystemLogger;
+import com.dextratech.dtf.parser.TestHtmlParser;
 
 /**
  * Goal to update html report file to add some scripts to enhance the report.
@@ -22,6 +24,8 @@ import com.dextratech.dtf.utils.DextraSystemLogger;
  *         07/12/2012
  */
 public class FixSurefireReport extends AbstractMojo {
+	private static Log log = LogFactory.getLog(FixSurefireReport.class);
+
 	/**
 	 * Define if this will to print logs in system console
 	 * @parameter expression="true"
@@ -38,7 +42,7 @@ public class FixSurefireReport extends AbstractMojo {
 	 * @see org.apache.maven.plugin.Mojo#execute()
 	 */
 	public void execute() throws MojoExecutionException {
-		DextraSystemLogger.print("Fixing Surefire reports...");
+		log.debug("Fixing Surefire reports...");
 		try {
 			String jqueryScript = "<script type=\"text/javascript\" src=\"scripts/jquery-1.7.2.min.js\"></script>";
 			String functionsScript = "<script type=\"text/javascript\" src=\"scripts/functions.js\"></script>";

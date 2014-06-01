@@ -19,6 +19,8 @@ import javax.xml.bind.Unmarshaller;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.springframework.beans.BeanUtils;
@@ -32,7 +34,6 @@ import com.dextratech.dtf.exception.DextraSeleniumException;
 import com.dextratech.dtf.html2java.Html2JavaConverter;
 import com.dextratech.dtf.parser.TestHtmlParser;
 import com.dextratech.dtf.utils.DataHelper;
-import com.dextratech.dtf.utils.DextraSystemLogger;
 import com.dextratech.dtf.utils.VelocityUtils;
 import com.dextratech.dtf.xml.testsuite.ActionOption;
 import com.dextratech.dtf.xml.testsuite.Assertion;
@@ -55,6 +56,7 @@ import com.dextratech.dtf.xml.testsuite.ValidationRules;
  *         06/05/2013
  */
 public class TestsuiteGenerator extends Html2JavaConverter {
+	private static Log log = LogFactory.getLog(TestsuiteGenerator.class);
 
 	/**
 	 * Location of the XLS data source file for this test case script
@@ -137,7 +139,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 								e.printStackTrace();
 							}
 						} else {
-							DextraSystemLogger.error("File not found: " + filePath);
+							log.error("File not found: " + filePath);
 						}
 					}
 
@@ -155,7 +157,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 		File vFunctionsXmlFile = new File(validationFunctionsXmlPath);
 		if (vFunctionsXmlFile.exists()) {
 			try {
-				DextraSystemLogger.println("\nLoading validation functions...");
+				log.debug("Loading validation functions...");
 				JAXBContext context = JAXBContext.newInstance(JAXB_CONTEXT_PATH_TESTSUITE);
 				Unmarshaller unmarshaller = context.createUnmarshaller();
 				Object unmarshalled = unmarshaller.unmarshal(vFunctionsXmlFile);
@@ -164,11 +166,11 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 
 				List<ValidationFunction> vFunctionList = vRules.getFunction();
 				for (ValidationFunction fn : vFunctionList) {
-					DextraSystemLogger.println("\tFunction loaded > " + fn.getId());
+					log.debug("Function loaded > " + fn.getId());
 				}
 				vFunctionRegistry.addAll(vFunctionList);
 			} catch (JAXBException e) {
-				DextraSystemLogger.error(e.getMessage());
+				log.error(e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -183,7 +185,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 		File componentsXmlFile = new File(componentsXmlPath);
 		if (componentsXmlFile.exists()) {
 			try {
-				DextraSystemLogger.println("\nLoading components...");
+				log.debug("Loading components...");
 				JAXBContext context = JAXBContext.newInstance(JAXB_CONTEXT_PATH_TESTSUITE);
 				Unmarshaller unmarshaller = context.createUnmarshaller();
 				Object unmarshalled = unmarshaller.unmarshal(componentsXmlFile);
@@ -192,11 +194,11 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 
 				List<Component> componentList = components.getComponent();
 				for (Component cmp : componentList) {
-					DextraSystemLogger.println("\tComponent loaded > " + cmp.getName());
+					log.debug("Component loaded > " + cmp.getName());
 				}
 				componentRegistry.addAll(componentList);
 			} catch (JAXBException e) {
-				DextraSystemLogger.error(e.getMessage());
+				log.error(e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -217,7 +219,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 		String testsuiteFilename = testsuite.getName();
 		String testsuiteOutDir = testSuitesDirectory.getAbsolutePath();
 
-		DextraSystemLogger.println("\nGenerating test suite for: ============ " + testsuiteFilename + " ============");
+		log.debug("Generating test suite for: ============ " + testsuiteFilename + " ============");
 		List<Testcase> testcaseList = testsuite.getTestcase();
 
 		FunctionRegistry tmpFunctionRegistry = new FunctionRegistry(vFunctionRegistry);
@@ -326,7 +328,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 							newTestcaseName = StringUtils.deleteWhitespace(newTestcaseName);
 							String htmlFilename = newTestcaseName + ".html";
 
-							DextraSystemLogger.println("Generating testcase for: ===" + testcaseName + " ===");
+							log.debug("Generating testcase for: ===" + testcaseName + " ===");
 							htmlTestsuiteGenerator.generateTestcaseScript(testcase, copyCommandList, testcaseOutDir, newTestcaseName, htmlFilename);
 							testcaseFilenames.add(htmlFilename);
 
@@ -341,7 +343,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 
 					// Generates the default test case, with all valid values for fields, that have to be run at last.
 					String htmlFilename = WordUtils.capitalizeFully(testcaseName) + ".html";
-					DextraSystemLogger.println("Generating testcase for: ===" + testcaseName + " ===");
+					log.debug("Generating testcase for: ===" + testcaseName + " ===");
 					htmlTestsuiteGenerator.generateTestcaseScript(testcase, copyCommandList, testcaseOutDir, testcaseName, htmlFilename);
 					testcaseFilenames.add(htmlFilename);
 					String testcaseClassName = generateJavaTestcase(testcase, testcaseOutDir, htmlFilename, javaTestSuiteDir, finalPackageTarget, testcaseName, dbSnapshot, dbRestore, afterErrorActionsSentences);
@@ -481,7 +483,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 
 		File javaTestFile = new File(javaTestDestinationDir.getAbsolutePath() + Constants.SEPARATOR + testName + ".java");
 		FileUtils.writeStringToFile(javaTestFile, javaTestcaseContent);
-		DextraSystemLogger.println(finalPackageTarget + "." + testName + ".class");
+		log.debug(finalPackageTarget + "." + testName + ".class");
 
 		return testName;
 	}

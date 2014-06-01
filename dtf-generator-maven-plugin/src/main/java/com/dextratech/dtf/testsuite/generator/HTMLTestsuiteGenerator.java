@@ -12,6 +12,8 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.dextratech.dtf.Constants;
 import com.dextratech.dtf.SeleniumCommand;
@@ -43,6 +45,7 @@ import com.dextratech.dtf.xml.testsuite.ValidationFunction;
  *         06/05/2013
  */
 public class HTMLTestsuiteGenerator {
+	private static Log log = LogFactory.getLog(HTMLTestsuiteGenerator.class);
 	private FunctionRegistry functionRegistry = new FunctionRegistry();
 	private ComponentRegistry componentRegistry = new ComponentRegistry();
 
@@ -93,7 +96,7 @@ public class HTMLTestsuiteGenerator {
 	public String generateAfterErrrorScript(Testcase testcase, List<SeleniumCommand> afterErrorCommandList, String testcaseOutDir, String testcaseName) throws URISyntaxException, IOException {
 		String newTestcaseName = WordUtils.capitalizeFully(testcaseName) + Constants.AFTER_ERROR_SCRIPT_SUFIX;
 		String afterErrorScriptsFilename = newTestcaseName + ".html";
-		DextraSystemLogger.println("Generating after error scripts for: ===" + testcaseName + " ===");
+		log.debug("Generating after error scripts for: ===" + testcaseName + " ===");
 		generateTestcaseScript(testcase, afterErrorCommandList, testcaseOutDir, newTestcaseName, afterErrorScriptsFilename);
 		return afterErrorScriptsFilename;
 	}
@@ -224,7 +227,7 @@ public class HTMLTestsuiteGenerator {
 		boolean errorStep = generic.isErrorStep();
 
 		SeleniumCommand seleniumCommand = new SeleniumCommand(name, target, value, errorStep);
-		DextraSystemLogger.println("Composed command : " + seleniumCommand.toString());
+		log.debug("Composed command : " + seleniumCommand.toString());
 		return seleniumCommand;
 
 	}
@@ -241,7 +244,7 @@ public class HTMLTestsuiteGenerator {
 		boolean errorStep = assertion.isErrorStep();
 
 		SeleniumCommand seleniumCommand = new SeleniumCommand(assertionType.value(), param1, param2, errorStep);
-		DextraSystemLogger.println("Composed command : " + seleniumCommand.toString());
+		log.debug("Composed command : " + seleniumCommand.toString());
 		return seleniumCommand;
 
 	}
@@ -260,7 +263,7 @@ public class HTMLTestsuiteGenerator {
 		boolean errorStep = action.isErrorStep();
 
 		SeleniumCommand seleniumCommand = new SeleniumCommand(actionType, finalLocator, additionalParam, errorStep);
-		DextraSystemLogger.println("Composed command : " + seleniumCommand.toString());
+		log.debug("Composed command : " + seleniumCommand.toString());
 		return seleniumCommand;
 	}
 
@@ -303,7 +306,7 @@ public class HTMLTestsuiteGenerator {
 		List<Object> validationList = field.getValidateOrValidateFunctionOrValidateFunctionRef();
 		seleniumCommand.setValidations(validationList);
 
-		DextraSystemLogger.println("Composed command : " + seleniumCommand.toString());
+		log.debug("Composed command : " + seleniumCommand.toString());
 		return seleniumCommand;
 	}
 

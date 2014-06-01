@@ -8,13 +8,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.MojoExecutionException;
 
 import com.dextratech.dtf.ConfigurationXmlHandler;
 import com.dextratech.dtf.Constants;
 import com.dextratech.dtf.TestSuiteXmlHandler;
+import com.dextratech.dtf.generator.HtmlSuiteGenerator;
 import com.dextratech.dtf.parser.TestSuiteHtmlParser;
-import com.dextratech.dtf.utils.DextraSystemLogger;
 
 /**
  * Utility to convert from HTML Selenese script file to Java source code
@@ -26,12 +28,12 @@ import com.dextratech.dtf.utils.DextraSystemLogger;
  */
 @Deprecated
 public class Html2JavaConverterHtmlDefined extends Html2JavaConverter {
+	private static Log log = LogFactory.getLog(Html2JavaConverterHtmlDefined.class);
 
 	/* (non-Javadoc)
 	 * @see org.apache.maven.plugin.AbstractMojo#execute()
 	 */
 	public void execute() throws MojoExecutionException {
-		DextraSystemLogger.setVerbose(verbose);
 		prefix = "Suite";
 		packagePostfix = "";
 		if (!testSuitesBasePackage.equals(packagePostfix)) {
@@ -57,14 +59,14 @@ public class Html2JavaConverterHtmlDefined extends Html2JavaConverter {
 							this.convertHtml2Java(testSuiteParser, count, javaTestSuitesDirectory, dbSnapshot, dbRestore);
 							count++;
 						} else {
-							DextraSystemLogger.error("File not found: " + filePath);
+							log.error("File not found: " + filePath);
 						}
 					}
 				}
 
 			} else {
 
-				DextraSystemLogger.println("Using POM global configurations.", true);
+				log.debug("Using POM global configurations.");
 				Iterator<File> fileIt = FileUtils.iterateFiles(generatedHtmlTestsuitesPath, new String[] { "html" }, false);
 				for (; fileIt.hasNext(); count++) {
 					File htmlSuiteFile = fileIt.next();
@@ -73,9 +75,9 @@ public class Html2JavaConverterHtmlDefined extends Html2JavaConverter {
 				}
 
 			}
-			DextraSystemLogger.println(">>>>>>>>>>>>>>>>>>>>>> " + count + " test suites generated.");
+			log.debug(">>>>>>>>>>>>>>>>>>>>>> " + count + " test suites generated.");
 		} catch (Exception e) {
-			DextraSystemLogger.println(e.getMessage(), true);
+			log.debug(e.getMessage(), e);
 			e.printStackTrace();
 		}
 	}

@@ -5,14 +5,18 @@ package com.dextratech.dtf.exception;
 
 import java.text.MessageFormat;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.dextratech.dtf.SeleniumCommand;
-import com.dextratech.dtf.utils.DextraSystemLogger;
 
 /**
  * @author <a href="mailto:jorge.ruiz.aquino@gmail.com">Jorge Ruiz Aquino<a>
  *         06/12/2012
  */
 public class NoErrorOccurredException extends DextraSeleniumException {
+	private static Log log = LogFactory.getLog(NoErrorOccurredException.class);
+
 	private static final long serialVersionUID = 1L;
 
 	public NoErrorOccurredException(SeleniumCommand[] expectedToFailCommands, SeleniumCommand testingCommand) {
@@ -47,7 +51,7 @@ public class NoErrorOccurredException extends DextraSeleniumException {
 		}
 		String tmpl = sb.toString();
 		String html = MessageFormat.format(tmpl, expectedErrorSteps.toString());
-		DextraSystemLogger.println(html);
+		log.debug(html);
 		this.exceptionMessage = html;
 	}
 

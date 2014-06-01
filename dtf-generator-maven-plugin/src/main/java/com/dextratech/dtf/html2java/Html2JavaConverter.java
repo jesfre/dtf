@@ -19,6 +19,8 @@ import javax.script.ScriptEngineManager;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.cyberneko.html.parsers.DOMParser;
@@ -33,6 +35,7 @@ import com.dextratech.dtf.ConfigurationXmlHandler;
 import com.dextratech.dtf.Constants;
 import com.dextratech.dtf.Constants.SeleniumXunitFramework;
 import com.dextratech.dtf.DtfAbstractMojo;
+import com.dextratech.dtf.JavascriptLogger;
 import com.dextratech.dtf.LabelValue;
 import com.dextratech.dtf.SeleniumCommand;
 import com.dextratech.dtf.parser.ConfigurationXmlReader;
@@ -47,6 +50,7 @@ import com.dextratech.dtf.utils.VelocityUtils;
  *         22/06/2012
  */
 public abstract class Html2JavaConverter extends DtfAbstractMojo {
+	private static Log log = LogFactory.getLog(Html2JavaConverter.class);
 
 	/**
 	 * The format of the Java test class
@@ -127,6 +131,12 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 	 */
 	protected String customJs = null;
 
+	/**
+	 * Paths to Javascript files to be loaded
+	 * @parameter
+	 */
+	protected String webdriverJs = null;
+
 	@Override
 	abstract public void execute() throws MojoExecutionException, MojoFailureException;
 
@@ -134,7 +144,7 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 	 * @return
 	 */
 	protected ConfigurationXmlHandler setupGlobalConfigurations() {
-		DextraSystemLogger.println("\nUsing Xml configuration file: " + globalConfigurationFile.getName(), true);
+		log.debug("Using Xml configuration file: " + globalConfigurationFile.getName());
 		ConfigurationXmlHandler config = ConfigurationXmlReader.parseXml(globalConfigurationFile);
 		seleniumHost = config.getSeleniumHost();
 		seleniumPort = config.getSeleniumPort();
@@ -143,13 +153,13 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 		timeout = Integer.valueOf(config.getTimeout());
 		speed = config.getSpeed();
 
-		DextraSystemLogger.println("\t> Converting test using global configurations...");
-		DextraSystemLogger.println("\t> seleniumHost: " + seleniumHost);
-		DextraSystemLogger.println("\t> seleniumPort: " + seleniumPort);
-		DextraSystemLogger.println("\t> browser: " + browser);
-		DextraSystemLogger.println("\t> baseUrl: " + baseUrl);
-		DextraSystemLogger.println("\t> timeout: " + timeout);
-		DextraSystemLogger.println("\t> speed: " + speed);
+		log.debug("\t> Converting test using global configurations...");
+		log.debug("\t> seleniumHost: " + seleniumHost);
+		log.debug("\t> seleniumPort: " + seleniumPort);
+		log.debug("\t> browser: " + browser);
+		log.debug("\t> baseUrl: " + baseUrl);
+		log.debug("\t> timeout: " + timeout);
+		log.debug("\t> speed: " + speed);
 		return config;
 	}
 
@@ -180,6 +190,9 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 		}
 		if (toolsJs == null) {
 			toolsJs = Constants.SELENIUM_JS_TOOLS;
+		}
+		if (webdriverJs == null) {
+			webdriverJs = Constants.SELENIUM_JS_WEBDRIVER;		
 		}
 		if (rcJunitJs == null) {
 			if (format.trim().equals(SeleniumXunitFramework.JUNIT_3RC.getName()))
@@ -243,7 +256,7 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 				FileUtils.writeStringToFile(javaTestFile, javaTestcaseContent);
 
 				testClassNameList.add(testName + ".class");
-				DextraSystemLogger.println(finalPackageTarget + "." + testName + ".class");
+				log.debug(finalPackageTarget + "." + testName + ".class");
 			}
 
 			Map<String, Object> params = new HashMap<String, Object>();
@@ -256,9 +269,9 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 			String testSuiteFileName = testSuiteName + ".java";
 
 			VelocityUtils.evaluate(params, testSuiteTemplatePath, javaTestSuiteDir, testSuiteFileName);
-			DextraSystemLogger.println(finalPackageTarget + "." + testSuiteFileName);
+			log.debug(finalPackageTarget + "." + testSuiteFileName);
 		} catch (Exception e) {
-			DextraSystemLogger.println(e.getMessage(), true);
+			log.error(e.getMessage(), e);
 		}
 	}
 
@@ -276,6 +289,7 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 			ScriptEngineManager manager = new ScriptEngineManager();
 			ScriptEngine engine = manager.getEngineByName("rhino");
 			engine.put("out", System.out);
+			engine.put("log", LogFactory.getLog(JavascriptLogger.class));
 
 			List<SeleniumCommand> formatedSeleniumCommandList = testParser.getFormatedSelenseCommands();
 			NativeArray nativeArray = new NativeArray(formatedSeleniumCommandList.toArray());
@@ -320,34 +334,73 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 			InputStreamReader isr = new InputStreamReader(isJs);
 			Object result = engine.eval(isr, context);
 
+			isJs = this.getClass().getResourceAsStream(webdriverJs);
+			if (isJs != null) {
+				isr = new InputStreamReader(isJs);
+				result = engine.eval(isr, context);
+				log.debug("Loaded " + webdriverJs);
+			} else {
+				log.debug("Can't load " + webdriverJs);
+			}
+
 			isJs = this.getClass().getResourceAsStream(remoteControlJs);
-			isr = new InputStreamReader(isJs);
-			result = engine.eval(isr, context);
+			if (isJs != null) {
+				isr = new InputStreamReader(isJs);
+				result = engine.eval(isr, context);
+				log.debug("Loaded " + remoteControlJs);
+			} else {
+				log.debug("Can't load " + remoteControlJs);
+			}
 
 			isJs = this.getClass().getResourceAsStream(testCaseJs);
-			isr = new InputStreamReader(isJs);
-			result = engine.eval(isr, context);
+			if (isJs != null) {
+				isr = new InputStreamReader(isJs);
+				result = engine.eval(isr, context);
+				log.debug("Loaded " + testCaseJs);
+			} else {
+				log.debug("Can't load " + testCaseJs);
+			}
 
 			isJs = this.getClass().getResourceAsStream(fmtCommndAdapterJs);
-			isr = new InputStreamReader(isJs);
-			result = engine.eval(isr, context);
+			if (isJs != null) {
+				isr = new InputStreamReader(isJs);
+				result = engine.eval(isr, context);
+				log.debug("Loaded " + fmtCommndAdapterJs);
+			} else {
+				log.debug("Can't load " + fmtCommndAdapterJs);
+			}
 
 			isJs = this.getClass().getResourceAsStream(formatJs);
-			isr = new InputStreamReader(isJs);
-			result = engine.eval(isr, context);
+			if (isJs != null) {
+				isr = new InputStreamReader(isJs);
+				result = engine.eval(isr, context);
+				log.debug("Loaded " + formatJs);
+			} else {
+				log.debug("Can't load " + formatJs);
+			}
 
 			isJs = this.getClass().getResourceAsStream(rcJunitJs);
-			isr = new InputStreamReader(isJs);
-			result = engine.eval(isr, context);
+			if (isJs != null) {
+				isr = new InputStreamReader(isJs);
+				result = engine.eval(isr, context);
+				log.debug("Loaded " + rcJunitJs);
+			} else {
+				log.debug("Can't load " + rcJunitJs);
+			}
 
 			isJs = this.getClass().getResourceAsStream(customJs);
-			isr = new InputStreamReader(isJs);
-			result = engine.eval(isr, context);
+			if (isJs != null) {
+				isr = new InputStreamReader(isJs);
+				result = engine.eval(isr, context);
+				log.debug("Loaded " + customJs);
+			} else {
+				log.debug("Can't load " + customJs);
+			}
 
 			String javaCode = (String) result;
 			return javaCode;
 		} catch (Exception e) {
-			DextraSystemLogger.println(e.getMessage(), true);
+			log.error(e.getMessage(), e);
 			e.printStackTrace();
 		}
 		return null;

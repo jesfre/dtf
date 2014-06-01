@@ -3,6 +3,11 @@
 //
 package com.dextratech.dtf;
 
+/**
+ * The Class Constants.
+ * @author <a href="jorge.ruiz.aquino@gmail.com">Jorge Ruiz Aquino</a>
+ * 31/05/2014
+ */
 public class Constants {
 	public static final String SEPARATOR = System.getProperty("file.separator");
 	public static final String WILDCARD_PREFIX = "${";
@@ -48,6 +53,7 @@ public class Constants {
 	public static final String SELENIUM_JS_COMMAND_ADAPTER = SELENIUM_API_SRC_DIR + "formatCommandOnlyAdapter.js";
 	public static final String SELENIUM_JS_FORMAT = SELENIUM_API_SRC_DIR + "format.js";
 	public static final String SELENIUM_JS_TOOLS = SELENIUM_API_SRC_DIR + "tools.js";
+	public static final String SELENIUM_JS_WEBDRIVER = SELENIUM_API_SRC_DIR + "webdriver.js";
 
 	/**
 	 * Selenium unit testing frameworks

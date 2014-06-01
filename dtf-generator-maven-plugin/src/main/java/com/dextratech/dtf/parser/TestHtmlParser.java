@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.htmlparser.Node;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.TagNameFilter;
@@ -20,7 +22,6 @@ import org.htmlparser.util.ParserException;
 
 import com.dextratech.dtf.SeleneseHtmlColumnIndex;
 import com.dextratech.dtf.SeleniumCommand;
-import com.dextratech.dtf.utils.DextraSystemLogger;
 
 /**
  * Class that parse a html document
@@ -28,6 +29,8 @@ import com.dextratech.dtf.utils.DextraSystemLogger;
  *         20/06/2012
  */
 public class TestHtmlParser extends GenericHtmlParser {
+	private static Log log = LogFactory.getLog(TestHtmlParser.class);
+
 	public static final String META_SUCCESS = "success";
 
 	public TestHtmlParser(File htmlFile) {
@@ -99,7 +102,7 @@ public class TestHtmlParser extends GenericHtmlParser {
 	 * @throws ParserException
 	 */
 	private void populateMetaMap(NodeList metaNodeList) throws ParserException {
-		DextraSystemLogger.println("Populating META map...");
+		log.debug("Populating META map...");
 		NodeIterator metaIterator = metaNodeList.elements();
 		for (; metaIterator.hasMoreNodes();) {
 			Node node = metaIterator.nextNode();
@@ -107,7 +110,7 @@ public class TestHtmlParser extends GenericHtmlParser {
 			String metaName = meta.getMetaTagName();
 			String metaContent = meta.getMetaContent();
 
-			DextraSystemLogger.println("META found: " + metaName + " with content: " + metaContent);
+			log.debug("META found: " + metaName + " with content: " + metaContent);
 			metaMap.put(metaName, metaContent);
 		}
 	}
@@ -143,7 +146,7 @@ public class TestHtmlParser extends GenericHtmlParser {
 	}
 
 	public List<SeleniumCommand> getFormatedSelenseCommands() throws ParserException {
-		DextraSystemLogger.println("\nParsing commands...");
+		log.debug("Parsing commands...");
 		List<SeleniumCommand> formatedSeleneseCommands = new ArrayList<SeleniumCommand>();
 		while (iterator.hasMoreNodes()) {
 			Node rowNode = iterator.nextNode();
@@ -156,7 +159,7 @@ public class TestHtmlParser extends GenericHtmlParser {
 			boolean testingCommand = Boolean.valueOf(testingCommandString);
 
 			String formatedSeleneseCommand = cmd + "|" + target + "|" + value + "|" + errorStep + "|" + testingCommand;
-			DextraSystemLogger.println(formatedSeleneseCommand);
+			log.debug(formatedSeleneseCommand);
 
 			SeleniumCommand sc = new SeleniumCommand(cmd, target, value, errorStep, testingCommand);
 			formatedSeleneseCommands.add(sc);

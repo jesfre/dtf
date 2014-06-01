@@ -15,9 +15,12 @@ import java.util.Scanner;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.maven.model.Dependency;
 
 import com.dextratech.dtf.Constants;
+import com.dextratech.dtf.runner.SeleniumHtmlClient;
 
 /**
  * Util to generate a pom.xml file for a Java Web project with a non-standard
@@ -27,6 +30,8 @@ import com.dextratech.dtf.Constants;
  *         17/07/2012
  */
 public class MavenizerUtil {
+	private static Log log = LogFactory.getLog(MavenizerUtil.class);
+
 	private static String rootDir;
 	private static String srcDir;
 	private static String webDir;
@@ -58,9 +63,9 @@ public class MavenizerUtil {
 			File rootDirFile = new File(rootDir);
 			String rootDirName = rootDirFile.getName();
 			projectName = rootDirName;
-			DextraSystemLogger.println("\nNew project name: " + projectName);
+			log.debug("\nNew project name: " + projectName);
 		} else {
-			DextraSystemLogger.println();
+			log.debug("\n");
 		}
 
 		List<Dependency> dependencyList = new ArrayList<Dependency>();

@@ -8,11 +8,12 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.MojoExecutionException;
 
 import com.dextratech.dtf.Constants;
 import com.dextratech.dtf.DtfAbstractMojo;
-import com.dextratech.dtf.utils.DextraSystemLogger;
 
 /**
  * Class used to clean all generated resources in src/test/java and src/test/resources.
@@ -22,6 +23,7 @@ import com.dextratech.dtf.utils.DextraSystemLogger;
  *         04/12/2012
  */
 public class CleanGeneratedResources extends DtfAbstractMojo {
+	private static Log log = LogFactory.getLog(CleanGeneratedResources.class);
 
 	/**
 	 * @parameter expression="true"
@@ -50,8 +52,6 @@ public class CleanGeneratedResources extends DtfAbstractMojo {
 	private boolean cleanScreenshots;
 
 	public void execute() throws MojoExecutionException {
-		DextraSystemLogger.setVerbose(verbose);
-
 		try {
 			if (cleanLayouts)
 				cleanLayouts();
@@ -66,7 +66,6 @@ public class CleanGeneratedResources extends DtfAbstractMojo {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	private void cleanLayouts() throws IOException {
@@ -102,7 +101,8 @@ public class CleanGeneratedResources extends DtfAbstractMojo {
 	 * @throws IOException
 	 */
 	private void cleanDirectory(String path) throws IOException {
-		DextraSystemLogger.println("Cleaning directory " + path);
+		log.debug("Cleaning directory " + path);
+
 		File latoutsPath = new File(path);
 		if (latoutsPath.exists()) {
 			FileUtils.forceDelete(latoutsPath);

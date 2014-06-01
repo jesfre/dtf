@@ -6,12 +6,15 @@ package com.dextratech.dtf;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dextratech.dtf.utils.DextraSystemLogger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Modified by <a href="mailto:jorge.ruiz.aquino@gmail.com">Jorge Ruiz Aquino<a> / 22/06/2012
  */
 public class ConfigurationXmlHandler {
+	private static Log log = LogFactory.getLog(ConfigurationXmlHandler.class);
+
 	private String seleniumHost;
 	private Integer seleniumPort;
 	private String timeout;
@@ -115,28 +118,28 @@ public class ConfigurationXmlHandler {
 	}
 
 	public void imprimeConfiguracion() {
-		DextraSystemLogger.println("		Selenium host : " + seleniumHost);
-		DextraSystemLogger.println("		Selenium port : " + seleniumPort);
-		DextraSystemLogger.println("		Timeout : " + timeout);
-		DextraSystemLogger.println("		Speed : " + speed);
-		DextraSystemLogger.println("		Navigator : " + browser);
-		DextraSystemLogger.println("        URL : " + url);
-		DextraSystemLogger.println("        User : " + user);
-		DextraSystemLogger.println("        Password : " + password);
-		DextraSystemLogger.println();
+		log.debug("		Selenium host : " + seleniumHost);
+		log.debug("		Selenium port : " + seleniumPort);
+		log.debug("		Timeout : " + timeout);
+		log.debug("		Speed : " + speed);
+		log.debug("		Navigator : " + browser);
+		log.debug("        URL : " + url);
+		log.debug("        User : " + user);
+		log.debug("        Password : " + password);
+		log.debug("\n");
 
 		for (int i = 0; i < testSuiteList.size(); i++) {
 			TestSuiteXmlHandler ts = new TestSuiteXmlHandler();
 			ts = testSuiteList.get(i);
 
-			DextraSystemLogger.println("+ ------>> Caso de Prueba " + (i + 1));
-			DextraSystemLogger.println();
-			DextraSystemLogger.println("	      Nombre del Test : " + ts.getSuiteName());
-			DextraSystemLogger.println("	   Nombre del Archivo : " + ts.getFileName());
-			DextraSystemLogger.println("	          Snapshot BD : " + ts.getDbSnapshot());
-			DextraSystemLogger.println("	         Restaurar BD : " + ts.getDbRestore());
-			DextraSystemLogger.println("	             Ejecutar : " + ts.getRun());
-			DextraSystemLogger.println();
+			log.debug("+ ------>> Caso de Prueba " + (i + 1));
+			log.debug("\n");
+			log.debug("	      Nombre del Test : " + ts.getSuiteName());
+			log.debug("	   Nombre del Archivo : " + ts.getFileName());
+			log.debug("	          Snapshot BD : " + ts.getDbSnapshot());
+			log.debug("	         Restaurar BD : " + ts.getDbRestore());
+			log.debug("	             Ejecutar : " + ts.getRun());
+			log.debug("\n");
 
 		}
 	}

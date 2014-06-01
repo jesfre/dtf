@@ -15,14 +15,16 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.MojoExecutionException;
 
 import com.dextratech.dtf.Constants;
 import com.dextratech.dtf.DtfAbstractMojo;
+import com.dextratech.dtf.exception.NoErrorOccurredException;
 import com.dextratech.dtf.parser.DatasetExcelParser;
 import com.dextratech.dtf.parser.GenericHtmlParser;
 import com.dextratech.dtf.testsuite.generator.HTMLTestsuiteGenerator;
-import com.dextratech.dtf.utils.DextraSystemLogger;
 
 /**
  * Class used to generator test suites in base of a data set from a Excel file and a layout
@@ -34,6 +36,7 @@ import com.dextratech.dtf.utils.DextraSystemLogger;
  */
 @Deprecated
 public class HtmlSuiteGenerator extends DtfAbstractMojo {
+	private static Log log = LogFactory.getLog(HtmlSuiteGenerator.class);
 
 	/**
 	 * Location of the HTML for pre test tasks scripts and configurations
@@ -109,18 +112,17 @@ public class HtmlSuiteGenerator extends DtfAbstractMojo {
 	}
 
 	public void execute() throws MojoExecutionException {
-		DextraSystemLogger.setVerbose(verbose);
 		String layoutFile = "";
 		String outDir = generatedHtmlTestsuitesPath.getAbsolutePath();
 
 		try {
 			File latoutsPath = new File(generatedLayoutsPath);
 			Iterator<File> it = FileUtils.iterateFiles(latoutsPath, new String[] { "html" }, true);
-			DextraSystemLogger.println("\nGenerating test suites...");
+			log.debug("\nGenerating test suites...");
 			while (it.hasNext()) {
 				File file = it.next();
 				layoutFile = file.getAbsolutePath();
-				DextraSystemLogger.println("Generating test suite for: " + file.getName());
+				log.debug("Generating test suite for: " + file.getName());
 
 				String html = GenericHtmlParser.getHTML(layoutFile);
 
@@ -128,7 +130,7 @@ public class HtmlSuiteGenerator extends DtfAbstractMojo {
 				String shortFileName = StringUtils.substringBeforeLast(file.getName(), ".");
 				dataSource += shortFileName + ".xls";
 
-				DextraSystemLogger.println("Loading datasource: " + shortFileName + ".xls");
+				log.debug("Loading datasource: " + shortFileName + ".xls");
 
 				List<Map<String, String>> dataSetList = DatasetExcelParser.getTableArray(dataSource);
 
@@ -140,7 +142,7 @@ public class HtmlSuiteGenerator extends DtfAbstractMojo {
 				// The parameters for the constructor of HTMLTestsuiteGenerator are doesn't necesary.
 				HTMLTestsuiteGenerator htmlTestsuiteGenerator = new HTMLTestsuiteGenerator(null, screenshotsDirectory);
 				htmlTestsuiteGenerator.generateTestsuiteScript(fileNameList, testSuiteName, outDir);
-				DextraSystemLogger.println("Generated test suite: " + testSuiteName);
+				log.debug("Generated test suite: " + testSuiteName);
 			}
 		} catch (URISyntaxException e) {
 			e.printStackTrace();

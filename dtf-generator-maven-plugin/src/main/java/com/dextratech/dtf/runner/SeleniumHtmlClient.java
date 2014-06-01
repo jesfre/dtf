@@ -9,6 +9,8 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.htmlparser.Node;
 
 import com.dextratech.dtf.Command;
@@ -17,10 +19,11 @@ import com.dextratech.dtf.Test;
 import com.dextratech.dtf.TestSuite;
 import com.dextratech.dtf.parser.TestHtmlParser;
 import com.dextratech.dtf.parser.TestSuiteHtmlParser;
-import com.dextratech.dtf.utils.DextraSystemLogger;
 
 @Deprecated
 public class SeleniumHtmlClient {
+	private static Log log = LogFactory.getLog(SeleniumHtmlClient.class);
+
 	private String host = "localhost";
 	private int port = 4444;
 	private String browser = "*firefox";
@@ -47,7 +50,7 @@ public class SeleniumHtmlClient {
 	}
 
 	public boolean runSuite(String filename) throws Exception {
-		DextraSystemLogger.println("Running test suite " + filename + " against " + this.host + ":" + this.port + " with " + this.browser);
+		log.debug("Running test suite " + filename + " against " + this.host + ":" + this.port + " with " + this.browser);
 		TestSuite suite = new TestSuite();
 		suite.setFile(new File(filename));
 		suiteParser = new TestSuiteHtmlParser(suite.getFile());
@@ -91,11 +94,10 @@ public class SeleniumHtmlClient {
 
 	public boolean runTest(Test test) throws Exception {
 		String filename = test.getHtmlFile().toString();
-		DextraSystemLogger.println("Running " + filename + " against " + this.host
-				+ ":" + this.port + " with " + this.browser, true);
+		log.debug("Running " + filename + " against " + this.host + ":" + this.port + " with " + this.browser);
 		testHtmlParser = new TestHtmlParser(test.getHtmlFile());
 
-		DextraSystemLogger.println("Base URL=" + this.baseUrl);
+		log.debug("Base URL=" + this.baseUrl);
 
 		test.setName(testHtmlParser.getTestName());
 
@@ -155,7 +157,7 @@ public class SeleniumHtmlClient {
 
 		String args[] = argList.toArray(new String[0]);
 		command.setArgs(args);
-			DextraSystemLogger.println(command.getCmd() + " " + Arrays.asList(args));
+		log.debug(command.getCmd() + " " + Arrays.asList(args));
 		try {
 			command.setResult( this.htmlCommandProcessor.doCommand(command.getCmd(), args) );
 			command.setError(false);

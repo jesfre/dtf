@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
@@ -17,7 +19,7 @@ import com.dextratech.dtf.Constants;
 import com.dextratech.dtf.DtfAbstractMojo;
 import com.dextratech.dtf.TestSuiteXmlHandler;
 import com.dextratech.dtf.parser.ConfigurationXmlReader;
-import com.dextratech.dtf.utils.DextraSystemLogger;
+import com.dextratech.dtf.reporting.FixSurefireReport;
 
 /**
  * Goal to run all tests located in ${basedir}/src/test/resources/generated-testsuites/
@@ -28,6 +30,7 @@ import com.dextratech.dtf.utils.DextraSystemLogger;
  */
 @Deprecated
 public class DextraSeleniumHtmlRunner extends DtfAbstractMojo {
+	private static Log log = LogFactory.getLog(DextraSeleniumHtmlRunner.class);
 
 	/**
 	 * The output directory
@@ -39,11 +42,10 @@ public class DextraSeleniumHtmlRunner extends DtfAbstractMojo {
 	 * @see org.apache.maven.plugin.Mojo#execute()
 	 */
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		DextraSystemLogger.setVerbose(verbose);
 		Iterator<File> fileIt = null;
 		try {
 			if (globalConfigurationFile != null && globalConfigurationFile.exists()) {
-				DextraSystemLogger.println("Using Xml configuration file: " + globalConfigurationFile.getName(), true);
+				log.debug("Using Xml configuration file: " + globalConfigurationFile.getName());
 				ConfigurationXmlHandler config = ConfigurationXmlReader.parseXml(globalConfigurationFile);
 				seleniumHost = config.getSeleniumHost();
 				seleniumPort = config.getSeleniumPort();
@@ -64,20 +66,20 @@ public class DextraSeleniumHtmlRunner extends DtfAbstractMojo {
 				}
 				fileIt = fileList.iterator();
 			} else {
-				DextraSystemLogger.println("Using POM global configurations.", true);
+				log.debug("Using POM global configurations.");
 				fileIt = FileUtils.iterateFiles(generatedHtmlTestsuitesPath, new String[] { "html" }, false);
 			}
 
-			DextraSystemLogger.println(">>>>>>>>>>>>>>>>>>>>>> seleniumHost: " + seleniumHost);
-			DextraSystemLogger.println(">>>>>>>>>>>>>>>>>>>>>> seleniumPort: " + seleniumPort);
-			DextraSystemLogger.println(">>>>>>>>>>>>>>>>>>>>>> browser: " + browser);
-			DextraSystemLogger.println(">>>>>>>>>>>>>>>>>>>>>> baseUrl: " + baseUrl);
+			log.debug(">>>>>>>>>>>>>>>>>>>>>> seleniumHost: " + seleniumHost);
+			log.debug(">>>>>>>>>>>>>>>>>>>>>> seleniumPort: " + seleniumPort);
+			log.debug(">>>>>>>>>>>>>>>>>>>>>> browser: " + browser);
+			log.debug(">>>>>>>>>>>>>>>>>>>>>> baseUrl: " + baseUrl);
 
 			SeleniumHtmlClient client = new SeleniumHtmlClient(seleniumHost, seleniumPort, browser, baseUrl, outputDirectory, verbose);
 			while (fileIt.hasNext()) {
 				File testSuite = fileIt.next();
 				String testSuitePath = testSuite.getAbsolutePath();
-				DextraSystemLogger.println(testSuitePath);
+				log.debug(testSuitePath);
 				client.runSuite(testSuitePath);
 			}
 		} catch (Exception e) {
