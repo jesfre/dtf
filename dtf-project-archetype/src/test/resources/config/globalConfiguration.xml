@@ -43,7 +43,6 @@ Browser
 			<dbRestore>false</dbRestore>
 			<run>true</run>
 		</testsuite>
-		<!-- 
 		<testsuite>
 			<suiteName>preferencias_asignar_alias_2</suiteName>
 			<fileName>null</fileName>
@@ -51,6 +50,7 @@ Browser
 			<dbRestore>false</dbRestore>
 			<run>true</run>
 		</testsuite>
+		<!-- 
 		<testsuite>
 			<suiteName>preferencias_asignar_alias</suiteName>
 			<fileName>preferencias_asignar_alias.html</fileName>

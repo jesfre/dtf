@@ -2,12 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.dextratech.dtf</groupId>
 	<artifactId>dtf-maven-plugin</artifactId>
 	<version>1.2.0.ALPHA</version>
 	<packaging>maven-plugin</packaging>
 	<name>Dextra Testing Framework Maven Plugin</name>
 	<url>http://maven.apache.org</url>
+	
+	<parent>
+  		<groupId>com.dextratech.dtf</groupId>
+  		<artifactId>dtf-parent</artifactId>
+	  	<version>1.2.0.ALPHA</version>
+  	</parent>
 	
 	<developers>
 		<developer>
@@ -55,7 +60,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>2.4.0</version>
+			<version>${selenium-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -193,6 +198,7 @@
 	</build>
 	
 	<properties>
+		<selenium-version>2.40.0</selenium-version>
 		<project-archetype-location>${basedir}/../dtf-project-archetype/</project-archetype-location>
 		<dtf-maven-plugin-repo-dir-structure>${project-archetype-location}/lib/com/dextratech/dtf/${project.artifactId}/</dtf-maven-plugin-repo-dir-structure>
 	</properties>

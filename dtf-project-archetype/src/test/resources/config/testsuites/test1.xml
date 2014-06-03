@@ -11,7 +11,15 @@
 		run="true" success="true">
 		
 		<action actionType="type" locatorType="id" locatorValue="cliente" additionalParameter="001"/>
-		<action actionType="clickAndWait" locatorType="id" locatorValue="submit"/>
+		
+		<action actionType="clickAndWait" locatorType="link" locatorValue="PREFERENCIAS"/>
+		<captureScreenshot pngFilename="en asignar alias"/>
+
+		<action actionType="clickAndWait" locatorType="link" locatorValue="Asignar alias"/>
+		<captureScreenshot pngFilename="alias modificado" directory="C:/screenshots/"/>
+
+		<action actionType="clickAndWait" locatorType="id" locatorValue="submitChange"/>
+		<captureScreenshot/>
 	</testcase>
 
 </testsuite>
