@@ -74,6 +74,11 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 	protected String seleniumJavascriptSource = null;
 
 	/**
+	 * Path to utility scripts
+	 */
+	protected String seleniumScriptsDir = null;
+
+	/**
 	 * The XML file with the API doc of Selenese commands
 	 * @parameter
 	 */
@@ -123,7 +128,7 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 	 * Paths to Javascript files to be loaded
 	 * @parameter
 	 */
-	protected String rcJunitJs = null;
+	protected String xJunitJsApi = null;
 
 	/**
 	 * Paths to Javascript files to be loaded
@@ -170,14 +175,11 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 		if (seleniumJavascriptSource == null) {
 			seleniumJavascriptSource = Constants.SELENIUM_JS_SOURCE;
 		}
+		if (seleniumScriptsDir == null) {
+			seleniumScriptsDir = Constants.SELENIUM_SCRIPTS_DIR;
+		}
 		if (seleniumApiDocFile == null) {
 			seleniumApiDocFile = Constants.SELENIUM_JS_IE_DOC;
-		}
-		if (testSuiteTemplatePath == null) {
-			testSuiteTemplatePath = Constants.SELENIUM_JS_TESTSUITE_TEMPLATE;
-		}
-		if (remoteControlJs == null) {
-			remoteControlJs = Constants.SELENIUM_JS_REMOT_CONTROL;
 		}
 		if (testCaseJs == null) {
 			testCaseJs = Constants.SELENIUM_JS_TEST_CASE;
@@ -191,20 +193,29 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 		if (toolsJs == null) {
 			toolsJs = Constants.SELENIUM_JS_TOOLS;
 		}
-		if (webdriverJs == null) {
-			webdriverJs = Constants.SELENIUM_JS_WEBDRIVER;		
-		}
-		if (rcJunitJs == null) {
-			if (format.trim().equals(SeleniumXunitFramework.JUNIT_3RC.getName()))
-				rcJunitJs = SeleniumXunitFramework.JUNIT_3RC.getJsFile();
-			if (format.trim().equals(SeleniumXunitFramework.JUNIT_4RC.getName()))
-				rcJunitJs = SeleniumXunitFramework.JUNIT_4RC.getJsFile();
-			if (format.trim().equals(SeleniumXunitFramework.JUNIT_4WEB_DRIVER.getName()))
-				rcJunitJs = SeleniumXunitFramework.JUNIT_4WEB_DRIVER.getJsFile();
-			if (format.trim().equals(SeleniumXunitFramework.JUNIT_4WEB_DRIVER_BACKED.getName()))
-				rcJunitJs = SeleniumXunitFramework.JUNIT_4WEB_DRIVER_BACKED.getJsFile();
+		if (xJunitJsApi == null) {
+			if (format.trim().equals(SeleniumXunitFramework.JUNIT_3RC.getName())) {
+				xJunitJsApi = SeleniumXunitFramework.JUNIT_3RC.getJsFile();
+				remoteControlJs = Constants.SELENIUM_JS_REMOT_CONTROL;
+				testSuiteTemplatePath = Constants.SELENIUM_JS_JUNIT4RC_TESTSUITE_TEMPLATE;
+			}
+			if (format.trim().equals(SeleniumXunitFramework.JUNIT_4RC.getName())) {
+				xJunitJsApi = SeleniumXunitFramework.JUNIT_4RC.getJsFile();
+				remoteControlJs = Constants.SELENIUM_JS_REMOT_CONTROL;
+				testSuiteTemplatePath = Constants.SELENIUM_JS_JUNIT4RC_TESTSUITE_TEMPLATE;
+			}
+			if (format.trim().equals(SeleniumXunitFramework.JUNIT_4WEB_DRIVER.getName())) {
+				xJunitJsApi = SeleniumXunitFramework.JUNIT_4WEB_DRIVER.getJsFile();
+				webdriverJs = Constants.SELENIUM_JS_WEBDRIVER;
+				testSuiteTemplatePath = Constants.SELENIUM_JS_JUNIT4WEBDRIVER_TESTSUITE_TEMPLATE;
+			}
+			if (format.trim().equals(SeleniumXunitFramework.JUNIT_4WEB_DRIVER_BACKED.getName())) {
+				xJunitJsApi = SeleniumXunitFramework.JUNIT_4WEB_DRIVER_BACKED.getJsFile();
+				webdriverJs = Constants.SELENIUM_JS_WEBDRIVER;
+				testSuiteTemplatePath = Constants.SELENIUM_JS_JUNIT4WEBDRIVER_TESTSUITE_TEMPLATE;
+			}
 			if (format.trim().equals(SeleniumXunitFramework.TESTNG_RC.getName()))
-				rcJunitJs = SeleniumXunitFramework.TESTNG_RC.getJsFile();
+				xJunitJsApi = SeleniumXunitFramework.TESTNG_RC.getJsFile();
 		}
 		if (customJs == null) {
 			customJs = Constants.SELENIUM_API_DIR + "customSeleniumCode.js";
@@ -334,27 +345,54 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 			InputStreamReader isr = new InputStreamReader(isJs);
 			Object result = engine.eval(isr, context);
 
-			isJs = this.getClass().getResourceAsStream(webdriverJs);
-			if (isJs != null) {
-				isr = new InputStreamReader(isJs);
-				result = engine.eval(isr, context);
-				log.debug("Loaded " + webdriverJs);
-			} else {
-				log.debug("Can't load " + webdriverJs);
+			// Load every util script in the directory
+			if (StringUtils.isNotBlank(seleniumScriptsDir)) {
+				List<String> filenames = new ArrayList<String>();
+				filenames.add("customUtils.js");
+				filenames.add("htmlutils.js");
+				for (String filename : filenames) {
+					String utilPath = seleniumScriptsDir + filename;
+					isJs = this.getClass().getResourceAsStream(utilPath);
+					if (isJs != null) {
+						isr = new InputStreamReader(isJs);
+						log.trace("Evaluating " + utilPath);
+						result = engine.eval(isr, context);
+						log.debug("Loaded " + utilPath);
+					} else {
+						log.debug("Can't load " + utilPath);
+					}
+				}
 			}
 
-			isJs = this.getClass().getResourceAsStream(remoteControlJs);
-			if (isJs != null) {
-				isr = new InputStreamReader(isJs);
-				result = engine.eval(isr, context);
-				log.debug("Loaded " + remoteControlJs);
-			} else {
-				log.debug("Can't load " + remoteControlJs);
+			// TODO enhance this to load a map of resources instead of each resource one by one.
+			if (StringUtils.isNotBlank(webdriverJs)) {
+				isJs = this.getClass().getResourceAsStream(webdriverJs);
+				if (isJs != null) {
+					isr = new InputStreamReader(isJs);
+					log.trace("Evaluating " + webdriverJs);
+					result = engine.eval(isr, context);
+					log.debug("Loaded " + webdriverJs);
+				} else {
+					log.debug("Can't load " + webdriverJs);
+				}
+			}
+
+			if (StringUtils.isNotBlank(remoteControlJs)) {
+				isJs = this.getClass().getResourceAsStream(remoteControlJs);
+				if (isJs != null) {
+					isr = new InputStreamReader(isJs);
+					log.trace("Evaluating " + remoteControlJs);
+					result = engine.eval(isr, context);
+					log.debug("Loaded " + remoteControlJs);
+				} else {
+					log.debug("Can't load " + remoteControlJs);
+				}
 			}
 
 			isJs = this.getClass().getResourceAsStream(testCaseJs);
 			if (isJs != null) {
 				isr = new InputStreamReader(isJs);
+				log.trace("Evaluating " + testCaseJs);
 				result = engine.eval(isr, context);
 				log.debug("Loaded " + testCaseJs);
 			} else {
@@ -364,6 +402,7 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 			isJs = this.getClass().getResourceAsStream(fmtCommndAdapterJs);
 			if (isJs != null) {
 				isr = new InputStreamReader(isJs);
+				log.trace("Evaluating " + fmtCommndAdapterJs);
 				result = engine.eval(isr, context);
 				log.debug("Loaded " + fmtCommndAdapterJs);
 			} else {
@@ -373,24 +412,27 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 			isJs = this.getClass().getResourceAsStream(formatJs);
 			if (isJs != null) {
 				isr = new InputStreamReader(isJs);
+				log.trace("Evaluating " + formatJs);
 				result = engine.eval(isr, context);
 				log.debug("Loaded " + formatJs);
 			} else {
 				log.debug("Can't load " + formatJs);
 			}
 
-			isJs = this.getClass().getResourceAsStream(rcJunitJs);
+			isJs = this.getClass().getResourceAsStream(xJunitJsApi);
 			if (isJs != null) {
 				isr = new InputStreamReader(isJs);
+				log.trace("Evaluating " + xJunitJsApi);
 				result = engine.eval(isr, context);
-				log.debug("Loaded " + rcJunitJs);
+				log.debug("Loaded " + xJunitJsApi);
 			} else {
-				log.debug("Can't load " + rcJunitJs);
+				log.debug("Can't load " + xJunitJsApi);
 			}
 
 			isJs = this.getClass().getResourceAsStream(customJs);
 			if (isJs != null) {
 				isr = new InputStreamReader(isJs);
+				log.trace("Evaluating " + customJs);
 				result = engine.eval(isr, context);
 				log.debug("Loaded " + customJs);
 			} else {
@@ -502,11 +544,11 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 	}
 
 	public String getRcJunitJs() {
-		return rcJunitJs;
+		return xJunitJsApi;
 	}
 
 	public void setRcJunitJs(String rcJunitJs) {
-		this.rcJunitJs = rcJunitJs;
+		this.xJunitJsApi = rcJunitJs;
 	}
 
 	public String getCustomJs() {

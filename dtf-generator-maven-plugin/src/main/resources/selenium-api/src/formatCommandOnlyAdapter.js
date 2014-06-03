@@ -32,7 +32,7 @@ function parse(testCase, source) {
  * @param name The name of the test case, if any. It may be used to embed title into the source.
  */
 function format(testCase, name) {
-	//this.log.info("formatting testCase: " + name);
+	this.log.info("formatting testCase: " + name);
 	var result = '';
 	var header = "";
 	var footer = "";
@@ -61,7 +61,7 @@ function filterForRemoteControl(originalCommands) {
 				var c1 = c.createCopy();
 				c1.command = c.command.replace(/AndWait$/, '');
 				commands.push(c1);
-				commands.push(new Command("waitForPageToLoad", options['global.timeout'] || options['timeout'] || "30000"));
+				commands.push(new Command("waitForPageToLoad", options['global.timeout'] || "30000"));
 			} else {
 				commands.push(c);
 			}

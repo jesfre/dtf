@@ -1,5 +1,6 @@
 //
 // Developed by Dextra Technologies www.dextratech.com
+// This is a copy for JUnit4RC. Make changes to fix to an actual testsuite for the API
 //
 package testLayouts;
 import junit.framework.Test;

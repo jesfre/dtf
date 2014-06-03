@@ -2,10 +2,10 @@ var testCase = new TestCase(className);
     
 var commands = [];
 Command.apiDocuments = new Array(apiDocument);
-log.debug('Converting to Java...');
+out.println('\nConverting to Java...');
 for (var i in formatedSeleniumCommandList) {
 	var javaCommand = formatedSeleniumCommandList[i];
-	log.debug('Translating command ('+i+'): ' + javaCommand);
+	out.println('Translating command ('+i+'): ' + javaCommand);
 	var cmd = javaCommand.getName();
 	cmd = String(cmd);
 	var target = javaCommand.getTarget();
@@ -18,7 +18,6 @@ for (var i in formatedSeleniumCommandList) {
 	testingCommand = String(testingCommand);
 	var jsCommand = new Command(cmd, target, value, errorStep, testingCommand);
 	commands.push(jsCommand);
-	log.trace('Pushed JS command ('+i+'): ' + jsCommand);
 }
 if(commands)
 	testCase.commands = commands;

@@ -470,7 +470,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 			// Adding the actions to fire if an error occurs.
 			final StringBuilder AFTER_ERROR_ACTIONS_PREFIX = new StringBuilder("private void runAfterErrorCommands() {");
 			final StringBuilder AFTER_ERROR_ACTIONS_MESSAGE = new StringBuilder();
-			AFTER_ERROR_ACTIONS_MESSAGE.append("\n\t\tselenium.setContext(\"Firing actions after error...\");");
+			//			AFTER_ERROR_ACTIONS_MESSAGE.append("\n\t\tselenium.setContext(\"Firing actions after error...\");");
 			// AFTER_ERROR_ACTIONS_MESSAGE.append("\n\t\ttry {");
 			// AFTER_ERROR_ACTIONS_MESSAGE.append("\n\t\t\tselenium.wait(1000);");
 			// AFTER_ERROR_ACTIONS_MESSAGE.append("\n\t\t} catch (InterruptedException e) {");

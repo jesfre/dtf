@@ -1,12 +1,15 @@
 /*
  * Common classes / functions for Selenium RC format.
  */
-
-var subScriptLoader = Components.classes["@mozilla.org/moz/jssubscript-loader;1"].getService(Components.interfaces.mozIJSSubScriptLoader);
-subScriptLoader.loadSubScript('chrome://selenium-ide/content/formats/formatCommandOnlyAdapter.js', this);
+ 
+/* Modified:
+ * Removed load of formatCommandOnlyAdapter.js.
+ */
 
 /* @override
  * This function filters the command list and strips away the commands we no longer need
+ * or changes the command to another one.
+ * NOTE: do not change the existing command directly or it will also change in the test case.
  */
 this.postFilter = function(originalCommands) {
   var commands = [];
@@ -14,11 +17,15 @@ this.postFilter = function(originalCommands) {
     'waitForPageToLoad' : 1,
     'pause': 1
   };
+  var rc;
   for (var i = 0; i < originalCommands.length; i++) {
     var c = originalCommands[i];
     if (c.type == 'command') {
       if (commandsToSkip[c.command] && commandsToSkip[c.command] == 1) {
         //Skip
+      } else if (rc = SeleneseMapper.remap(c)) {  //Yes, this IS an assignment
+        //Remap
+        commands.push.apply(commands, rc);
       } else {
         commands.push(c);
       }
@@ -29,6 +36,62 @@ this.postFilter = function(originalCommands) {
   return commands;
 };
 
+/* SeleneseMapper changes one Selenese command to another that is more suitable for WebDriver export
+ */
+function SeleneseMapper() {
+}
+
+SeleneseMapper.remap = function(cmd) {
+/*
+  for (var mapper in SeleneseMapper) {
+    if (SeleneseMapper.hasOwnProperty(mapper) && typeof SeleneseMapper.mapper.isDefined === 'function'  && typeof SeleneseMapper.mapper.convert === 'function') {
+      if (SeleneseMapper.mapper.isDefined(cmd)) {
+        return SeleneseMapper.mapper.convert(cmd);
+      }
+    }
+  }
+*/
+  // NOTE The above code is useful if there are more than one mappers, since there is just one, it is more efficient to call it directly
+  if (SeleneseMapper.IsTextPresent.isDefined(cmd)) {
+    return SeleneseMapper.IsTextPresent.convert(cmd);
+  }
+  return null;
+};
+
+SeleneseMapper.IsTextPresent = {
+  isTextPresentRegex: /^(assert|verify|waitFor)Text(Not)?Present$/,
+  isPatternRegex: /^(regexp|regexpi|regex):/,
+  exactRegex: /^exact:/,
+
+  isDefined:function (cmd) {
+    return this.isTextPresentRegex.test(cmd.command);
+  },
+
+  convert:function (cmd) {
+    if (this.isTextPresentRegex.test(cmd.command)) {
+      var pattern = cmd.target;
+      if (!this.isPatternRegex.test(pattern)) {
+        if (this.exactRegex.test(pattern)) {
+          //TODO how to escape wildcards in an glob pattern?
+          pattern = pattern.replace(this.exactRegex, 'glob:*') + '*';
+        } else {
+          //glob
+          pattern = pattern.replace(/^(glob:)?\*?/, 'glob:*');
+          if (!/\*$/.test(pattern)) {
+            pattern += '*';
+          }
+        }
+      }
+      var remappedCmd = new Command(cmd.command.replace(this.isTextPresentRegex, "$1$2Text"), 'css=BODY', pattern);
+      remappedCmd.remapped = cmd;
+      return [new Comment('Warning: ' + cmd.command + ' may require manual changes'), remappedCmd];
+    }
+  }
+};
+
+/* Modified:
+ * Added more replacements
+ */
 function formatHeader(testCase) {
   var className = testCase.getTitle();
   if (!className) {
@@ -36,15 +99,23 @@ function formatHeader(testCase) {
   }
   className = testClassName(className);
   var formatLocal = testCase.formatLocal(this.name);
-  methodName = testMethodName(className.replace(/Test$/i, "").replace(/^Test/i, "").
-      replace(/^[A-Z]/, function(str) {
-        return str.toLowerCase();
-      }));
+  methodName = testMethodName(className.replace(/Test$/i, "").replace(/^Test/i, "").replace(/^[A-Z]/, function(str) {
+    return str.toLowerCase();
+  }));
   var header = (options.getHeader ? options.getHeader() : options.header).
+  		replace(/\$\{success\}/g, success).
+	  	replace(/\$\{packageName\}/g, packageName).
+		replace(/\$\{seleniumHost\}/g, seleniumHost).
+		replace(/\$\{seleniumPort\}/g, seleniumPort).
+		replace(/\$\{environment\}/g, browser).
+		replace(/\$\{timeout\}/g, timeout).
+		replace(/\$\{speed\}/g, speed).
+		replace(/\$\{dbSnapshot\}/g, (dbSnapshot == 'true')?"\t\tsuper.setUp();\n":"").
+		replace(/\$\{screenshotsDirectory\}/g, screenshotsDirectory).
+		replace(/\\/g, '/').
       replace(/\$\{className\}/g, className).
       replace(/\$\{methodName\}/g, methodName).
       replace(/\$\{baseURL\}/g, testCase.getBaseURL()).
-      replace(/\\/g, '/').
       replace(/\$\{([a-zA-Z0-9_]+)\}/g, function(str, name) {
         return options[name];
       });
@@ -53,10 +124,14 @@ function formatHeader(testCase) {
   return formatLocal.header;
 }
 
+/* Modified:
+ * Added more replacements
+ */
 function formatFooter(testCase) {
   var formatLocal = testCase.formatLocal(this.name);
   var footer = (options.getFooter ? options.getFooter() : options.footer).
 	replace(/\$\{screenshotsDirectory\}/g, screenshotsDirectory).
+	replace(/\$\{dbRestore\}/g, (dbRestore == 'true')?"\t\tsuper.tearDown();\n":"").
 	replace(/\\/g, '/');
   formatLocal.footer = footer;
   return formatLocal.footer;
@@ -188,6 +263,27 @@ function concatString(array) {
   return array.join(" + ");
 }
 
+function toArgumentList(array) {
+  return array.join(", ");
+}
+
+function keyVariable(key) {
+  return variableName(key);
+}
+
+this.sendKeysMaping = {};
+
+function xlateKeyVariable(variable) {
+  var r;
+  if ((r = /^KEY_(.+)$/.exec(variable))) {
+    var key = this.sendKeysMaping[r[1]];
+    if (key) {
+      return keyVariable(key);
+    }
+  }
+  return null;
+}
+
 function xlateArgument(value, type) {
   value = value.replace(/^\s+/, '');
   value = value.replace(/\s+$/, '');
@@ -209,11 +305,12 @@ function xlateArgument(value, type) {
     var regexp = /\$\{(.*?)\}/g;
     var lastIndex = 0;
     while (r2 = regexp.exec(value)) {
-      if (this.declaredVars && this.declaredVars[r2[1]]) {
+      var key = xlateKeyVariable(r2[1]);
+      if (key || (this.declaredVars && this.declaredVars[r2[1]])) {
         if (r2.index - lastIndex > 0) {
           parts.push(string(value.substring(lastIndex, r2.index)));
         }
-        parts.push(variableName(r2[1]));
+        parts.push(key ? key : variableName(r2[1]));
         lastIndex = regexp.lastIndex;
       } else if (r2[1] == "nbsp") {
         if (r2.index - lastIndex > 0) {
@@ -226,7 +323,7 @@ function xlateArgument(value, type) {
     if (lastIndex < value.length) {
       parts.push(string(value.substring(lastIndex, value.length)));
     }
-    return concatString(parts);
+    return (type && type.toLowerCase() == 'args') ? toArgumentList(parts) : concatString(parts);
   } else if (type && type.toLowerCase() == 'number') {
     return value;
   } else {
@@ -311,6 +408,7 @@ function CallSelenium(message, args, rawArgs) {
 }
 
 CallSelenium.prototype.invert = function() {
+	log.info('Processing invert [ ' + this.message + ' ]');
   var call = new CallSelenium(this.message);
   call.args = this.args;
   call.rawArgs = this.rawArgs;
@@ -319,14 +417,16 @@ CallSelenium.prototype.invert = function() {
 };
 
 CallSelenium.prototype.toString = function() {
-  log.info('Processing ' + this.message);
+	log.info('Processing toString [ ' + this.message + ' ]');
   if (this.message == 'waitForPageToLoad') {
     return '';
   }
   var result = '';
+  out.println("rawArgs: "+this.rawArgs);
   var adaptor = new SeleniumWebDriverAdaptor(this.rawArgs);
   if (adaptor[this.message]) {
     var codeBlock = adaptor[this.message].call(adaptor);
+    log.trace('Generated code block: ' + codeBlock);
     if (adaptor.negative) {
       this.negative = !this.negative;
     }
@@ -336,7 +436,7 @@ CallSelenium.prototype.toString = function() {
     result += codeBlock;
   } else {
     //unsupported
-    throw 'ERROR: Unsupported command [' + this.message + ']';
+    throw 'ERROR: Unsupported command [' + this.message + ' | ' + (this.rawArgs.length > 0 && this.rawArgs[0] ? this.rawArgs[0] : '') + ' | ' + (this.rawArgs.length > 1 && this.rawArgs[1] ? this.rawArgs[1] : '') + ']';
   }
   return result;
 };
@@ -348,6 +448,7 @@ function formatCommand(command) {
     var i;
     var eq;
     var method;
+    log.trace('Received Command[type:'+command.type+', command:'+command.command+', target:'+command.target+', value:'+command.value+']');
     if (command.type == 'command') {
       var def = command.getDefinition();
       if (def && def.isAccessor) {
@@ -427,12 +528,16 @@ function formatCommand(command) {
               call.args.push(xlateArgument(command.getParameterAt(i)));
             }
           }
+          out.println(1);
           line = statement(call, command);
+          out.println(2);
         }
+        out.println(3);
       } else {
-        this.log.info("unknown command: <" + command.command + ">");
+    	  //this.log.info("unknown command: <" + command.command + ">");
         throw 'unknown command [' + command.command + ']';
       }
+      out.println(4);
     }
   } catch(e) {
     this.log.error("Caught exception: [" + e + "]");
@@ -458,9 +563,39 @@ function formatCommand(command) {
   }
   //TODO: convert array to newline separated string -> if(array) return array.join"\n"
   if (command.type == 'command' && options.showSelenese && options.showSelenese == 'true') {
-    line = formatComment(new Comment(command.command + ' | ' + command.target + ' | ' + command.value)) + "\n" + line;
+    if (command.remapped) {
+      line = formatComment(new Comment(command.remapped.command + ' | ' + command.remapped.target + ' | ' + command.remapped.value)) + "\n" + line;
+    } else {
+      line = formatComment(new Comment(command.command + ' | ' + command.target + ' | ' + command.value)) + "\n" + line;
+    }
   }
+  
+  /* Modified: new lines
+   * 
+   */ 
+  var moreLines = enhanceExceptionLines(command);
+  line = moreLines + line;
+  
   return line;
+}
+
+/* Modified: new function
+ * Here, more lines are added to be generated in the Java class.
+ * These lines works to enhance the throwing exceptions when a test fails.
+ */ 
+function enhanceExceptionLines(command) {
+	var moreLines = 'setStepInfo(';
+	moreLines += '"'+ command.command.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '", ';
+	moreLines += '"'+ command.target.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '", ';
+	moreLines += '"'+ command.value.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"';
+	if(command.errorStep) {
+		moreLines += ', ' + command.errorStep;
+	}
+	if(command.testingCommand) {
+		moreLines += ', ' + command.testingCommand;
+	}
+	moreLines += ');\n';
+	return moreLines;
 }
 
 this.remoteControl = true;
@@ -485,6 +620,7 @@ SeleniumWebDriverAdaptor.prototype._elementLocator = function(sel1Locator) {
     return locator;
   }
   if (locator.type == 'link') {
+    locator.string = locator.string.replace(/^exact:/, '');
     return locator;
   }
   if (locator.type == 'name') {
@@ -606,6 +742,34 @@ SeleniumWebDriverAdaptor.prototype.getTitle = function() {
   return driver.getTitle();
 };
 
+SeleniumWebDriverAdaptor.prototype.getAlert = function() {
+  var driver = new WDAPI.Driver();
+  return driver.getAlert();
+};
+
+SeleniumWebDriverAdaptor.prototype.isAlertPresent = function() {
+  return WDAPI.Utils.isAlertPresent();
+};
+
+SeleniumWebDriverAdaptor.prototype.getConfirmation = function() {
+  var driver = new WDAPI.Driver();
+  return driver.getAlert();
+};
+
+SeleniumWebDriverAdaptor.prototype.isConfirmationPresent = function() {
+  return WDAPI.Utils.isAlertPresent();
+};
+
+SeleniumWebDriverAdaptor.prototype.chooseOkOnNextConfirmation = function() {
+  var driver = new WDAPI.Driver();
+  return driver.chooseOkOnNextConfirmation();
+};
+
+SeleniumWebDriverAdaptor.prototype.chooseCancelOnNextConfirmation = function() {
+  var driver = new WDAPI.Driver();
+  return driver.chooseCancelOnNextConfirmation();
+};
+
 SeleniumWebDriverAdaptor.prototype.getValue = function(elementLocator) {
   var locator = this._elementLocator(this.rawArgs[0]);
   var driver = new WDAPI.Driver();
@@ -668,6 +832,12 @@ SeleniumWebDriverAdaptor.prototype.type = function(elementLocator, text) {
   return statement(new SeleniumWebDriverAdaptor.SimpleExpression(webElement.clear())) + "\n" + webElement.sendKeys(this.rawArgs[1]);
 };
 
+SeleniumWebDriverAdaptor.prototype.sendKeys = function(elementLocator, text) {
+  var locator = this._elementLocator(this.rawArgs[0]);
+  var driver = new WDAPI.Driver();
+  return driver.findElement(locator.type, locator.string).sendKeys(this.rawArgs[1]);
+};
+
 SeleniumWebDriverAdaptor.prototype.uncheck = function(elementLocator) {
   var locator = this._elementLocator(this.rawArgs[0]);
   var driver = new WDAPI.Driver();
@@ -680,7 +850,7 @@ SeleniumWebDriverAdaptor.prototype.uncheck = function(elementLocator) {
 SeleniumWebDriverAdaptor.prototype.select = function(elementLocator, label) {
   var locator = this._elementLocator(this.rawArgs[0]);
   var driver = new WDAPI.Driver();
-  return driver.findElement(locator.type, locator.string).select(this.rawArgs[1].substring("label=".length, this.rawArgs[1].length));
+  return driver.findElement(locator.type, locator.string).select(this._selectLocator(this.rawArgs[1]));
 };
 
 //SeleniumWebDriverAdaptor.prototype.isSomethingSelected = function(elementLocator) {
@@ -720,6 +890,13 @@ SeleniumWebDriverAdaptor.prototype.select = function(elementLocator, label) {
 ////  }
 //};
 
+/* Modified:
+ * 
+ */
+SeleniumWebDriverAdaptor.prototype.captureScreenshot = function(locator, text) {
+	var filePath = xlateArgument(this.rawArgs[0]);
+	return 'captureScreenshot('+filePath+');';
+};
+
 function WDAPI() {
 }
-

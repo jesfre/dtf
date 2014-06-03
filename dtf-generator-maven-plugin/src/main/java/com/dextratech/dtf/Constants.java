@@ -41,13 +41,15 @@ public class Constants {
 	public static final String SELENIUM_API_DIR = "/selenium-api/";
 	public static final String SELENIUM_API_SRC_DIR = "/selenium-api/src/";
 	public static final String SELENIUM_API_FORMAT_DIR = "/selenium-api/src/formats/";
+	public static final String SELENIUM_SCRIPTS_DIR = "/selenium-api/src/scripts/";
 
 	/**
 	 * Selenium Javascript source code for XUnit generation
 	 */
 	public static final String SELENIUM_JS_SOURCE = SELENIUM_API_DIR + "javascriptsource.js";
 	public static final String SELENIUM_JS_IE_DOC = SELENIUM_API_DIR + "iedoc-core-custom.xml";
-	public static final String SELENIUM_JS_TESTSUITE_TEMPLATE = "testLayouts/TestSuiteLayout_JUnit4RC.vm";
+	public static final String SELENIUM_JS_JUNIT4RC_TESTSUITE_TEMPLATE = "testLayouts/TestSuiteLayout_JUnit4RC.vm";
+	public static final String SELENIUM_JS_JUNIT4WEBDRIVER_TESTSUITE_TEMPLATE = "testLayouts/TestSuiteLayout_JUnit4WebDriver.vm";
 	public static final String SELENIUM_JS_REMOT_CONTROL = SELENIUM_API_SRC_DIR + "remoteControl.js";
 	public static final String SELENIUM_JS_TEST_CASE = SELENIUM_API_SRC_DIR + "testCase.js";
 	public static final String SELENIUM_JS_COMMAND_ADAPTER = SELENIUM_API_SRC_DIR + "formatCommandOnlyAdapter.js";

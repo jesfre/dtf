@@ -1,17 +1,29 @@
 /*
  * Formatter for Selenium 2 / WebDriver Java client.
  */
+ 
+/* Modified:
+ * Removed load of webdriver.js.
+ */
 
-
+/* Modified:
+ * Removed .map(...) call.
+ */
 function useSeparateEqualsForArray() {
   return true;
 }
 
+/* Modified:
+ * Removed load webdriver.js.
+ */
 function testClassName(testName) {
+	return StringUtils.capitalize(testName);
+	/*
   return testName.split(/[^0-9A-Za-z]+/).map(
       function(x) {
         return capitalize(x);
       }).join('');
+	 */
 }
 
 function testMethodName(testName) {
@@ -67,7 +79,9 @@ function joinExpression(expression) {
 }
 
 function statement(expression) {
+	out.println('-- ' + 1);
   var s = expression.toString();
+  	out.println('-- ' + 2);
   if (s.length == 0) {
     return null;
   }
@@ -143,6 +157,90 @@ function formatComment(comment) {
   });
 }
 
+function keyVariable(key) {
+  return "Keys." + key;
+}
+
+this.sendKeysMaping = {
+  BKSP: "BACK_SPACE",
+  BACKSPACE: "BACK_SPACE",
+  TAB: "TAB",
+  ENTER: "ENTER",
+  SHIFT: "SHIFT",
+  CONTROL: "CONTROL",
+  CTRL: "CONTROL",
+  ALT: "ALT",
+  PAUSE: "PAUSE",
+  ESCAPE: "ESCAPE",
+  ESC: "ESCAPE",
+  SPACE: "SPACE",
+  PAGE_UP: "PAGE_UP",
+  PGUP: "PAGE_UP",
+  PAGE_DOWN: "PAGE_DOWN",
+  PGDN: "PAGE_DOWN",
+  END: "END",
+  HOME: "HOME",
+  LEFT: "LEFT",
+  UP: "UP",
+  RIGHT: "RIGHT",
+  DOWN: "DOWN",
+  INSERT: "INSERT",
+  INS: "INSERT",
+  DELETE: "DELETE",
+  DEL: "DELETE",
+  SEMICOLON: "SEMICOLON",
+  EQUALS: "EQUALS",
+
+  NUMPAD0: "NUMPAD0",
+  N0: "NUMPAD0",
+  NUMPAD1: "NUMPAD1",
+  N1: "NUMPAD1",
+  NUMPAD2: "NUMPAD2",
+  N2: "NUMPAD2",
+  NUMPAD3: "NUMPAD3",
+  N3: "NUMPAD3",
+  NUMPAD4: "NUMPAD4",
+  N4: "NUMPAD4",
+  NUMPAD5: "NUMPAD5",
+  N5: "NUMPAD5",
+  NUMPAD6: "NUMPAD6",
+  N6: "NUMPAD6",
+  NUMPAD7: "NUMPAD7",
+  N7: "NUMPAD7",
+  NUMPAD8: "NUMPAD8",
+  N8: "NUMPAD8",
+  NUMPAD9: "NUMPAD9",
+  N9: "NUMPAD9",
+  MULTIPLY: "MULTIPLY",
+  MUL: "MULTIPLY",
+  ADD: "ADD",
+  PLUS: "ADD",
+  SEPARATOR: "SEPARATOR",
+  SEP: "SEPARATOR",
+  SUBTRACT: "SUBTRACT",
+  MINUS: "SUBTRACT",
+  DECIMAL: "DECIMAL",
+  PERIOD: "DECIMAL",
+  DIVIDE: "DIVIDE",
+  DIV: "DIVIDE",
+
+  F1: "F1",
+  F2: "F2",
+  F3: "F3",
+  F4: "F4",
+  F5: "F5",
+  F6: "F6",
+  F7: "F7",
+  F8: "F8",
+  F9: "F9",
+  F10: "F10",
+  F11: "F11",
+  F12: "F12",
+
+  META: "META",
+  COMMAND: "COMMAND"
+};
+
 /**
  * Returns a string representing the suite for this formatter language.
  *
@@ -182,16 +280,25 @@ function defaultExtension() {
   return this.options.defaultExtension;
 }
 
+/* Modified:
+ * Added more options to handle customized values
+ */
 this.options = {
   receiver: "driver",
-  environment: "*chrome",
   packageName: "com.example.tests",
+  //indent:    '2',
   indent:    'tab',
   initialIndents:    '2',
   showSelenese: 'false',
-  defaultExtension: "java"
+  defaultExtension: "java",
+  superClass: "DextraWebDriverTestCase",
+  timeout: '3000',
+  speed: '1000'
 };
 
+/* Modified:
+ * Header has been updated. Now builds a enhanced testcase.
+ */
 options.header =
     "package ${packageName};\n" +
         "\n" +
@@ -203,51 +310,113 @@ options.header =
         "import org.openqa.selenium.*;\n" +
         "import org.openqa.selenium.firefox.FirefoxDriver;\n" +
         "import org.openqa.selenium.support.ui.Select;\n" +
+        "import com.dextratech.dtf.${superClass};\n"+
+    	"import com.dextratech.dtf.exception.DextraSeleniumException;\n"+
         "\n" +
-        "public class ${className} {\n" +
-        "\tprivate WebDriver driver;\n" +
-        "\tprivate String baseUrl;\n" +
-        "\tprivate StringBuffer verificationErrors = new StringBuffer();\n" +
-        "\t@Before\n" +
-        "\tpublic void setUp() throws Exception {\n" +
-        "\t\tsuper.setUp();\n" +
-        "\t\tdriver = new FirefoxDriver();\n" +
-        "\t\tbaseUrl = \"${baseURL}\";\n" +
-        "\t\tdriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);\n" +
-        "\t}\n" +
-        "\n" +
-        "\t@Test\n" +
-        "\tpublic void ${methodName}() throws Exception {\n";
+        "public class ${className} extends ${superClass} {\n" +
+        indents(1) + "private boolean success = ${success};\n" +
+        indents(1) + 'private String screenshotDirectory = "${screenshotsDirectory}/";\n\n' +
+        indents(1) + "private WebDriver driver;\n" +
+        indents(1) + "private String baseUrl;\n" +
+        indents(1) + "private boolean acceptNextAlert = true;\n" +
+        indents(1) + "private StringBuffer verificationErrors = new StringBuffer();\n" +
+        indents(0) + "\n" +
+        indents(1) + "@Before\n" +
+        indents(1) + "public void setUp() throws Exception {\n" +
+        indents(1) + "${dbSnapshot}\n" +
+        indents(2) + "driver = new FirefoxDriver();\n" +
+        indents(2) + "baseUrl = \"${baseURL}\";\n" +
+        indents(2) + "driver.manage().timeouts().implicitlyWait(${timeout}, TimeUnit.SECONDS);\n" +
+        indents(1) + "}\n" +
+        indents(0) + "\n" +
+        indents(1) + "@Test\n" +
+        indents(1) + "public void ${methodName}() throws Throwable {\n"+
+		indents(2) + 'driver.manage().window().maximize();\n'+
+        indents(2) + 'try {\n';
 
+/* Modified:
+ * Footer has been updated. Now builds a enhanced testcase.
+ */
 options.footer =
-    "\t}\n" +
-        "\n" +
-        "\t@After\n" +
-        "\tpublic void tearDown() throws Exception {\n" +
-        "\t\tdriver.quit();\n" +
-        "\t\tString verificationErrorString = verificationErrors.toString();\n" +
-        "\t\tif (!\"\".equals(verificationErrorString)) {\n" +
-        "\t\t\tfail(verificationErrorString);\n" +
-        "\t\t}\n" +
-        "\t}\n" +
-        "\n" +
-        "\tprivate boolean isElementPresent(By by) {\n" +
-        "\t\ttry {\n" +
-        "\t\t\tdriver.findElement(by);\n" +
-        "\t\t\treturn true;\n" +
-        "\t\t} catch (NoSuchElementException e) {\n" +
-        "\t\t\treturn false;\n" +
-        "\t\t}\n" +
-        "\t}\n" +
-        "}\n";
+		indents(2) + '} catch (Throwable e) {\n'+
+		indents(3) + 'String screenshotFile = captureExceptionScreenshot(screenshotDirectory);\n'+
+		indents(3) + 'runAfterErrorCommands();\n'+
+		indents(3) + 'if (success && errorCommands.size() == 0 || !success && !currentCommand.getErrorStep()) {\n'+
+		indents(4) + 'fireDextraSeleniumException(e, screenshotFile);\n'+
+		indents(3) + '}\n'+
+		indents(2) + '}\n'+
+		indents(2) + 'if (errorCommands.size() > 0) {\n'+
+		indents(3) + 'fireNoErrorOccurredException();\n' +
+		indents(2) + '}\n' +
+    	indents(1) + "}\n" +
+        indents(0) + "\n" +
+        indents(1) + "@After\n" +
+        indents(1) + "public void tearDown() throws Exception {\n" +
+        indents(2) + "driver.quit();\n" +
+        indents(2) + "String verificationErrorString = verificationErrors.toString();\n" +
+        indents(2) + "if (!\"\".equals(verificationErrorString)) {\n" +
+        indents(3) + "fail(verificationErrorString);\n" +
+        indents(2) + "}\n" +
+        indents(1) + "}\n" +
+        indents(0) + "\n" +
+        indents(1) + "private void runAfterErrorCommands() {\n" +
+        indents(1) + "}\n" +
+        indents(0) + "\n" +
+        indents(1) + "private boolean isElementPresent(By by) {\n" +
+        indents(2) + "try {\n" +
+        indents(3) + "driver.findElement(by);\n" +
+        indents(3) + "return true;\n" +
+        indents(2) + "} catch (NoSuchElementException e) {\n" +
+        indents(3) + "return false;\n" +
+        indents(2) + "}\n" +
+        indents(1) + "}\n" +
+        indents(0) + "\n" +
+        indents(1) + "private boolean isAlertPresent() {\n" +
+        indents(2) + "try {\n" +
+        indents(3) + "driver.switchTo().alert();\n" +
+        indents(3) + "return true;\n" +
+        indents(2) + "} catch (NoAlertPresentException e) {\n" +
+        indents(3) + "return false;\n" +
+        indents(2) + "}\n" +
+        indents(1) + "}\n" +
+        indents(0) + "\n" +
+        indents(1) + "private String closeAlertAndGetItsText() {\n" +
+        indents(2) + "try {\n" +
+        indents(3) + "Alert alert = driver.switchTo().alert();\n" +
+        indents(3) + "String alertText = alert.getText();\n" +
+        indents(3) + "if (acceptNextAlert) {\n" +
+        indents(4) + "alert.accept();\n" +
+        indents(3) + "} else {\n" +
+        indents(4) + "alert.dismiss();\n" +
+        indents(3) + "}\n" +
+        indents(3) + "return alertText;\n" +
+        indents(2) + "} finally {\n" +
+        indents(3) + "acceptNextAlert = true;\n" +
+        indents(2) + "}\n" +
+        indents(1) + "}\n" +
+        indents(0) + "}\n";
 
 this.configForm =
     '<description>Variable for Selenium instance</description>' +
         '<textbox id="options_receiver" />' +
-        '<description>Environment</description>' +
-        '<textbox id="options_environment" />' +
         '<description>Package</description>' +
         '<textbox id="options_packageName" />' +
+        '<description>Header</description>' +
+        '<textbox id="options_header" multiline="true" flex="1" rows="4"/>' +
+        '<description>Footer</description>' +
+        '<textbox id="options_footer" multiline="true" flex="1" rows="4"/>' +
+        '<description>Indent</description>' +
+        '<menulist id="options_indent"><menupopup>' +
+        '<menuitem label="Tab" value="tab"/>' +
+        '<menuitem label="1 space" value="1"/>' +
+        '<menuitem label="2 spaces" value="2"/>' +
+        '<menuitem label="3 spaces" value="3"/>' +
+        '<menuitem label="4 spaces" value="4"/>' +
+        '<menuitem label="5 spaces" value="5"/>' +
+        '<menuitem label="6 spaces" value="6"/>' +
+        '<menuitem label="7 spaces" value="7"/>' +
+        '<menuitem label="8 spaces" value="8"/>' +
+        '</menupopup></menulist>' +
         '<checkbox id="options_showSelenese" label="Show Selenese"/>';
 
 this.name = "JUnit 4 (WebDriver)";
@@ -310,6 +479,18 @@ WDAPI.Driver.prototype.getTitle = function() {
   return this.ref + ".getTitle()";
 };
 
+WDAPI.Driver.prototype.getAlert = function() {
+  return "closeAlertAndGetItsText()";
+};
+
+WDAPI.Driver.prototype.chooseOkOnNextConfirmation = function() {
+  return "acceptNextAlert = true";
+};
+
+WDAPI.Driver.prototype.chooseCancelOnNextConfirmation = function() {
+  return "acceptNextAlert = false";
+};
+
 WDAPI.Driver.prototype.refresh = function() {
   return this.ref + ".navigate().refresh()";
 };
@@ -350,8 +531,14 @@ WDAPI.Element.prototype.submit = function() {
   return this.ref + ".submit()";
 };
 
-WDAPI.Element.prototype.select = function(label) {
-  return "new Select(" + this.ref + ").selectByVisibleText(" + xlateArgument(label) + ")";
+WDAPI.Element.prototype.select = function(selectLocator) {
+  if (selectLocator.type == 'index') {
+    return "new Select(" + this.ref + ").selectByIndex(" + selectLocator.string + ")";
+  }
+  if (selectLocator.type == 'value') {
+    return "new Select(" + this.ref + ").selectByValue(" + xlateArgument(selectLocator.string) + ")";
+  }
+  return "new Select(" + this.ref + ").selectByVisibleText(" + xlateArgument(selectLocator.string) + ")";
 };
 
 WDAPI.ElementList = function(ref) {
@@ -375,4 +562,8 @@ WDAPI.Utils = function() {
 
 WDAPI.Utils.isElementPresent = function(how, what) {
   return "isElementPresent(" + WDAPI.Driver.searchContext(how, what) + ")";
+};
+
+WDAPI.Utils.isAlertPresent = function() {
+  return "isAlertPresent()";
 };

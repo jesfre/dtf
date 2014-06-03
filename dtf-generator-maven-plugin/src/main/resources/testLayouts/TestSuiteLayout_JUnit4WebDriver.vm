@@ -1,19 +1,21 @@
 //
 // Developed by Dextra Technologies www.dextratech.com
 //
-package testLayouts;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+package $testSuitePackageName;
 
-public class TestSuiteLayout_JUnit4WebDriver {
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite();
-		suite.addTestSuite(testSet1.class);
-		return suite;
-	}
-
-	public static void main(String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+@RunWith(Suite.class)
+@SuiteClasses({ 
+#foreach( $testClassName in $testClassNameList )
+	#if( $velocityCount == $testClassNameList.size())
+	$testClassName
+	#else
+	$testClassName,
+	#end
+#end 
+})
+public class $testSuiteClassName {
 }
