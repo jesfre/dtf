@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bindings version="2.1" xmlns="http://java.sun.com/xml/ns/jaxb">
+  <!--
+
+Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
+Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
+Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
+Generado el: 2014.06.05 a las 01:44:46 AM CDT 
+
+  -->
+  <bindings scd="x-schema::tns" xmlns:tns="http://www.dextratech.com/testsuite">
+    <schemaBindings map="false">
+      <package name="com.dextratech.dtf.xml.testsuite"/>
+    </schemaBindings>
+    <bindings scd="~tns:components">
+      <class ref="com.dextratech.dtf.xml.testsuite.Components"/>
+    </bindings>
+    <bindings scd="~tns:validationRules">
+      <class ref="com.dextratech.dtf.xml.testsuite.ValidationRules"/>
+    </bindings>
+    <bindings scd="~tns:testsuite">
+      <class ref="com.dextratech.dtf.xml.testsuite.Testsuite"/>
+    </bindings>
+    <bindings scd="~tns:validationFunction">
+      <class ref="com.dextratech.dtf.xml.testsuite.ValidationFunction"/>
+    </bindings>
+    <bindings scd="~tns:genericCommand">
+      <class ref="com.dextratech.dtf.xml.testsuite.GenericCommand"/>
+    </bindings>
+    <bindings scd="~tns:function">
+      <class ref="com.dextratech.dtf.xml.testsuite.Function"/>
+    </bindings>
+    <bindings scd="~tns:component">
+      <class ref="com.dextratech.dtf.xml.testsuite.Component"/>
+    </bindings>
+    <bindings scd="~tns:action">
+      <class ref="com.dextratech.dtf.xml.testsuite.Action"/>
+    </bindings>
+    <bindings scd="~tns:validFieldValue">
+      <class ref="com.dextratech.dtf.xml.testsuite.ValidFieldValue"/>
+    </bindings>
+    <bindings scd="~tns:validation">
+      <class ref="com.dextratech.dtf.xml.testsuite.Validation"/>
+    </bindings>
+    <bindings scd="~tns:functionRef">
+      <class ref="com.dextratech.dtf.xml.testsuite.FunctionRef"/>
+    </bindings>
+    <bindings scd="~tns:assertion">
+      <class ref="com.dextratech.dtf.xml.testsuite.Assertion"/>
+    </bindings>
+    <bindings scd="~tns:testcase">
+      <class ref="com.dextratech.dtf.xml.testsuite.Testcase"/>
+    </bindings>
+    <bindings scd="~tns:include">
+      <class ref="com.dextratech.dtf.xml.testsuite.Include"/>
+    </bindings>
+    <bindings scd="~tns:validationFunctionRef">
+      <class ref="com.dextratech.dtf.xml.testsuite.ValidationFunctionRef"/>
+    </bindings>
+    <bindings scd="~tns:field">
+      <class ref="com.dextratech.dtf.xml.testsuite.Field"/>
+    </bindings>
+    <bindings scd="~tns:actionOption">
+      <class ref="com.dextratech.dtf.xml.testsuite.ActionOption"/>
+    </bindings>
+    <bindings scd="~tns:onload">
+      <class ref="com.dextratech.dtf.xml.testsuite.Onload"/>
+    </bindings>
+    <bindings scd="~tns:captureScreenshot">
+      <class ref="com.dextratech.dtf.xml.testsuite.CaptureScreenshot"/>
+    </bindings>
+    <bindings scd="~tns:functionType">
+      <typesafeEnumClass ref="com.dextratech.dtf.xml.testsuite.FunctionType"/>
+    </bindings>
+    <bindings scd="~tns:seleneseCommand">
+      <typesafeEnumClass ref="com.dextratech.dtf.xml.testsuite.SeleneseCommand"/>
+    </bindings>
+    <bindings scd="~tns:seleneseAssertion">
+      <typesafeEnumClass ref="com.dextratech.dtf.xml.testsuite.SeleneseAssertion"/>
+    </bindings>
+    <bindings scd="~tns:onloadAction">
+      <typesafeEnumClass ref="com.dextratech.dtf.xml.testsuite.OnloadAction"/>
+    </bindings>
+    <bindings scd="~tns:locatorType">
+      <typesafeEnumClass ref="com.dextratech.dtf.xml.testsuite.LocatorType"/>
+    </bindings>
+  </bindings>
+</bindings>
+
