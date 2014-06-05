@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite xmlns="http://www.dextratech.com/testsuite"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.dextratech.com/testsuite ../testsuite.xsd ">
+	xsi:schemaLocation="http://www.dextratech.com/testsuite ../config/testsuite.xsd ">
 
 	<!-- Names must be valid for [a-zA-Z_$][a-zA-Z_$0-9\s]* -->
 
 	<name>cambiar de Empresa</name>
-
+	
 	<testcase name="a" url="preferencias/empresa"
 		run="true" success="true">
 		<include componentName="login" />

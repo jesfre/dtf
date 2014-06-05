@@ -1,0 +1,140 @@
+<!-- Developed by Dextra Technologies www.dextratech.com -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="success" content="true">
+<link rel="selenium.base" href="/mainMenu" />
+<title>Asignar_aliases_1_Textolargo</title>
+</head>
+<body>
+	<table cellpadding="1" cellspacing="1" border="1">
+		<thead>
+			<tr>
+				<td rowspan="1" colspan="3">Asignar_aliases_1_Textolargo</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>open</td>
+				<td>/mainMenu</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>type</td>
+				<td>id=j_username</td>
+				<td>admin</td>
+			</tr>
+					<tr  >
+				<td>click</td>
+				<td>id=entrar1</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>waitForTextPresent</td>
+				<td>Token</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>type</td>
+				<td>id=j_password</td>
+				<td>admin</td>
+			</tr>
+					<tr  >
+				<td>type</td>
+				<td>id=j_token</td>
+				<td>123456</td>
+			</tr>
+					<tr  >
+				<td>clickAndWait</td>
+				<td>id=entrar2</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>assertTextPresent</td>
+				<td>BIENVENIDO:</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>captureScreenshot</td>
+				<td>E:\dev\projects\titulacion\sources\dtf2\dtf-project-archetype/src/test/resources/screenshots/asignar_aliases_1.png</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>clickAndWait</td>
+				<td>link=PREFERENCIAS</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>captureScreenshot</td>
+				<td>E:\dev\projects\titulacion\sources\dtf2\dtf-project-archetype/src/test/resources/screenshots/en asignar alias.png</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>clickAndWait</td>
+				<td>link=Asignar alias</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>captureScreenshot</td>
+				<td>C:/screenshots/alias modificado.png</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>clickAndWait</td>
+				<td>id=submitChange</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>captureScreenshot</td>
+				<td>E:\dev\projects\titulacion\sources\dtf2\dtf-project-archetype/src/test/resources/screenshots/asignar_aliases_2.png</td>
+				<td></td>
+			</tr>
+					<tr   testingCommand="true" >
+				<td>type</td>
+				<td>//table[@id='accountList']/tbody/tr[1]/td[4]/input</td>
+				<td>BvCnRoPoXlVsJgUmXwQyFxCxUsBlDwDyGtKiHhXtEeVdWpTmSxQlJdAoLwEaVbIhFvZsAkHyXxNnEnReOjVmOlZwUxSqVtRuYrUg</td>
+			</tr>
+					<tr  >
+				<td>captureScreenshot</td>
+				<td>E:\dev\projects\titulacion\sources\dtf2\dtf-project-archetype/src/test/resources/screenshots/asignar_aliases_3.png</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>clickAndWait</td>
+				<td>id=submitUpdates</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>captureScreenshot</td>
+				<td>E:\dev\projects\titulacion\sources\dtf2\dtf-project-archetype/src/test/resources/screenshots/asignar_aliases_4.png</td>
+				<td></td>
+			</tr>
+					<tr  errorStep="true"  >
+				<td>assertTextPresent</td>
+				<td>Alias Z</td>
+				<td></td>
+			</tr>
+					<tr  errorStep="true"  >
+				<td>assertTextPresent</td>
+				<td>Alias X</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>captureScreenshot</td>
+				<td>E:\dev\projects\titulacion\sources\dtf2\dtf-project-archetype/src/test/resources/screenshots/asignar_aliases_5.png</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>open</td>
+				<td>/logout</td>
+				<td></td>
+			</tr>
+					<tr  >
+				<td>assertTextPresent</td>
+				<td>Login</td>
+				<td></td>
+			</tr>
+				</tbody>
+	</table>
+</body>
+</html>

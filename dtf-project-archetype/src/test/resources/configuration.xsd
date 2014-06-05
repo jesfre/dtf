@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.dextratech.com/dtf/configuration" xmlns:tns="http://www.dextratech.com/dtf/configuration" elementFormDefault="qualified">
+
+    <element name="configuration" type="tns:configuration"></element>
+
+    <complexType name="configuration">
+    	<sequence maxOccurs="1" minOccurs="1">
+    		<element name="timeout" type="int" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    		<element name="speed" type="int" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    		<element name="browser" maxOccurs="1" minOccurs="1">
+    			<simpleType>
+    				<restriction base="string">
+    					<enumeration value="*chrome"></enumeration>
+    					<enumeration value="*googlechrome"></enumeration>
+    					<enumeration value="*firefox"></enumeration>
+    					<enumeration value="*firefoxproxy"></enumeration>
+    					<enumeration value="*pifirefox"></enumeration>
+    					<enumeration value="*firefox3"></enumeration>
+    					<enumeration value="*firefox2"></enumeration>
+    					<enumeration value="*firefoxchrome"></enumeration>
+    					<enumeration value="*iexplore"></enumeration>
+    					<enumeration value="*iexploreproxy"></enumeration>
+    					<enumeration value="*piiexplore"></enumeration>
+    					<enumeration value="*safari"></enumeration>
+    					<enumeration value="*safariproxy"></enumeration>
+    					<enumeration value="*konqueror"></enumeration>
+    					<enumeration value="*opera"></enumeration>
+    					<enumeration value="*mock"></enumeration>
+    					<enumeration value="*iehta"></enumeration>
+    					<enumeration value="*custom"></enumeration>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    		<element name="browserExecutable" type="string" maxOccurs="1" minOccurs="0"></element>
+    		<element name="appUrl" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="testsuiteList" type="tns:testsuiteList"
+    			maxOccurs="1" minOccurs="1">
+    		</element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="testsuiteList">
+    	<sequence>
+    		<element name="testsuite" type="tns:testsuite" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="testsuite">
+    	<attribute name="name" type="string" use="required"></attribute>
+    	<attribute name="fileName" type="string" use="optional"></attribute>
+    	<attribute name="dbSnapshot" use="optional" type="boolean">
+    	</attribute>
+    	<attribute name="dbRestore" use="optional" type="boolean">
+    	</attribute>
+    	<attribute name="run" type="boolean" use="optional">
+    	</attribute>
+    </complexType>
+</schema>
