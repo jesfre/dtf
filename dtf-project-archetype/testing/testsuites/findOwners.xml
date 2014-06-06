@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns="http://www.dextratech.com/testsuite" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dextratech.com/testsuite ../../src/test/resources/testsuite.xsd ">
+
+	<!-- Names must be valid for [a-zA-Z_$][a-zA-Z_$0-9\s]* -->
+
+	<name>Alta de mascota</name>
+	
+	<testcase name="alta_1" url="/owners/find.html" run="true" success="true">
+		<action actionType="click" locatorType="link" locatorValue="Add Owner"/>
+		<assert type="assertTextPresent" param1="New Owner"/>
+		<captureScreenshot/>
+		<action actionType="type" locatorType="id" locatorValue="firstName" additionalParameter="Eclipse"/>
+		<action actionType="type" locatorType="id" locatorValue="lastName" additionalParameter="Ok"/>
+		<action actionType="type" locatorType="id" locatorValue="address" additionalParameter="Miguel Hgo. #4"/>
+		<action actionType="type" locatorType="id" locatorValue="city" additionalParameter="Jucho"/>
+		<action actionType="type" locatorType="id" locatorValue="telephone" additionalParameter="1234567890"/>
+		<captureScreenshot pngFilename="despues_de-guardar.png"/>
+		<action actionType="clickAndWait" locatorType="xpath" locatorValue="//*[@id='add-owner-form']/div[6]/button"/>
+		<assert type="assertTextPresent" param1="Owner Information"/>
+		<captureScreenshot/>
+	</testcase>
+
+	<validationRules>
+	</validationRules>
+</testsuite>

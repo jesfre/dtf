@@ -6,14 +6,12 @@
 Developed by Dextra Technologies www.dextratech.com 
 -->
 
-	<timeout>80000</timeout>
-	<speed>500</speed>
+	<appUrl>http://localhost:9966/petclinic/</appUrl>
 	<browser>*googlechrome</browser>
 	<browserExecutable>C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe</browserExecutable>	
-	<appUrl>http://localhost:9966/petclinic/</appUrl>
+	<timeout>80000</timeout>
+	<speed>500</speed>
 
-	<testsuiteList>
-		<testsuite name="find-owners" run="true" fileName="findOwners.xml" dbRestore="true" dbSnapshot="false"/>
-	</testsuiteList>
-
+	<testsuite name="find-owners" run="true" fileName="findOwners.xml" dbRestore="true" dbSnapshot="false"/>
+	
 </configuration>

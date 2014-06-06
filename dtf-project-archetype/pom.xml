@@ -30,10 +30,16 @@
 		<!-- 
 		<dtf.plugin.format>JUnit4RC</dtf.plugin.format>
 		 -->
-		
-
 		<selenium.suite>src/test/selenium/testSuite1.html</selenium.suite>
 		<selenium.startURL>http://google.com.mx</selenium.startURL>
+		<!-- Default paths -->
+		<global-configuration-file>${basedir}/testing/conf/globalConfiguration.xml</global-configuration-file>
+		<dtf-testsuites-dir>${basedir}/testing/testsuites</dtf-testsuites-dir>
+		<generated-layouts-dir>${basedir}/testing/generated/layouts</generated-layouts-dir>
+		<generated-html-testsuites-dir>${basedir}/testing/generated/testsuites</generated-html-testsuites-dir>
+		<generated-datasets-dir>${basedir}/testing/generated/datasets</generated-datasets-dir>
+		<generated-screenshots-dir>${basedir}/testing/generated/screenshots</generated-screenshots-dir>
+		<generated-java-testsuites-dir>${basedir}/src/test/java</generated-java-testsuites-dir>
 
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<hibernate.version>3.6.1.Final</hibernate.version>
@@ -242,10 +248,6 @@
 						<id>integration</id>
 						<phase>process-test-resources</phase>
 						<goals>
-							<!-- 
-							<goal>generate-tests</goal>
-							<goal>html2java</goal>
-							 -->
 							<goal>clean</goal>
 							<goal>xml-testsuites</goal>
 						</goals>

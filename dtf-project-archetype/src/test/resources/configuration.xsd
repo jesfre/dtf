@@ -5,13 +5,9 @@
 
     <complexType name="configuration">
     	<sequence maxOccurs="1" minOccurs="1">
-    		<element name="timeout" type="int" maxOccurs="1"
-    			minOccurs="0">
+            <element name="appUrl" type="string" maxOccurs="1" minOccurs="1">
     		</element>
-    		<element name="speed" type="int" maxOccurs="1"
-    			minOccurs="0">
-    		</element>
-    		<element name="browser" maxOccurs="1" minOccurs="1">
+            <element name="browser" maxOccurs="1" minOccurs="1">
     			<simpleType>
     				<restriction base="string">
     					<enumeration value="*chrome"></enumeration>
@@ -35,21 +31,17 @@
     				</restriction>
     			</simpleType>
     		</element>
-    		<element name="browserExecutable" type="string" maxOccurs="1" minOccurs="0"></element>
-    		<element name="appUrl" type="string" maxOccurs="1"
-    			minOccurs="1">
+            <element name="browserExecutable" type="string" maxOccurs="1" minOccurs="0">
     		</element>
-    		<element name="testsuiteList" type="tns:testsuiteList"
-    			maxOccurs="1" minOccurs="1">
+            <element name="timeout" type="int" maxOccurs="1" minOccurs="0">
     		</element>
-    	</sequence>
+            <element name="speed" type="int" maxOccurs="1" minOccurs="0">
+    		</element>
+            <element name="testsuite" type="tns:testsuite" maxOccurs="unbounded" minOccurs="0">
+    		</element>
+        </sequence>
     </complexType>
 
-    <complexType name="testsuiteList">
-    	<sequence>
-    		<element name="testsuite" type="tns:testsuite" maxOccurs="unbounded" minOccurs="0"></element>
-    	</sequence>
-    </complexType>
 
     <complexType name="testsuite">
     	<attribute name="name" type="string" use="required"></attribute>
