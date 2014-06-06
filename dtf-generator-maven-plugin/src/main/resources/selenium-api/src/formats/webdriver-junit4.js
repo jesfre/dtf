@@ -79,9 +79,7 @@ function joinExpression(expression) {
 }
 
 function statement(expression) {
-	out.println('-- ' + 1);
   var s = expression.toString();
-  	out.println('-- ' + 2);
   if (s.length == 0) {
     return null;
   }
@@ -315,8 +313,8 @@ options.header =
         "\n" +
         "public class ${className} extends ${superClass} {\n" +
         indents(1) + "private boolean success = ${success};\n" +
-        indents(1) + 'private String screenshotDirectory = "${screenshotsDirectory}/";\n\n' +
-        indents(1) + "private WebDriver driver;\n" +
+        indents(1) + "// Using the inherited driver property\n" +
+        indents(1) + "// private WebDriver driver;\n" +
         indents(1) + "private String baseUrl;\n" +
         indents(1) + "private boolean acceptNextAlert = true;\n" +
         indents(1) + "private StringBuffer verificationErrors = new StringBuffer();\n" +
@@ -324,9 +322,11 @@ options.header =
         indents(1) + "@Before\n" +
         indents(1) + "public void setUp() throws Exception {\n" +
         indents(1) + "${dbSnapshot}\n" +
+		indents(2) + 'testName = "ASSIGN_ONE";\n' +
         indents(2) + "driver = new FirefoxDriver();\n" +
         indents(2) + "baseUrl = \"${baseURL}\";\n" +
         indents(2) + "driver.manage().timeouts().implicitlyWait(${timeout}, TimeUnit.SECONDS);\n" +
+        indents(2) + 'screenshotDirectory = "${screenshotsDirectory}/";\n\n' +
         indents(1) + "}\n" +
         indents(0) + "\n" +
         indents(1) + "@Test\n" +
@@ -339,7 +339,7 @@ options.header =
  */
 options.footer =
 		indents(2) + '} catch (Throwable e) {\n'+
-		indents(3) + 'String screenshotFile = captureExceptionScreenshot(screenshotDirectory);\n'+
+		indents(3) + 'String screenshotFile = captureExceptionScreenshot();\n'+
 		indents(3) + 'runAfterErrorCommands();\n'+
 		indents(3) + 'if (success && errorCommands.size() == 0 || !success && !currentCommand.getErrorStep()) {\n'+
 		indents(4) + 'fireDextraSeleniumException(e, screenshotFile);\n'+

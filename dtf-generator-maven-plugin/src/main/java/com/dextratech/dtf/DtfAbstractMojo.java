@@ -24,7 +24,7 @@ public abstract class DtfAbstractMojo extends AbstractMojo {
 
 	/**
 	 * Location of the file where the global configurations (seleniumHost, seleniumPort, timeout, speed, browser, url, user, password, testCaseList) can be found.
-	 * @parameter expression="${basedir}/src/test/resources/config/globalConfiguration.xml"
+	 * @parameter expression="${global-configuration-file}"
 	 */
 	protected File globalConfigurationFile;
 
@@ -88,21 +88,21 @@ public abstract class DtfAbstractMojo extends AbstractMojo {
 
 	/**
 	 * The file path of the html layout
-	 * @parameter expression="${basedir}/src/test/resources/generated-layouts/"
+	 * @parameter expression="${generated-layouts-dir}"
 	 * @required
 	 */
 	protected String generatedLayoutsPath;
 
 	/**
 	 * The directory path to save the generated tests
-	 * @parameter expression="${basedir}/src/test/resources/generated-testsuites/"
+	 * @parameter expression="${generated-html-testsuites-dir}"
 	 * @required
 	 */
 	protected File generatedHtmlTestsuitesPath;
 
 	/**
 	 * Location of the XLS data source file for this test case script
-	 * @parameter expression="${basedir}/src/test/resources/generated-datasets/"
+	 * @parameter expression="${generated-datasets-dir}"
 	 * @required
 	 * @readonly
 	 */
@@ -116,14 +116,14 @@ public abstract class DtfAbstractMojo extends AbstractMojo {
 	protected String testSuitesBasePackage;
 
 	/**
-	 * @parameter expression="${basedir}/src/test/java"
+	 * @parameter expression="${generated-java-testsuites-dir}"
 	 * @required
 	 */
 	protected String javaTestSuitesDirectory = null;
 
 	/**
 	 * The build directory
-	 * @parameter expression="${basedir}/src/test/resources/screenshots/"
+	 * @parameter expression="${generated-screenshots-dir}"
 	 */
 	protected String screenshotsDirectory;
 

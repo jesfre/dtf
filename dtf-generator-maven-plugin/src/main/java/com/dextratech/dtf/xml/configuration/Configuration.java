@@ -2,12 +2,14 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2014.06.05 a las 01:44:39 AM CDT 
+// Generado el: 2014.06.06 a las 01:42:38 AM CDT 
 //
 
 
 package com.dextratech.dtf.xml.configuration;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -28,8 +30,7 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="timeout" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="speed" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="appUrl" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="browser">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -55,8 +56,9 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  *           &lt;/simpleType>
  *         &lt;/element>
  *         &lt;element name="browserExecutable" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="appUrl" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="testsuiteList" type="{http://www.dextratech.com/dtf/configuration}testsuiteList"/>
+ *         &lt;element name="timeout" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="speed" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="testsuite" type="{http://www.dextratech.com/dtf/configuration}testsuite" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -67,73 +69,48 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "configuration", propOrder = {
-    "timeout",
-    "speed",
+    "appUrl",
     "browser",
     "browserExecutable",
-    "appUrl",
-    "testsuiteList"
+    "timeout",
+    "speed",
+    "testsuite"
 })
 public class Configuration
     implements ToString
 {
 
-    protected Integer timeout;
-    protected Integer speed;
-    @XmlElement(required = true)
-    protected String browser;
-    protected String browserExecutable;
     @XmlElement(required = true)
     protected String appUrl;
     @XmlElement(required = true)
-    protected TestsuiteList testsuiteList;
+    protected String browser;
+    protected String browserExecutable;
+    protected Integer timeout;
+    protected Integer speed;
+    protected List<Testsuite> testsuite;
 
     /**
-     * Obtiene el valor de la propiedad timeout.
+     * Obtiene el valor de la propiedad appUrl.
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public Integer getTimeout() {
-        return timeout;
+    public String getAppUrl() {
+        return appUrl;
     }
 
     /**
-     * Define el valor de la propiedad timeout.
+     * Define el valor de la propiedad appUrl.
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public void setTimeout(Integer value) {
-        this.timeout = value;
-    }
-
-    /**
-     * Obtiene el valor de la propiedad speed.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getSpeed() {
-        return speed;
-    }
-
-    /**
-     * Define el valor de la propiedad speed.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setSpeed(Integer value) {
-        this.speed = value;
+    public void setAppUrl(String value) {
+        this.appUrl = value;
     }
 
     /**
@@ -185,51 +162,80 @@ public class Configuration
     }
 
     /**
-     * Obtiene el valor de la propiedad appUrl.
+     * Obtiene el valor de la propiedad timeout.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Integer }
      *     
      */
-    public String getAppUrl() {
-        return appUrl;
+    public Integer getTimeout() {
+        return timeout;
     }
 
     /**
-     * Define el valor de la propiedad appUrl.
+     * Define el valor de la propiedad timeout.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Integer }
      *     
      */
-    public void setAppUrl(String value) {
-        this.appUrl = value;
+    public void setTimeout(Integer value) {
+        this.timeout = value;
     }
 
     /**
-     * Obtiene el valor de la propiedad testsuiteList.
+     * Obtiene el valor de la propiedad speed.
      * 
      * @return
      *     possible object is
-     *     {@link TestsuiteList }
+     *     {@link Integer }
      *     
      */
-    public TestsuiteList getTestsuiteList() {
-        return testsuiteList;
+    public Integer getSpeed() {
+        return speed;
     }
 
     /**
-     * Define el valor de la propiedad testsuiteList.
+     * Define el valor de la propiedad speed.
      * 
      * @param value
      *     allowed object is
-     *     {@link TestsuiteList }
+     *     {@link Integer }
      *     
      */
-    public void setTestsuiteList(TestsuiteList value) {
-        this.testsuiteList = value;
+    public void setSpeed(Integer value) {
+        this.speed = value;
+    }
+
+    /**
+     * Gets the value of the testsuite property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the testsuite property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getTestsuite().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Testsuite }
+     * 
+     * 
+     */
+    public List<Testsuite> getTestsuite() {
+        if (testsuite == null) {
+            testsuite = new ArrayList<Testsuite>();
+        }
+        return this.testsuite;
     }
 
     public String toString() {
@@ -248,14 +254,9 @@ public class Configuration
 
     public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
         {
-            Integer theTimeout;
-            theTimeout = this.getTimeout();
-            strategy.appendField(locator, this, "timeout", buffer, theTimeout);
-        }
-        {
-            Integer theSpeed;
-            theSpeed = this.getSpeed();
-            strategy.appendField(locator, this, "speed", buffer, theSpeed);
+            String theAppUrl;
+            theAppUrl = this.getAppUrl();
+            strategy.appendField(locator, this, "appUrl", buffer, theAppUrl);
         }
         {
             String theBrowser;
@@ -268,14 +269,19 @@ public class Configuration
             strategy.appendField(locator, this, "browserExecutable", buffer, theBrowserExecutable);
         }
         {
-            String theAppUrl;
-            theAppUrl = this.getAppUrl();
-            strategy.appendField(locator, this, "appUrl", buffer, theAppUrl);
+            Integer theTimeout;
+            theTimeout = this.getTimeout();
+            strategy.appendField(locator, this, "timeout", buffer, theTimeout);
         }
         {
-            TestsuiteList theTestsuiteList;
-            theTestsuiteList = this.getTestsuiteList();
-            strategy.appendField(locator, this, "testsuiteList", buffer, theTestsuiteList);
+            Integer theSpeed;
+            theSpeed = this.getSpeed();
+            strategy.appendField(locator, this, "speed", buffer, theSpeed);
+        }
+        {
+            List<Testsuite> theTestsuite;
+            theTestsuite = (((this.testsuite!= null)&&(!this.testsuite.isEmpty()))?this.getTestsuite():null);
+            strategy.appendField(locator, this, "testsuite", buffer, theTestsuite);
         }
         return buffer;
     }

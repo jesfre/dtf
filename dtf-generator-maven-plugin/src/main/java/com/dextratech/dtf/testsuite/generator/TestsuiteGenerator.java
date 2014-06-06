@@ -25,16 +25,15 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.springframework.beans.BeanUtils;
 
-import com.dextratech.dtf.ConfigurationXmlHandler;
 import com.dextratech.dtf.Constants;
 import com.dextratech.dtf.SeleniumCommand;
 import com.dextratech.dtf.SeleniumCommand.Type;
-import com.dextratech.dtf.TestSuiteXmlHandler;
 import com.dextratech.dtf.exception.DextraSeleniumException;
 import com.dextratech.dtf.html2java.Html2JavaConverter;
 import com.dextratech.dtf.parser.TestHtmlParser;
 import com.dextratech.dtf.utils.DataHelper;
 import com.dextratech.dtf.utils.VelocityUtils;
+import com.dextratech.dtf.xml.configuration.Configuration;
 import com.dextratech.dtf.xml.testsuite.ActionOption;
 import com.dextratech.dtf.xml.testsuite.Assertion;
 import com.dextratech.dtf.xml.testsuite.Component;
@@ -60,21 +59,21 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 
 	/**
 	 * Location of the XLS data source file for this test case script
-	 * @parameter expression="${basedir}/src/test/resources/config/testsuites/"
+	 * @parameter expression="${dtf-testsuites-dir}"
 	 * @readonly
 	 */
 	private String testsuitesXMLLocation;
 
 	/**
 	 * Location of the XML that contains all the global validations functions for all test suites.
-	 * @parameter expression="${basedir}/src/test/resources/config/testsuites/validation-functions.xml"
+	 * @parameter expression="${dtf-testsuites-dir}/validation-functions.xml"
 	 * @readonly
 	 */
 	private String validationFunctionsXmlPath;
 
 	/**
 	 * Location of the XML that contains all the global components for all test suites.
-	 * @parameter expression="${basedir}/src/test/resources/config/testsuites/components.xml"
+	 * @parameter expression="${dtf-testsuites-dir}/components.xml"
 	 * @readonly
 	 */
 	private String componentsXmlPath;
@@ -89,6 +88,8 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 	 */
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
+		log.trace("Running the TestSuiteGenerator...");
+
 		File testsuitesLocation = new File(testsuitesXMLLocation);
 
 		// Iterate the directory to obtain all testsuites from XML files
@@ -107,18 +108,29 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 
 					loadGlobalComponents();
 
-					ConfigurationXmlHandler config = setupGlobalConfigurations();
-					List<TestSuiteXmlHandler> fileNameList = config.getRunnableTestsuiteList();
+					Configuration config = setupGlobalConfigurations();
+					List<com.dextratech.dtf.xml.configuration.Testsuite> testsuiteList = config.getTestsuite();
 					int testsuiteCounter = 0;
-					for (TestSuiteXmlHandler tst : fileNameList) {
-						boolean dbSnapshot = tst.getDbSnapshot();
-						boolean dbRestore = tst.getDbRestore();
-
+					for (com.dextratech.dtf.xml.configuration.Testsuite tst : testsuiteList) {
 						/* For each runnable testsuite element, 
 						 * a HTML testsuite script and a set of testcase scripts will be generated.
 						 */
-						String filePath = testsuitesXMLLocation + Constants.SEPARATOR + tst.getSuiteName() + ".xml";
+						String fileName = null;
+						if (StringUtils.isNotBlank(tst.getFileName())) {
+							fileName = tst.getFileName();
+						} else {
+							fileName = tst.getName() + ".xml";
+						}
+
+						log.debug("Processing [ " + fileName + " ]");
+						String filePath = testsuitesXMLLocation + Constants.SEPARATOR + fileName;
 						File testsuiteFile = new File(filePath);
+						if (!testsuiteFile.exists()) {
+							throw new MojoExecutionException("The testsuite file [ " + filePath + " ] doesn't exist.");
+						}
+
+						boolean dbSnapshot = tst.isDbSnapshot();
+						boolean dbRestore = tst.isDbRestore();
 						if (testsuiteFile.exists()) {
 							try {
 
@@ -145,6 +157,8 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 
 				}
 			}
+		} else {
+			throw new MojoExecutionException("Testsuite location [" + testsuitesLocation + "] doesn't exist.");
 		}
 	}
 
@@ -232,6 +246,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 		List<Component> componentList = testsuite.getComponent();
 		HTMLTestsuiteGenerator htmlTestsuiteGenerator = null;
 		for (Testcase testcase : testcaseList) {
+			log.debug("Found testcase [ " + testcase.getName() + " ]");
 			List<String> testClassNameList = new ArrayList<String>();
 			// Generate only testcase signed with run=true
 			if (testcase.isRun()) {
@@ -352,6 +367,8 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 
 				// Generates a test suite Java file to invoke the list of test cases.
 				String testSuiteFileName = generateJavaTestsuite(testClassNameList, testcaseName, finalPackageTarget, javaTestSuiteDir);
+			} else {
+				log.info("Found testcase [ " + testcase.getName() + " ] but 'run' is [" + testcase.isRun() + "]");
 			}
 		}
 		if (htmlTestsuiteGenerator != null) {
@@ -504,6 +521,9 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 		this.validationFunctionsXmlPath = validationFunctionsXMLPath;
 	}
 
+	/*
+	 * TODO to delete
+	 */
 	public static void main(String[] args) {
 		TestsuiteGenerator generator = new TestsuiteGenerator();
 		generator.setTestsuitesXMLLocation("D:/dev/projects/DEXTRA-testing-framework/Dextra_Testing_Framework/dtf-project-archetype/src/test/resources/config/testsuites/");

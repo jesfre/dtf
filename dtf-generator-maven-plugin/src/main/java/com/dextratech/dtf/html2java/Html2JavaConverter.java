@@ -15,6 +15,7 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
+import javax.xml.bind.JAXBException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -31,6 +32,7 @@ import org.xml.sax.InputSource;
 
 import sun.org.mozilla.javascript.internal.NativeArray;
 
+import com.dextratech.dtf.ConfigurationHandler;
 import com.dextratech.dtf.ConfigurationXmlHandler;
 import com.dextratech.dtf.Constants;
 import com.dextratech.dtf.Constants.SeleniumXunitFramework;
@@ -43,6 +45,7 @@ import com.dextratech.dtf.parser.TestHtmlParser;
 import com.dextratech.dtf.parser.TestSuiteHtmlParser;
 import com.dextratech.dtf.utils.DextraSystemLogger;
 import com.dextratech.dtf.utils.VelocityUtils;
+import com.dextratech.dtf.xml.configuration.Configuration;
 
 /**
  * Utility to convert from HTML Selenese script file to Java source code
@@ -146,25 +149,32 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 	abstract public void execute() throws MojoExecutionException, MojoFailureException;
 
 	/**
-	 * @return
+	 * Setup the global configurations.
+	 * @return the configuration
 	 */
-	protected ConfigurationXmlHandler setupGlobalConfigurations() {
+	protected Configuration setupGlobalConfigurations() {
 		log.debug("Using Xml configuration file: " + globalConfigurationFile.getName());
-		ConfigurationXmlHandler config = ConfigurationXmlReader.parseXml(globalConfigurationFile);
-		seleniumHost = config.getSeleniumHost();
-		seleniumPort = config.getSeleniumPort();
-		browser = config.getBrowser();
-		baseUrl = config.getUrl();
-		timeout = Integer.valueOf(config.getTimeout());
-		speed = config.getSpeed();
+		Configuration config = null;
+		try {
+			ConfigurationHandler configurationHandler = new ConfigurationHandler(globalConfigurationFile);
+			config = configurationHandler.getConfiguration();
+			//			seleniumHost = config.getSeleniumHost();
+			//			seleniumPort = config.getSeleniumPort();
+			browser = config.getBrowser();
+			baseUrl = config.getAppUrl();
+			timeout = config.getTimeout();
+			speed = config.getSpeed();
 
-		log.debug("\t> Converting test using global configurations...");
-		log.debug("\t> seleniumHost: " + seleniumHost);
-		log.debug("\t> seleniumPort: " + seleniumPort);
-		log.debug("\t> browser: " + browser);
-		log.debug("\t> baseUrl: " + baseUrl);
-		log.debug("\t> timeout: " + timeout);
-		log.debug("\t> speed: " + speed);
+			log.debug("\t> Converting test using global configurations...");
+			log.debug("\t> seleniumHost: " + seleniumHost);
+			log.debug("\t> seleniumPort: " + seleniumPort);
+			log.debug("\t> browser: " + browser);
+			log.debug("\t> baseUrl: " + baseUrl);
+			log.debug("\t> timeout: " + timeout);
+			log.debug("\t> speed: " + speed);
+		} catch (JAXBException e) {
+			log.error(e.getMessage(), e);
+		}
 		return config;
 	}
 
@@ -357,9 +367,9 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 						isr = new InputStreamReader(isJs);
 						log.trace("Evaluating " + utilPath);
 						result = engine.eval(isr, context);
-						log.debug("Loaded " + utilPath);
+						log.trace("Loaded " + utilPath);
 					} else {
-						log.debug("Can't load " + utilPath);
+						log.warn("Can't load " + utilPath);
 					}
 				}
 			}

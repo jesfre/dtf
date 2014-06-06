@@ -29,6 +29,7 @@ public class DextraWebDriverTestCase {
 	private static Log log = LogFactory.getLog(DextraWebDriverTestCase.class);
 
 	protected String testName = null;
+	protected String screenshotDirectory = null;
 	protected WebDriver driver = null;
 	protected SeleniumCommand currentCommand = new SeleniumCommand();
 	protected SeleniumCommand testingCommand4ThisTestcase = new SeleniumCommand();
@@ -88,29 +89,30 @@ public class DextraWebDriverTestCase {
 	}
 
 	/**
-	 * @param screenshotFilePath
+	 * @param screenshotFileName
 	 * @return
 	 */
-	public String captureScreenshot(String screenshotFilePath) {
+	public String captureScreenshot(String screenshotFileName) {
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		// Now you can do whatever you need to do with it, for example copy somewhere
+		String filePath = screenshotDirectory + Constants.SEPARATOR + screenshotFileName;
 		try {
-			FileUtils.copyFile(scrFile, new File(screenshotFilePath));
+			FileUtils.copyFile(scrFile, new File(filePath));
+			log.trace("Saved screenshot [ " + screenshotFileName + " ]");
 		} catch (IOException e) {
-			log.error("Can't create screen shot for " + getTestName());
+			log.error("Can't create screenshot for [ " + screenshotFileName + " ]");
 			log.error(e.getMessage(), e);
 		}
-		return screenshotFilePath;
+		return screenshotFileName;
 	}
 
 	/**
-	 * @param screenshotDirectory
 	 * @return
 	 */
-	public String captureExceptionScreenshot(String screenshotDirectory) {
-		String screenshotFilePath = screenshotDirectory + "error-" + getTestName() + ".png";
-		captureScreenshot(screenshotFilePath);
-		return screenshotFilePath;
+	public String captureExceptionScreenshot() {
+		String screenshotFileName = "error-" + getTestName() + ".png";
+		captureScreenshot(screenshotFileName);
+		return screenshotFileName;
 	}
 
 	/**

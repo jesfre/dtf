@@ -189,15 +189,19 @@ public class HTMLTestsuiteGenerator {
 	private SeleniumCommand composeCommandForCaptureScreenshot(CaptureScreenshot screenshot) {
 		SeleniumCommand command;
 		String commandName = SeleneseCommand.CAPTURE_SCREENSHOT.value();
-		String directory = screenshot.getDirectory();
-		if (StringUtils.isBlank(directory)) {
-			directory = screenshotsDirectory;
-		}
+		/*
+		 * Full path of the file is not more needed.
+		 */
+		//		String directory = screenshot.getDirectory();
+		//		if (StringUtils.isBlank(directory)) {
+		//			directory = screenshotsDirectory;
+		//		}
 		String filename = screenshot.getPngFilename();
 		if (StringUtils.isBlank(filename)) {
 			filename = testcaseName + "_" + (++screenshotCounter);
 		}
-		String target = directory + filename + ".png";
+		//		String target = directory + filename + ".png";
+		String target = filename + ".png";
 		command = new SeleniumCommand(commandName, target, "");
 		return command;
 	}

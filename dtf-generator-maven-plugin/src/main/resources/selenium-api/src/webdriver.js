@@ -422,7 +422,6 @@ CallSelenium.prototype.toString = function() {
     return '';
   }
   var result = '';
-  out.println("rawArgs: "+this.rawArgs);
   var adaptor = new SeleniumWebDriverAdaptor(this.rawArgs);
   if (adaptor[this.message]) {
     var codeBlock = adaptor[this.message].call(adaptor);
@@ -528,16 +527,12 @@ function formatCommand(command) {
               call.args.push(xlateArgument(command.getParameterAt(i)));
             }
           }
-          out.println(1);
           line = statement(call, command);
-          out.println(2);
         }
-        out.println(3);
       } else {
     	  //this.log.info("unknown command: <" + command.command + ">");
         throw 'unknown command [' + command.command + ']';
       }
-      out.println(4);
     }
   } catch(e) {
     this.log.error("Caught exception: [" + e + "]");

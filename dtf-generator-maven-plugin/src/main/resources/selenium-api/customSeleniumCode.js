@@ -5,7 +5,7 @@ Command.apiDocuments = new Array(apiDocument);
 log.debug('Converting to Java...');
 for (var i in formatedSeleniumCommandList) {
 	var javaCommand = formatedSeleniumCommandList[i];
-	log.debug('Translating command ('+i+'): ' + javaCommand);
+	log.trace('Translating command ('+i+'): ' + javaCommand);
 	var cmd = javaCommand.getName();
 	cmd = String(cmd);
 	var target = javaCommand.getTarget();

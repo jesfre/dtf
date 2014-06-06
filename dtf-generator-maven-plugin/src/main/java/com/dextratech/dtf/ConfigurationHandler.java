@@ -18,12 +18,12 @@ import com.dextratech.dtf.xml.configuration.Configuration;
  * 04/06/2014
  */
 public class ConfigurationHandler {
-	private String configurationFilePath = null;
+	private File configurationFile = null;
 	private Configuration configuration = null;
 
-	public ConfigurationHandler(String configurationFilePath) throws JAXBException {
-		this.configurationFilePath = configurationFilePath;
-		configuration = getConfiguration(configurationFilePath);
+	public ConfigurationHandler(File configurationFile) throws JAXBException {
+		this.configurationFile = configurationFile;
+		configuration = getConfiguration(this.configurationFile);
 	}
 
 	/**
@@ -32,18 +32,17 @@ public class ConfigurationHandler {
 	 * @return the configuration
 	 * @throws JAXBException the jAXB exception
 	 */
-	private Configuration getConfiguration(String xmlFilePath) throws JAXBException {
-		File xmlFile = new File(xmlFilePath);
+	private Configuration getConfiguration(File xmlFilePath) throws JAXBException {
 		JAXBContext context = JAXBContext.newInstance("com.dextratech.dtf.xml.configuration");
 		Unmarshaller unmarshaller = context.createUnmarshaller();
-		Object unmarshalled = unmarshaller.unmarshal(xmlFile);
+		Object unmarshalled = unmarshaller.unmarshal(xmlFilePath);
 		JAXBElement<Configuration> configurationJaxb = (JAXBElement<Configuration>) unmarshalled;
 		Configuration configuration = configurationJaxb.getValue();
 		return configuration;
 	}
 
-	public String getConfigurationFile() {
-		return configurationFilePath;
+	public File getConfigurationFile() {
+		return configurationFile;
 	}
 
 	public Configuration getConfiguration() {
@@ -55,8 +54,9 @@ public class ConfigurationHandler {
 	 */
 	public static void main(String[] args) {
 		try {
-			ConfigurationHandler ch = new ConfigurationHandler("E:/dev/projects/titulacion/sources/dtf2/dtf-project-archetype/testing/conf/globalConfiguration.xml");
-			String file = ch.getConfigurationFile();
+			File xmlFile = new File("E:/dev/projects/titulacion/sources/dtf2/dtf-project-archetype/testing/conf/globalConfiguration.xml");
+			ConfigurationHandler ch = new ConfigurationHandler(xmlFile);
+			File file = ch.getConfigurationFile();
 			System.out.println("File is: " + file);
 			System.out.println(ch.getConfiguration());
 		} catch (JAXBException e) {
