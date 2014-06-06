@@ -33,12 +33,13 @@
 		<selenium.suite>src/test/selenium/testSuite1.html</selenium.suite>
 		<selenium.startURL>http://google.com.mx</selenium.startURL>
 		<!-- Default paths -->
-		<global-configuration-file>${basedir}/testing/conf/globalConfiguration.xml</global-configuration-file>
 		<dtf-testsuites-dir>${basedir}/testing/testsuites</dtf-testsuites-dir>
+		<global-configuration-file>${basedir}/testing/conf/globalConfiguration.xml</global-configuration-file>
 		<generated-layouts-dir>${basedir}/testing/generated/layouts</generated-layouts-dir>
 		<generated-html-testsuites-dir>${basedir}/testing/generated/testsuites</generated-html-testsuites-dir>
 		<generated-datasets-dir>${basedir}/testing/generated/datasets</generated-datasets-dir>
 		<generated-screenshots-dir>${basedir}/testing/generated/screenshots</generated-screenshots-dir>
+		<generated-reports-dir>${basedir}/testing/generated/reports</generated-reports-dir>
 		<generated-java-testsuites-dir>${basedir}/src/test/java</generated-java-testsuites-dir>
 
 		<spring.version>3.0.5.RELEASE</spring.version>
@@ -112,11 +113,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.2</version>
+				<version>3.3</version>
 				<configuration>
 					<generateReports>true</generateReports>
 					<generateProjectInfo>false</generateProjectInfo>
 					<generateSitemap>false</generateSitemap>
+					<outputDirectory>${generated-reports-dir}</outputDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -149,6 +151,7 @@
 				<configuration>
 					<showSuccess>true</showSuccess>
 					<linkXRef>true</linkXRef>
+					<outputDirectory>${generated-reports-dir}</outputDirectory>
 				</configuration>
 				<executions>
 					<execution>
