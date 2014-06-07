@@ -481,7 +481,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 		File htmlTestFile = new File(testcaseOutDir + Constants.SEPARATOR + afterErrorActionsHtmlFileName);
 		TestHtmlParser testParser = new TestHtmlParser(htmlTestFile);
 
-		String javaTestcaseContent = convertTestCase(testParser, testName, finalPackageTarget, dbSnapshot, dbRestore);
+		String javaTestcaseContent = convertTestCase(testParser, testcaseName, testName, finalPackageTarget, dbSnapshot, dbRestore);
 
 		if (afterErrorActionsSentences != null) {
 			// Adding the actions to fire if an error occurs.

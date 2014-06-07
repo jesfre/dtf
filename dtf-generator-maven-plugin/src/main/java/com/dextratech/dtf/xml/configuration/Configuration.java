@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2014.06.06 a las 01:42:38 AM CDT 
+// Generado el: 2014.06.06 a las 11:39:10 PM CDT 
 //
 
 
@@ -31,31 +31,7 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="appUrl" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="browser">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;enumeration value="*chrome"/>
- *               &lt;enumeration value="*googlechrome"/>
- *               &lt;enumeration value="*firefox"/>
- *               &lt;enumeration value="*firefoxproxy"/>
- *               &lt;enumeration value="*pifirefox"/>
- *               &lt;enumeration value="*firefox3"/>
- *               &lt;enumeration value="*firefox2"/>
- *               &lt;enumeration value="*firefoxchrome"/>
- *               &lt;enumeration value="*iexplore"/>
- *               &lt;enumeration value="*iexploreproxy"/>
- *               &lt;enumeration value="*piiexplore"/>
- *               &lt;enumeration value="*safari"/>
- *               &lt;enumeration value="*safariproxy"/>
- *               &lt;enumeration value="*konqueror"/>
- *               &lt;enumeration value="*opera"/>
- *               &lt;enumeration value="*mock"/>
- *               &lt;enumeration value="*iehta"/>
- *               &lt;enumeration value="*custom"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element name="browserExecutable" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="browser" type="{http://www.dextratech.com/dtf/configuration}browser" minOccurs="0"/>
  *         &lt;element name="timeout" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="speed" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="testsuite" type="{http://www.dextratech.com/dtf/configuration}testsuite" maxOccurs="unbounded" minOccurs="0"/>
@@ -71,7 +47,6 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 @XmlType(name = "configuration", propOrder = {
     "appUrl",
     "browser",
-    "browserExecutable",
     "timeout",
     "speed",
     "testsuite"
@@ -82,9 +57,7 @@ public class Configuration
 
     @XmlElement(required = true)
     protected String appUrl;
-    @XmlElement(required = true)
-    protected String browser;
-    protected String browserExecutable;
+    protected Browser browser;
     protected Integer timeout;
     protected Integer speed;
     protected List<Testsuite> testsuite;
@@ -118,10 +91,10 @@ public class Configuration
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Browser }
      *     
      */
-    public String getBrowser() {
+    public Browser getBrowser() {
         return browser;
     }
 
@@ -130,35 +103,11 @@ public class Configuration
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Browser }
      *     
      */
-    public void setBrowser(String value) {
+    public void setBrowser(Browser value) {
         this.browser = value;
-    }
-
-    /**
-     * Obtiene el valor de la propiedad browserExecutable.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getBrowserExecutable() {
-        return browserExecutable;
-    }
-
-    /**
-     * Define el valor de la propiedad browserExecutable.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setBrowserExecutable(String value) {
-        this.browserExecutable = value;
     }
 
     /**
@@ -259,14 +208,9 @@ public class Configuration
             strategy.appendField(locator, this, "appUrl", buffer, theAppUrl);
         }
         {
-            String theBrowser;
+            Browser theBrowser;
             theBrowser = this.getBrowser();
             strategy.appendField(locator, this, "browser", buffer, theBrowser);
-        }
-        {
-            String theBrowserExecutable;
-            theBrowserExecutable = this.getBrowserExecutable();
-            strategy.appendField(locator, this, "browserExecutable", buffer, theBrowserExecutable);
         }
         {
             Integer theTimeout;

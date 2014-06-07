@@ -10,6 +10,7 @@
   		<groupId>com.dextratech.dtf</groupId>
   		<artifactId>dtf-parent</artifactId>
 	  	<version>1.2.0.ALPHA</version>
+	  	<relativePath>../dtf-parent/pom.xml</relativePath>
   	</parent>
   
   	<developers>
@@ -70,6 +71,47 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.9.0</version>
+                <configuration>
+                	<schemaDirectory>${basedir}/../dtf-project-archetype/src/test/resources</schemaDirectory>
+                	<generateDirectory>${basedir}/src/main/java</generateDirectory>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.jvnet.jaxb2_commons</groupId>
+                            <artifactId>jaxb2-basics</artifactId>
+                            <version>0.6.2</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.jvnet.jaxb2_commons</groupId>
+                            <artifactId>jaxb2-basics-annotate</artifactId>
+                            <version>0.6.2</version>
+                        </plugin>
+                    </plugins>
+                    <args>
+                        <arg>-Xannotate</arg>
+                        <arg>-XtoString</arg>
+                    </args>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-testsuite-classes</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+		                    <generatePackage>com.dextratech.dtf.xml.testsuite</generatePackage>
+                        	<schemaIncludes>
+	                        	<include>testsuite.xsd</include>
+                        	</schemaIncludes>
+		                    <strict>false</strict>
+		                    <extension>true</extension>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
@@ -125,6 +167,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- Dependency for toString and common methods in JAXB classes -->
+		<dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics-runtime</artifactId>
+            <version>0.6.2</version>
+        </dependency>
 
 		<!-- Test dependencies -->
 		<dependency>

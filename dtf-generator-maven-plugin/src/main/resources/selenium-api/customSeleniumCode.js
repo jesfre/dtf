@@ -2,7 +2,7 @@ var testCase = new TestCase(className);
     
 var commands = [];
 Command.apiDocuments = new Array(apiDocument);
-log.debug('Converting to Java...');
+log.debug('Converting to Java using [ ' + this.name + ' ]...');
 for (var i in formatedSeleniumCommandList) {
 	var javaCommand = formatedSeleniumCommandList[i];
 	log.trace('Translating command ('+i+'): ' + javaCommand);
@@ -24,6 +24,10 @@ if(commands)
 	testCase.commands = commands;
 if(screenshotsDirectory)
 	testCase.screenshotsDirectory = screenshotsDirectory;
+if(testName)
+	testCase.testName = testName;
+if(driver)
+	testCase.driver = driver;
 if(success)
 	testCase.success = success;
 if(packageName)
@@ -34,6 +38,8 @@ if(seleniumPort)
 	testCase.seleniumPort = seleniumPort;
 if(browser)
 	testCase.browser = browser;
+if(browserMaximized)
+	testCase.browserMaximized = browserMaximized;
 if(baseurl)
 	testCase.baseURL = baseurl;
 if(timeout) {

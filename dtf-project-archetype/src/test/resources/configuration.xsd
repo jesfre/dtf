@@ -5,41 +5,20 @@
 
     <complexType name="configuration">
     	<sequence maxOccurs="1" minOccurs="1">
-            <element name="appUrl" type="string" maxOccurs="1" minOccurs="1">
+    		<element name="appUrl" type="string" maxOccurs="1"
+    			minOccurs="1">
     		</element>
-            <element name="browser" maxOccurs="1" minOccurs="1">
-    			<simpleType>
-    				<restriction base="string">
-    					<enumeration value="*chrome"></enumeration>
-    					<enumeration value="*googlechrome"></enumeration>
-    					<enumeration value="*firefox"></enumeration>
-    					<enumeration value="*firefoxproxy"></enumeration>
-    					<enumeration value="*pifirefox"></enumeration>
-    					<enumeration value="*firefox3"></enumeration>
-    					<enumeration value="*firefox2"></enumeration>
-    					<enumeration value="*firefoxchrome"></enumeration>
-    					<enumeration value="*iexplore"></enumeration>
-    					<enumeration value="*iexploreproxy"></enumeration>
-    					<enumeration value="*piiexplore"></enumeration>
-    					<enumeration value="*safari"></enumeration>
-    					<enumeration value="*safariproxy"></enumeration>
-    					<enumeration value="*konqueror"></enumeration>
-    					<enumeration value="*opera"></enumeration>
-    					<enumeration value="*mock"></enumeration>
-    					<enumeration value="*iehta"></enumeration>
-    					<enumeration value="*custom"></enumeration>
-    				</restriction>
-    			</simpleType>
+            <element name="browser" type="tns:browser" maxOccurs="1" minOccurs="0"></element>
+            <element name="timeout" type="int" maxOccurs="1"
+    			minOccurs="0">
     		</element>
-            <element name="browserExecutable" type="string" maxOccurs="1" minOccurs="0">
+    		<element name="speed" type="int" maxOccurs="1"
+    			minOccurs="0">
     		</element>
-            <element name="timeout" type="int" maxOccurs="1" minOccurs="0">
+            <element name="testsuite" type="tns:testsuite"
+    			maxOccurs="unbounded" minOccurs="0">
     		</element>
-            <element name="speed" type="int" maxOccurs="1" minOccurs="0">
-    		</element>
-            <element name="testsuite" type="tns:testsuite" maxOccurs="unbounded" minOccurs="0">
-    		</element>
-        </sequence>
+    	</sequence>
     </complexType>
 
 
@@ -52,5 +31,24 @@
     	</attribute>
     	<attribute name="run" type="boolean" use="optional">
     	</attribute>
+    </complexType>
+
+    <complexType name="browser">
+    	<attribute name="name" use="required">
+    		<simpleType>
+    				<restriction base="string">
+    					<enumeration value="*firefox"></enumeration>
+    					<enumeration value="*firefoxproxy"></enumeration>
+    					<enumeration value="*chrome"></enumeration>
+    					<enumeration value="*googlechrome"></enumeration>
+    					<enumeration value="*iexplore"></enumeration>
+    					<enumeration value="*iexploreproxy"></enumeration>
+    					<enumeration value="*safari"></enumeration>
+    					<enumeration value="*safariproxy"></enumeration>
+    				</restriction>
+    			</simpleType>
+    	</attribute>
+    	<attribute name="executablePath" type="string" use="optional"></attribute>
+    	<attribute name="maximized" type="boolean" use="optional"></attribute>
     </complexType>
 </schema>

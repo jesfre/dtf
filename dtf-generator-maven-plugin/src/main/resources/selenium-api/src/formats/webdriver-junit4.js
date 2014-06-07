@@ -306,7 +306,11 @@ options.header =
         "import static org.junit.Assert.*;\n" +
         "import static org.hamcrest.CoreMatchers.*;\n" +
         "import org.openqa.selenium.*;\n" +
+        "import org.openqa.selenium.remote.RemoteWebDriver;\n" +
         "import org.openqa.selenium.firefox.FirefoxDriver;\n" +
+        "import org.openqa.selenium.chrome.ChromeDriver;\n" +
+        "import org.openqa.selenium.ie.InternetExplorerDriver;\n" +
+        "import org.openqa.selenium.safari.SafariDriver;\n" +
         "import org.openqa.selenium.support.ui.Select;\n" +
         "import com.dextratech.dtf.${superClass};\n"+
     	"import com.dextratech.dtf.exception.DextraSeleniumException;\n"+
@@ -322,16 +326,16 @@ options.header =
         indents(1) + "@Before\n" +
         indents(1) + "public void setUp() throws Exception {\n" +
         indents(1) + "${dbSnapshot}\n" +
-		indents(2) + 'testName = "ASSIGN_ONE";\n' +
-        indents(2) + "driver = new FirefoxDriver();\n" +
+		indents(2) + 'testName = "${testName}";\n' +
+        indents(2) + "${driver}\n" +
         indents(2) + "baseUrl = \"${baseURL}\";\n" +
         indents(2) + "driver.manage().timeouts().implicitlyWait(${timeout}, TimeUnit.SECONDS);\n" +
         indents(2) + 'screenshotDirectory = "${screenshotsDirectory}/";\n\n' +
         indents(1) + "}\n" +
         indents(0) + "\n" +
         indents(1) + "@Test\n" +
-        indents(1) + "public void ${methodName}() throws Throwable {\n"+
-		indents(2) + 'driver.manage().window().maximize();\n'+
+        indents(1) + "public void ${methodName}() throws Throwable {\n" +
+        ((browserMaximized == 'true' || browserMaximized == true)? indents(2) + 'driver.manage().window().maximize();\n' : '') +
         indents(2) + 'try {\n';
 
 /* Modified:

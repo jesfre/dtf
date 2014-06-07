@@ -23,6 +23,7 @@
 		<dtf.plugin.seleniumHost>localhost</dtf.plugin.seleniumHost>
 		<dtf.plugin.seleniumPort>4444</dtf.plugin.seleniumPort>
 		<dtf.plugin.browser>*firefox</dtf.plugin.browser>
+		<dtf.plugin.browser.maximized>true</dtf.plugin.browser.maximized>
 		<dtf.plugin.baseUrl>http://localhost:8080/</dtf.plugin.baseUrl>
 		<dtf.plugin.timeout>5000</dtf.plugin.timeout>
 		<dtf.plugin.speed>1000</dtf.plugin.speed>

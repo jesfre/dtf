@@ -6,7 +6,9 @@ package com.dextratech.dtf.html2java;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,19 +34,18 @@ import org.xml.sax.InputSource;
 
 import sun.org.mozilla.javascript.internal.NativeArray;
 
+import com.dextratech.dtf.BrowserEnum;
 import com.dextratech.dtf.ConfigurationHandler;
-import com.dextratech.dtf.ConfigurationXmlHandler;
 import com.dextratech.dtf.Constants;
 import com.dextratech.dtf.Constants.SeleniumXunitFramework;
 import com.dextratech.dtf.DtfAbstractMojo;
 import com.dextratech.dtf.JavascriptLogger;
 import com.dextratech.dtf.LabelValue;
 import com.dextratech.dtf.SeleniumCommand;
-import com.dextratech.dtf.parser.ConfigurationXmlReader;
 import com.dextratech.dtf.parser.TestHtmlParser;
 import com.dextratech.dtf.parser.TestSuiteHtmlParser;
-import com.dextratech.dtf.utils.DextraSystemLogger;
 import com.dextratech.dtf.utils.VelocityUtils;
+import com.dextratech.dtf.xml.configuration.Browser;
 import com.dextratech.dtf.xml.configuration.Configuration;
 
 /**
@@ -68,13 +69,6 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 	 * @required
 	 */
 	protected String format;
-
-	/**
-	 * The javascript file with the functions
-	 * that generate Java classes in base to a HTML script
-	 * @parameter
-	 */
-	protected String seleniumJavascriptSource = null;
 
 	/**
 	 * Path to utility scripts
@@ -160,7 +154,20 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 			config = configurationHandler.getConfiguration();
 			//			seleniumHost = config.getSeleniumHost();
 			//			seleniumPort = config.getSeleniumPort();
-			browser = config.getBrowser();
+			Browser browserObj = config.getBrowser();
+			if (browserObj != null) {
+				if (browserObj.getName() != null) {
+					browser = browserObj.getName();
+				}
+				if (browserObj.getExecutablePath() != null) {
+					browserExecutablePath = browserObj.getExecutablePath();
+				}
+				if (browserObj.isMaximized() != null) {
+					browserMaximized = browserObj.isMaximized();
+				}
+			}
+			log.debug("Using browser [browser=" + browser + ", maximized=" + browserMaximized + ", executablePath=" + browserExecutablePath + "]");
+
 			baseUrl = config.getAppUrl();
 			timeout = config.getTimeout();
 			speed = config.getSpeed();
@@ -182,9 +189,6 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 	 * 
 	 */
 	protected void setupSeleniumSourceCode() {
-		if (seleniumJavascriptSource == null) {
-			seleniumJavascriptSource = Constants.SELENIUM_JS_SOURCE;
-		}
 		if (seleniumScriptsDir == null) {
 			seleniumScriptsDir = Constants.SELENIUM_SCRIPTS_DIR;
 		}
@@ -264,20 +268,21 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 				Node node = iterator.nextNode();
 				LabelValue members = testSuiteParser.getTestFileMembers(node);
 				String testName = members.getLabel();
-				if (testName != null) {
-					int indexOfExtension = testName.lastIndexOf(".");
-					testName = testName.substring(0, indexOfExtension);
-					testName = StringUtils.capitalize(testName);
+				String className = members.getLabel();
+				if (className != null) {
+					int indexOfExtension = className.lastIndexOf(".");
+					className = className.substring(0, indexOfExtension);
+					className = StringUtils.capitalize(className);
 				}
 				File htmlTestFile = new File(testSuiteDirectoryPath + Constants.SEPARATOR + members.getValue());
 				TestHtmlParser testParser = new TestHtmlParser(htmlTestFile);
 
-				String javaTestcaseContent = convertTestCase(testParser, testName, finalPackageTarget, dbSnapshot, dbRestore);
-				File javaTestFile = new File(javaTestDestinationDir.getAbsolutePath() + Constants.SEPARATOR + testName + ".java");
+				String javaTestcaseContent = convertTestCase(testParser, testName, className, finalPackageTarget, dbSnapshot, dbRestore);
+				File javaTestFile = new File(javaTestDestinationDir.getAbsolutePath() + Constants.SEPARATOR + className + ".java");
 				FileUtils.writeStringToFile(javaTestFile, javaTestcaseContent);
 
-				testClassNameList.add(testName + ".class");
-				log.debug(finalPackageTarget + "." + testName + ".class");
+				testClassNameList.add(className + ".class");
+				log.debug(finalPackageTarget + "." + className + ".class");
 			}
 
 			Map<String, Object> params = new HashMap<String, Object>();
@@ -297,15 +302,17 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 	}
 
 	/**
-	 * Convert a test case HTML script document to Java class test case
+	 * Convert a test case HTML script document to Java class test case.
+	 *
 	 * @param testParser The parser to handle the HTML document
-	 * @param testName
+	 * @param testName the test name
+	 * @param className the class name
 	 * @param testBasePackage The package name string of the test class
-	 * @param dbSnapshot
-	 * @param dbRestore
+	 * @param dbSnapshot the db snapshot
+	 * @param dbRestore the db restore
 	 * @return a String that represents the Java class content
 	 */
-	protected String convertTestCase(TestHtmlParser testParser, String testName, String testBasePackage, boolean dbSnapshot, boolean dbRestore) {
+	protected String convertTestCase(TestHtmlParser testParser, String testName, String className, String testBasePackage, boolean dbSnapshot, boolean dbRestore) {
 		try {
 			ScriptEngineManager manager = new ScriptEngineManager();
 			ScriptEngine engine = manager.getEngineByName("rhino");
@@ -332,8 +339,25 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 			engine.put("dbSnapshot", Boolean.toString(dbSnapshot));
 			engine.put("dbRestore", Boolean.toString(dbRestore));
 
+			/*
+			 * Resolve the code snippet for the instantiation of the driver
+			 * This works for Google Chrome driver
+			 */
+			BrowserEnum browserEnum = getBrowserEmun(browser);
+			String driverSnippetTemplate = browserEnum.getDriverInstantiationTemplate();
+			String driverSnippet = null;
+			if (StringUtils.isNotBlank(browserExecutablePath)) {
+				driverSnippet = MessageFormat.format(driverSnippetTemplate, browserExecutablePath);
+			} else {
+				driverSnippet = driverSnippetTemplate;
+			}
+
 			if (testName != null)
-				engine.put("className", testName);
+				engine.put("testName", testName);
+			if (className != null)
+				engine.put("className", className);
+			if (testName != null)
+				engine.put("driver", driverSnippet);
 			if (testBasePackage != null)
 				engine.put("packageName", testBasePackage);
 			if (seleniumHost != null)
@@ -342,6 +366,8 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 				engine.put("seleniumPort", seleniumPort);
 			if (browser != null)
 				engine.put("browser", browser);
+			if (browserMaximized != null)
+				engine.put("browserMaximized", browserMaximized.toString());
 			if (baseUrl != null)
 				engine.put("baseurl", baseUrl);
 			if (timeout > 0)
@@ -459,6 +485,19 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 	}
 
 	/**
+	 * @return looks for the {@link BrowserEnum} to instantiate a specified driver corresponding to the browser name. 
+	 * If nothing found, returns BrowserEnum.FIREFOX.
+	 */
+	private BrowserEnum getBrowserEmun(String browserName) {
+		for (BrowserEnum browserEnum : BrowserEnum.values()) {
+			if (browserName.equals(browserEnum.getName())) {
+				return browserEnum;
+			}
+		}
+		return BrowserEnum.FIREFOX;
+	}
+
+	/**
 	 * Prints all available javascript engines
 	 */
 	protected void printEngines() {
@@ -471,14 +510,6 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 				System.out.println("Short name : " + n);
 			}
 		}
-	}
-
-	public String getSeleniumJavascriptSource() {
-		return seleniumJavascriptSource;
-	}
-
-	public void setSeleniumJavascriptSource(String seleniumJavascriptSource) {
-		this.seleniumJavascriptSource = seleniumJavascriptSource;
 	}
 
 	public String getSeleniumApiDocFile() {

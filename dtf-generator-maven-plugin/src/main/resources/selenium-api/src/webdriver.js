@@ -108,11 +108,14 @@ function formatHeader(testCase) {
 		replace(/\$\{seleniumHost\}/g, seleniumHost).
 		replace(/\$\{seleniumPort\}/g, seleniumPort).
 		replace(/\$\{environment\}/g, browser).
+		replace(/\$\{browserMaximized\}/g, browserMaximized).
 		replace(/\$\{timeout\}/g, timeout).
 		replace(/\$\{speed\}/g, speed).
 		replace(/\$\{dbSnapshot\}/g, (dbSnapshot == 'true')?"\t\tsuper.setUp();\n":"").
+		replace(/\$\{driver\}/g, driver).
 		replace(/\$\{screenshotsDirectory\}/g, screenshotsDirectory).
 		replace(/\\/g, '/').
+		replace(/\$\{testName\}/g, testName).
       replace(/\$\{className\}/g, className).
       replace(/\$\{methodName\}/g, methodName).
       replace(/\$\{baseURL\}/g, testCase.getBaseURL()).

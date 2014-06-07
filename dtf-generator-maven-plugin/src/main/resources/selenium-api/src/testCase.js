@@ -300,11 +300,14 @@ function TestCase(tempTitle) {
     this.recordModifiedInCommands();
     this.baseURL = "";
     this.screenshotsDirectory = "";
+    this.testName = "";
+    this.driver = "";
     this.success = "";
     this.packageName = "";
     this.seleniumHost = "";
     this.seleniumPort = "";
     this.browser = "";
+    this.browserMaximized = "";
     this.timeout = "";
     this.speed = "";
     this.dbSnapshot = "";

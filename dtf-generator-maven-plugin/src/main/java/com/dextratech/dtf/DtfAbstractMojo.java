@@ -43,29 +43,18 @@ public abstract class DtfAbstractMojo extends AbstractMojo {
 	protected int seleniumPort;
 
 	/**
-	 * Tested browser
-	 * *firefox
-	 * *mock
-	 * *firefoxproxy
-	 * *pifirefox
-	 * *chrome
-	 * *iexploreproxy
-	 * *iexplore
-	 * *firefox3
-	 * *safariproxy
-	 * *googlechrome
-	 * *konqueror
-	 * *firefox2
-	 * *safari
-	 * *piiexplore
-	 * *firefoxchrome
-	 * *opera
-	 * *iehta
-	 * *custom
 	 * @parameter expression="${dtf.plugin.browser}"
 	 * @required
 	 */
 	protected String browser;
+
+	protected String browserExecutablePath;
+
+	/**
+	 * @parameter expression="${dtf.plugin.browser.maximized}"
+	 * @required
+	 */
+	protected Boolean browserMaximized;
 
 	/**
 	 * Base URL of the tested application
@@ -192,6 +181,22 @@ public abstract class DtfAbstractMojo extends AbstractMojo {
 
 	public void setBrowser(String browser) {
 		this.browser = browser;
+	}
+
+	public String getBrowserExecutablePath() {
+		return browserExecutablePath;
+	}
+
+	public void setBrowserExecutablePath(String browserExecutablePath) {
+		this.browserExecutablePath = browserExecutablePath;
+	}
+
+	public Boolean isBrowserMaximized() {
+		return browserMaximized;
+	}
+
+	public void setBrowserMaximized(Boolean browserMaximized) {
+		this.browserMaximized = browserMaximized;
 	}
 
 	public String getBaseUrl() {

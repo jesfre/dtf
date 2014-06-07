@@ -20,7 +20,6 @@ import com.dextratech.dtf.SeleniumCommand;
 import com.dextratech.dtf.SeleniumCommand.Type;
 import com.dextratech.dtf.exception.DextraSeleniumException;
 import com.dextratech.dtf.utils.DataHelper;
-import com.dextratech.dtf.utils.DextraSystemLogger;
 import com.dextratech.dtf.utils.VelocityUtils;
 import com.dextratech.dtf.xml.testsuite.Action;
 import com.dextratech.dtf.xml.testsuite.Assertion;
