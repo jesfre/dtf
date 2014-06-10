@@ -6,9 +6,9 @@
 	<name>Onload</name>
 	
 	<testcase name="find_owners" url="/owners/find.html" run="true" success="true">
-		<action actionType="echo" locatorValue="logging????????" />
+		<action actionType="echo" locatorValue="logging??????	??" />
 	</testcase>
-	
+
 	<testcase name="testing_onload" url="/" run="true" success="true">
 		<assert type="assertAlertPresent" param1="Okas"/>
 		<assert type="assertAlertPresent" param1="Ok"/>

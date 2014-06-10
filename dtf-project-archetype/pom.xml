@@ -31,14 +31,18 @@
 		<!-- 
 		<dtf.plugin.format>JUnit4RC</dtf.plugin.format>
 		 -->
+		 
+		<!-- Configuration for DTF clean task -->
+		<dtf.plugin.clean.testsuites>true</dtf.plugin.clean.testsuites>
+		<dtf.plugin.clean.java>true</dtf.plugin.clean.java>
+		<dtf.plugin.clean.screenshots>true</dtf.plugin.clean.screenshots>
+		
 		<selenium.suite>src/test/selenium/testSuite1.html</selenium.suite>
 		<selenium.startURL>http://google.com.mx</selenium.startURL>
 		<!-- Default paths -->
 		<dtf-testsuites-dir>${basedir}/testing/testsuites</dtf-testsuites-dir>
 		<global-configuration-file>${basedir}/testing/conf/globalConfiguration.xml</global-configuration-file>
-		<generated-layouts-dir>${basedir}/testing/generated/layouts</generated-layouts-dir>
 		<generated-html-testsuites-dir>${basedir}/testing/generated/testsuites</generated-html-testsuites-dir>
-		<generated-datasets-dir>${basedir}/testing/generated/datasets</generated-datasets-dir>
 		<generated-screenshots-dir>${basedir}/testing/generated/screenshots</generated-screenshots-dir>
 		<generated-reports-dir>${basedir}/testing/generated/reports</generated-reports-dir>
 		<generated-java-testsuites-dir>${basedir}/src/test/java</generated-java-testsuites-dir>
@@ -139,7 +143,7 @@
 								<include>**/ts*/**/Suite*.java</include>
 							</includes>
 							<excludes>
-								<exclude>**/*Tests.java</exclude>
+								<exclude>**/*.java</exclude>
 							</excludes>
 						</configuration>
 					</execution>
@@ -241,11 +245,9 @@
 				<version>${dtf.version}</version>
 				<configuration>
 					<testSuitesBasePackage>${default.base.package}</testSuitesBasePackage>
-					<cleanLayouts>false</cleanLayouts>
-					<cleanDatasets>false</cleanDatasets>
-					<cleanTestsuites>true</cleanTestsuites>
-					<cleanJava>true</cleanJava>
-					<cleanScreenshots>true</cleanScreenshots>
+					<cleanTestsuites>${dtf.plugin.clean.testsuites}</cleanTestsuites>
+					<cleanJava>${dtf.plugin.clean.java}</cleanJava>
+					<cleanScreenshots>${dtf.plugin.clean.screenshots}</cleanScreenshots>
 				</configuration>
 				<executions>
 					<execution>
@@ -253,9 +255,9 @@
 						<phase>process-test-resources</phase>
 						<goals>
 						<!-- 
-						 -->
 							<goal>clean</goal>
 							<goal>xml-testsuites</goal>
+						 -->
 						</goals>
 						<configuration>
 							<verbose>${dtf.plugin.verbose}</verbose>
@@ -428,6 +430,11 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.dbunit</groupId>

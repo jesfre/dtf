@@ -29,22 +29,14 @@ public class CleanGeneratedResources extends DtfAbstractMojo {
 	 * @parameter expression="true"
 	 * @required
 	 */
-	private boolean cleanLayouts;
-	/**
-	 * @parameter expression="true"
-	 * @required
-	 */
-	private boolean cleanDatasets;
-	/**
-	 * @parameter expression="true"
-	 * @required
-	 */
 	private boolean cleanTestsuites;
+
 	/**
 	 * @parameter expression="true"
 	 * @required
 	 */
 	private boolean cleanJava;
+
 	/**
 	 * @parameter expression="true"
 	 * @required
@@ -53,10 +45,6 @@ public class CleanGeneratedResources extends DtfAbstractMojo {
 
 	public void execute() throws MojoExecutionException {
 		try {
-			if (cleanLayouts)
-				cleanLayouts();
-			if (cleanDatasets)
-				cleanDatasets();
 			if (cleanTestsuites)
 				cleanTestsuites();
 			if (cleanJava)
@@ -66,14 +54,6 @@ public class CleanGeneratedResources extends DtfAbstractMojo {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private void cleanLayouts() throws IOException {
-		cleanDirectory(generatedLayoutsPath);
-	}
-
-	private void cleanDatasets() throws IOException {
-		cleanDirectory(generatedDatasetsPath);
 	}
 
 	private void cleanTestsuites() throws IOException {
@@ -110,36 +90,12 @@ public class CleanGeneratedResources extends DtfAbstractMojo {
 		FileUtils.forceMkdir(latoutsPath);
 	}
 
-	public String getGeneratedDatasetsPath() {
-		return generatedDatasetsPath;
-	}
-
-	public void setGeneratedDatasetsPath(String generatedDatasetsPath) {
-		this.generatedDatasetsPath = generatedDatasetsPath;
-	}
-
 	public String getJavaTestSuitesDirectory() {
 		return javaTestSuitesDirectory;
 	}
 
 	public void setJavaTestSuitesDirectory(String javaTestSuitesDirectory) {
 		this.javaTestSuitesDirectory = javaTestSuitesDirectory;
-	}
-
-	public boolean isCleanLayouts() {
-		return cleanLayouts;
-	}
-
-	public void setCleanLayouts(boolean cleanLayouts) {
-		this.cleanLayouts = cleanLayouts;
-	}
-
-	public boolean isCleanDatasets() {
-		return cleanDatasets;
-	}
-
-	public void setCleanDatasets(boolean cleanDatasets) {
-		this.cleanDatasets = cleanDatasets;
 	}
 
 	public boolean isCleanTestsuites() {

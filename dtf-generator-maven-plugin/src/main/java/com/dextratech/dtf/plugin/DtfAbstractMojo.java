@@ -76,26 +76,11 @@ public abstract class DtfAbstractMojo extends AbstractMojo {
 	protected int speed;
 
 	/**
-	 * The file path of the html layout
-	 * @parameter expression="${generated-layouts-dir}"
-	 * @required
-	 */
-	protected String generatedLayoutsPath;
-
-	/**
 	 * The directory path to save the generated tests
 	 * @parameter expression="${generated-html-testsuites-dir}"
 	 * @required
 	 */
 	protected File generatedHtmlTestsuitesPath;
-
-	/**
-	 * Location of the XLS data source file for this test case script
-	 * @parameter expression="${generated-datasets-dir}"
-	 * @required
-	 * @readonly
-	 */
-	protected String generatedDatasetsPath;
 
 	/**
 	 * The package to be created to use in the Java test files
@@ -229,22 +214,6 @@ public abstract class DtfAbstractMojo extends AbstractMojo {
 
 	public void setGlobalConfigurationFile(File globalConfigurationFile) {
 		this.globalConfigurationFile = globalConfigurationFile;
-	}
-
-	public String getGeneratedLayoutsPath() {
-		return generatedLayoutsPath;
-	}
-
-	public void setGeneratedLayoutsPath(String generatedLayoutsPath) {
-		this.generatedLayoutsPath = generatedLayoutsPath;
-	}
-
-	public String getGeneratedDatasetsPath() {
-		return generatedDatasetsPath;
-	}
-
-	public void setGeneratedDatasetsPath(String generatedDatasetsPath) {
-		this.generatedDatasetsPath = generatedDatasetsPath;
 	}
 
 }
