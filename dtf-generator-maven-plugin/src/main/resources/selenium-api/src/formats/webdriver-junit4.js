@@ -145,8 +145,12 @@ function pause(milliseconds) {
   return "Thread.sleep(" + parseInt(milliseconds, 10) + ");";
 }
 
+/* Modified:
+ * Deleted function
+ */
 function echo(message) {
-  return "System.out.println(" + xlateArgument(message) + ");";
+	//return "System.out.println(" + xlateArgument(message) + ");";
+	return 'log("'+message+'");';
 }
 
 function formatComment(comment) {
@@ -312,7 +316,7 @@ options.header =
         "import org.openqa.selenium.ie.InternetExplorerDriver;\n" +
         "import org.openqa.selenium.safari.SafariDriver;\n" +
         "import org.openqa.selenium.support.ui.Select;\n" +
-        "import com.dextratech.dtf.${superClass};\n"+
+        "import com.dextratech.dtf.selenium.${superClass};\n"+
     	"import com.dextratech.dtf.exception.DextraSeleniumException;\n"+
         "\n" +
         "public class ${className} extends ${superClass} {\n" +
@@ -329,8 +333,9 @@ options.header =
 		indents(2) + 'testName = "${testName}";\n' +
         indents(2) + "${driver}\n" +
         indents(2) + "baseUrl = \"${baseURL}\";\n" +
-        indents(2) + "driver.manage().timeouts().implicitlyWait(${timeout}, TimeUnit.SECONDS);\n" +
-        indents(2) + 'screenshotDirectory = "${screenshotsDirectory}/";\n\n' +
+        indents(2) + "driver.manage().timeouts().implicitlyWait(${timeout}, TimeUnit.MILLISECONDS);\n" +
+        indents(2) + 'screenshotDirectory = "${screenshotsDirectory}/";\n' +
+        indents(2) + 'init();\n\n' +
         indents(1) + "}\n" +
         indents(0) + "\n" +
         indents(1) + "@Test\n" +
@@ -361,6 +366,7 @@ options.footer =
         indents(2) + "if (!\"\".equals(verificationErrorString)) {\n" +
         indents(3) + "fail(verificationErrorString);\n" +
         indents(2) + "}\n" +
+        indents(2) + 'destroy();\n' +
         indents(1) + "}\n" +
         indents(0) + "\n" +
         indents(1) + "private void runAfterErrorCommands() {\n" +

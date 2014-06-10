@@ -11,6 +11,8 @@ Developed by Dextra Technologies www.dextratech.com
 	<timeout>80000</timeout>
 	<speed>500</speed>
 
-	<testsuite name="find-owners" run="true" fileName="findOwners.xml" dbRestore="true" dbSnapshot="false"/>
+	<testsuite name="find-owners" run="false" fileName="findOwners.xml" dbRestore="true" dbSnapshot="false"/>
+	
+	<testsuite name="testOnload" run="true" fileName="test-onload.xml" dbRestore="false" dbSnapshot="false"/>
 	
 </configuration>

@@ -8,7 +8,7 @@ import java.text.MessageFormat;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.dextratech.dtf.SeleniumCommand;
+import com.dextratech.dtf.common.SeleniumCommand;
 
 /**
  * @author <a href="mailto:jorge.ruiz.aquino@gmail.com">Jorge Ruiz Aquino<a>

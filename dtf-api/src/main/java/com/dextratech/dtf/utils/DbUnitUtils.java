@@ -23,7 +23,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 
-import com.dextratech.dtf.Constants;
+import com.dextratech.dtf.common.Constants;
 
 /**
  * A util class with convenience methods for perform database unit testing operations.

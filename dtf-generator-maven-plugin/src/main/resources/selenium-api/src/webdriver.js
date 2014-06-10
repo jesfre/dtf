@@ -889,11 +889,19 @@ SeleniumWebDriverAdaptor.prototype.select = function(elementLocator, label) {
 //};
 
 /* Modified:
- * 
+ * New function
  */
 SeleniumWebDriverAdaptor.prototype.captureScreenshot = function(locator, text) {
 	var filePath = xlateArgument(this.rawArgs[0]);
-	return 'captureScreenshot('+filePath+');';
+	return 'captureScreenshot('+filePath+')';
+};
+
+/* Modified:
+ * New function
+ */
+SeleniumWebDriverAdaptor.prototype.log = function(locator, text) {
+	var message = xlateArgument(this.rawArgs[0]);
+	return 'log('+message+')';
 };
 
 function WDAPI() {

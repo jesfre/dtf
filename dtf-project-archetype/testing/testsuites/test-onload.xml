@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns="http://www.dextratech.com/testsuite" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dextratech.com/testsuite ../../src/test/resources/testsuite.xsd ">
+
+	<!-- Names must be valid for [a-zA-Z_$][a-zA-Z_$0-9\s]* -->
+
+	<name>Onload</name>
+	
+	<testcase name="find_owners" url="/owners/find.html" run="true" success="true">
+		<action actionType="echo" locatorValue="logging????????" />
+	</testcase>
+	
+	<testcase name="testing_onload" url="/" run="true" success="true">
+		<assert type="assertAlertPresent" param1="Okas"/>
+		<assert type="assertAlertPresent" param1="Ok"/>
+		<action actionType="click" locatorType="link" locatorValue="Add Owner"/>
+		<assert type="assertTextPresent" param1="New Owner"/>
+		<captureScreenshot/>
+	</testcase>
+
+	<validationRules>
+	</validationRules>
+</testsuite>

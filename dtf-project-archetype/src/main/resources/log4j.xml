@@ -3,10 +3,39 @@
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
+	<appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="testing/logs/plugin.log" />
+        <param name="Append" value="true" />
+        <param name="Threshold" value="trace" />
+        <param name="MaxFileSize" value="5MB" />
+        <param name="MaxBackupIndex" value="10"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{HH:mm:ss,SSS} %p [%t] %c{1}.%M(%L) | %m%n" />
+        </layout>
+    </appender>
+    
+    <appender name="FILE_RUNNER" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="testing/logs/testsuites.log" />
+        <param name="Append" value="true" />
+        <param name="Threshold" value="trace" />
+        <param name="MaxFileSize" value="5MB" />
+        <param name="MaxBackupIndex" value="10"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{HH:mm:ss,SSS} %p [%x] | %m%n" />
+        </layout>
+    </appender>
+
     <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
                 value="%d{HH:mm:ss,SSS} %p [%t] %c{1}.%M(%L) | %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="CONSOLE_RUNNER" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%d{HH:mm:ss,SSS} %p [%x] | %m%n"/>
         </layout>
     </appender>
     
@@ -48,13 +77,35 @@
         <level value="WARN"/>
     </logger>
    
-    <logger name="com.dextratech.dtf">
+    <logger name="com.dextratech.dtf.common">
         <level value="trace"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </logger>
+    <logger name="com.dextratech.dtf.exception">
+        <level value="trace"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </logger>
+    <logger name="com.dextratech.dtf.utils">
+        <level value="trace"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </logger>
+    <logger name="com.dextratech.dtf.xml">
+        <level value="trace"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </logger>
+    
+     <logger name="com.dextratech.dtf.selenium">
+        <level value="trace"/>
+		<appender-ref ref="CONSOLE_RUNNER"/>
+		<appender-ref ref="FILE_RUNNER"/>
     </logger>
 
     <root>
         <level value="WARN"/>
-        <appender-ref ref="CONSOLE"/>
     </root>
 
 </log4j:configuration>

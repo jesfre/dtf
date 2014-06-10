@@ -252,6 +252,8 @@
 						<id>integration</id>
 						<phase>process-test-resources</phase>
 						<goals>
+						<!-- 
+						 -->
 							<goal>clean</goal>
 							<goal>xml-testsuites</goal>
 						</goals>
@@ -418,7 +420,7 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.14</version>
+			<version>1.2.17</version>
 		</dependency>
 
 		<!-- Test dependencies -->
