@@ -1,3 +1,6 @@
+/*
+ * Here is where all HTML Selenese commands (formated into formatedSeleniumCommandList) are converted into Java statements.
+ */
 var testCase = new TestCase(className);
     
 var commands = [];
@@ -52,6 +55,9 @@ if(dbSnapshot)
 	testCase.dbSnapshot = dbSnapshot;
 if(dbRestore)
 	testCase.dbRestore = dbRestore;
+/*
+ * Formatting JS commands in testCase to Java code
+ */
 testCase = format(testCase);
 var result = testCase.toString();
 

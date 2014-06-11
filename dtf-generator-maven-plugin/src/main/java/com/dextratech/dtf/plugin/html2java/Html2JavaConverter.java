@@ -3,12 +3,14 @@
 //
 package com.dextratech.dtf.plugin.html2java;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,9 +18,11 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.xml.bind.JAXBException;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.apache.commons.logging.Log;
@@ -132,11 +136,23 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 	 */
 	protected String customJs = null;
 
+	/** 
+	 * The user extensions scripts directory 
+	 * @parameter expression="${userExtensions-dir}"
+	 */
+	protected String userExtensionsScriptsDir = null;
+
 	/**
 	 * Paths to Javascript files to be loaded
 	 * @parameter
 	 */
 	protected String webdriverJs = null;
+
+	/** The engine. */
+	protected ScriptEngine engine = null;
+
+	/** The engine's context. */
+	protected ScriptContext context = null;
 
 	@Override
 	abstract public void execute() throws MojoExecutionException, MojoFailureException;
@@ -314,7 +330,7 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 	protected String convertTestCase(TestHtmlParser testParser, String testName, String className, String testBasePackage, boolean dbSnapshot, boolean dbRestore) {
 		try {
 			ScriptEngineManager manager = new ScriptEngineManager();
-			ScriptEngine engine = manager.getEngineByName("rhino");
+			engine = manager.getEngineByName("rhino");
 			engine.put("out", System.out);
 			engine.put("log", LogFactory.getLog(JavascriptLogger.class));
 
@@ -374,13 +390,13 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 			if (speed >= 0)
 				engine.put("speed", speed);
 
-			ScriptContext context = engine.getContext();
+			context = engine.getContext();
 
 			InputStream isJs = this.getClass().getResourceAsStream(toolsJs);
 			InputStreamReader isr = new InputStreamReader(isJs);
 			Object result = engine.eval(isr, context);
 
-			// Load every util script in the directory
+			// Load every utility script in the directory
 			if (StringUtils.isNotBlank(seleniumScriptsDir)) {
 				List<String> filenames = new ArrayList<String>();
 				filenames.add("customUtils.js");
@@ -388,91 +404,48 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 				for (String filename : filenames) {
 					String utilPath = seleniumScriptsDir + filename;
 					isJs = this.getClass().getResourceAsStream(utilPath);
-					if (isJs != null) {
-						isr = new InputStreamReader(isJs);
-						log.trace("Evaluating " + utilPath);
-						result = engine.eval(isr, context);
-						log.trace("Loaded " + utilPath);
-					} else {
-						log.warn("Can't load " + utilPath);
-					}
+					result = loadAndEvalScript(isJs, result, utilPath);
 				}
 			}
 
 			// TODO enhance this to load a map of resources instead of each resource one by one.
 			if (StringUtils.isNotBlank(webdriverJs)) {
 				isJs = this.getClass().getResourceAsStream(webdriverJs);
-				if (isJs != null) {
-					isr = new InputStreamReader(isJs);
-					log.trace("Evaluating " + webdriverJs);
-					result = engine.eval(isr, context);
-					log.debug("Loaded " + webdriverJs);
-				} else {
-					log.debug("Can't load " + webdriverJs);
-				}
+				result = loadAndEvalScript(isJs, result, webdriverJs);
 			}
 
 			if (StringUtils.isNotBlank(remoteControlJs)) {
 				isJs = this.getClass().getResourceAsStream(remoteControlJs);
-				if (isJs != null) {
-					isr = new InputStreamReader(isJs);
-					log.trace("Evaluating " + remoteControlJs);
-					result = engine.eval(isr, context);
-					log.debug("Loaded " + remoteControlJs);
-				} else {
-					log.debug("Can't load " + remoteControlJs);
-				}
+				result = loadAndEvalScript(isJs, result, remoteControlJs);
 			}
 
 			isJs = this.getClass().getResourceAsStream(testCaseJs);
-			if (isJs != null) {
-				isr = new InputStreamReader(isJs);
-				log.trace("Evaluating " + testCaseJs);
-				result = engine.eval(isr, context);
-				log.debug("Loaded " + testCaseJs);
-			} else {
-				log.debug("Can't load " + testCaseJs);
-			}
+			result = loadAndEvalScript(isJs, result, testCaseJs);
 
 			isJs = this.getClass().getResourceAsStream(fmtCommndAdapterJs);
-			if (isJs != null) {
-				isr = new InputStreamReader(isJs);
-				log.trace("Evaluating " + fmtCommndAdapterJs);
-				result = engine.eval(isr, context);
-				log.debug("Loaded " + fmtCommndAdapterJs);
-			} else {
-				log.debug("Can't load " + fmtCommndAdapterJs);
-			}
+			result = loadAndEvalScript(isJs, result, fmtCommndAdapterJs);
 
 			isJs = this.getClass().getResourceAsStream(formatJs);
-			if (isJs != null) {
-				isr = new InputStreamReader(isJs);
-				log.trace("Evaluating " + formatJs);
-				result = engine.eval(isr, context);
-				log.debug("Loaded " + formatJs);
-			} else {
-				log.debug("Can't load " + formatJs);
-			}
+			result = loadAndEvalScript(isJs, result, formatJs);
 
 			isJs = this.getClass().getResourceAsStream(xJunitJsApi);
-			if (isJs != null) {
-				isr = new InputStreamReader(isJs);
-				log.trace("Evaluating " + xJunitJsApi);
-				result = engine.eval(isr, context);
-				log.debug("Loaded " + xJunitJsApi);
-			} else {
-				log.debug("Can't load " + xJunitJsApi);
+			result = loadAndEvalScript(isJs, result, xJunitJsApi);
+
+			// Loads every JS file from <userExtensionsScriptsDir> as an user extension
+			if (StringUtils.isNotBlank(userExtensionsScriptsDir)) {
+				File userExtensionsScriptsDirFile = new File(userExtensionsScriptsDir);
+				Iterator<File> fileIterator = FileUtils.iterateFiles(userExtensionsScriptsDirFile, new String[] { "js" }, true);
+				while (fileIterator.hasNext()) {
+					File extensionFile = fileIterator.next();
+					log.trace("Found user extension [ " + extensionFile.getName() + " ]");
+					byte[] extensionFileBA = FileUtils.readFileToByteArray(extensionFile);
+					isJs = new ByteArrayInputStream(extensionFileBA);
+					result = loadAndEvalScript(isJs, result, extensionFile.getAbsolutePath());
+				}
 			}
 
 			isJs = this.getClass().getResourceAsStream(customJs);
-			if (isJs != null) {
-				isr = new InputStreamReader(isJs);
-				log.trace("Evaluating " + customJs);
-				result = engine.eval(isr, context);
-				log.debug("Loaded " + customJs);
-			} else {
-				log.debug("Can't load " + customJs);
-			}
+			result = loadAndEvalScript(isJs, result, customJs);
 
 			String javaCode = (String) result;
 			return javaCode;
@@ -481,6 +454,28 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * Loads and evaluates the script from input stream.
+	 *
+	 * @param isJs the is js
+	 * @param result the result
+	 * @param scriptFilePath the script file path
+	 * @return the result with the evaluation
+	 * @throws ScriptException the script exception
+	 */
+	protected Object loadAndEvalScript(InputStream isJs, Object result, String scriptFilePath) throws ScriptException {
+		InputStreamReader isr;
+		if (isJs != null) {
+			isr = new InputStreamReader(isJs);
+			log.trace("Evaluating " + scriptFilePath);
+			result = engine.eval(isr, context);
+			log.debug("Loaded " + scriptFilePath);
+		} else {
+			log.error("Can't load " + scriptFilePath);
+		}
+		return result;
 	}
 
 	/**
@@ -597,6 +592,14 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 
 	public void setCustomJs(String customJs) {
 		this.customJs = customJs;
+	}
+
+	public String getUserExtensionsScriptsDir() {
+		return userExtensionsScriptsDir;
+	}
+
+	public void setUserExtensionsScriptsDir(String userExtensionsScriptsDir) {
+		this.userExtensionsScriptsDir = userExtensionsScriptsDir;
 	}
 
 	public String getPrefix() {

@@ -5,15 +5,11 @@
 
 	<name>Onload</name>
 	
-	<testcase name="find_owners" url="/owners/find.html" run="true" success="true">
+	<testcase name="testing_alert_onload" url="/" run="true" success="true">
 		<action actionType="echo" locatorValue="logging??????	??" />
-	</testcase>
-
-	<testcase name="testing_onload" url="/" run="true" success="true">
 		<action actionType="getAlert" additionalParameter="algo"/>
 		<action actionType="click" locatorType="link" locatorValue="Find owners"/>
 		<assert type="assertTextPresent" param1="Find Owners"/>
-		<assert type="assertAlertPresent" param1="XXXXXXX"/>
 		<captureScreenshot/>
 	</testcase>
 

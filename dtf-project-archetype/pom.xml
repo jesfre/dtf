@@ -46,6 +46,7 @@
 		<generated-screenshots-dir>${basedir}/testing/generated/screenshots</generated-screenshots-dir>
 		<generated-reports-dir>${basedir}/testing/generated/reports</generated-reports-dir>
 		<generated-java-testsuites-dir>${basedir}/src/test/java</generated-java-testsuites-dir>
+		<userExtensions-dir>${basedir}/testing/conf/user-extensions</userExtensions-dir>
 
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<hibernate.version>3.6.1.Final</hibernate.version>
