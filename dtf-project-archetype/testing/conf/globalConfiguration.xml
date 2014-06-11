@@ -7,7 +7,9 @@ Developed by Dextra Technologies www.dextratech.com
 -->
 
 	<appUrl>http://localhost:9966/petclinic/</appUrl>
+	<!-- 
 	<browser name="*googlechrome" executablePath="E:\\dev\\projects\\titulacion\\sources\\chrome-drivers\\chromedriver.exe"/>
+	 -->
 	<timeout>80000</timeout>
 	<speed>500</speed>
 

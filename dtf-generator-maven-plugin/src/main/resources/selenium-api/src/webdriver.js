@@ -443,6 +443,9 @@ CallSelenium.prototype.toString = function() {
   return result;
 };
 
+/* Modified:
+ * Added handling for getAlert, and throwing an error if the particular getXXX doesn't exist.
+ */
 function formatCommand(command) {
   var line = null;
   try {
@@ -485,6 +488,13 @@ function formatCommand(command) {
             eq = seleniumEquals(def.returnType, extraArg, call);
             if (def.negative) eq = eq.invert();
             line = waitFor(eq);
+          } else if (command.command.match(/^getAlert/)) {
+        	  /*
+        	   * Only closes the alert.
+        	   */
+        	  line = statement(call, command);
+          } else {
+        	  throw 'unknown command [' + command.command + ']';
           }
         }
       } else if (this.pause && 'pause' == command.command) {
@@ -538,7 +548,7 @@ function formatCommand(command) {
       }
     }
   } catch(e) {
-    this.log.error("Caught exception: [" + e + "]");
+    this.log.error("[ERROR] Caught exception: [" + e + "]");
     // TODO
 //    var call = new CallSelenium(command.command);
 //    if ((command.target != null && command.target.length > 0)

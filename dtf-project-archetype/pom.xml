@@ -17,6 +17,11 @@
 	</developers>
 	
 	<properties>
+		<!-- Configuration for DTF clean task -->
+		<dtf.plugin.clean.testsuites>true</dtf.plugin.clean.testsuites>
+		<dtf.plugin.clean.java>true</dtf.plugin.clean.java>
+		<dtf.plugin.clean.screenshots>true</dtf.plugin.clean.screenshots>
+	
 		<!-- NOT_NEEDED_TO_CONFIGURE - START -->
 		<!-- Default values for dtf-maven-plugin -->
 		<dtf.plugin.verbose>true</dtf.plugin.verbose>
@@ -31,11 +36,6 @@
 		<!-- 
 		<dtf.plugin.format>JUnit4RC</dtf.plugin.format>
 		 -->
-		 
-		<!-- Configuration for DTF clean task -->
-		<dtf.plugin.clean.testsuites>true</dtf.plugin.clean.testsuites>
-		<dtf.plugin.clean.java>true</dtf.plugin.clean.java>
-		<dtf.plugin.clean.screenshots>true</dtf.plugin.clean.screenshots>
 		
 		<selenium.suite>src/test/selenium/testSuite1.html</selenium.suite>
 		<selenium.startURL>http://google.com.mx</selenium.startURL>
@@ -181,9 +181,9 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<echo level="info">Loading report in ${project.build.directory}/site/surefire-report.html</echo>
+								<echo level="info">Loading report in ${generated-reports-dir}/surefire-report.html</echo>
 								<exec executable="${report.browser}" spawn="true">
-									<arg value="${project.build.directory}/site/surefire-report.html"/>
+									<arg value="${generated-reports-dir}/surefire-report.html"/>
 								</exec>
 							</tasks>
 						</configuration>
@@ -255,9 +255,9 @@
 						<phase>process-test-resources</phase>
 						<goals>
 						<!-- 
+						 -->
 							<goal>clean</goal>
 							<goal>xml-testsuites</goal>
-						 -->
 						</goals>
 						<configuration>
 							<verbose>${dtf.plugin.verbose}</verbose>
@@ -430,11 +430,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8</version>
-		</dependency>
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>6.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.dbunit</groupId>

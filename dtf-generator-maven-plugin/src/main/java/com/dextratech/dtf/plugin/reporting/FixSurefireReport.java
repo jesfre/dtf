@@ -34,7 +34,7 @@ public class FixSurefireReport extends AbstractMojo {
 
 	/**
 	 * The surefire-report html file.
-	 * @parameter expression="${project.build.directory}/site/surefire-report.html"
+	 * @parameter expression="${generated-reports-dir}/surefire-report.html"
 	 */
 	private String surefireReportPath;
 
@@ -42,7 +42,8 @@ public class FixSurefireReport extends AbstractMojo {
 	 * @see org.apache.maven.plugin.Mojo#execute()
 	 */
 	public void execute() throws MojoExecutionException {
-		log.debug("Fixing Surefire reports...");
+		log.info("Fixing Surefire reports...");
+		log.debug("Using path for final report [ " + surefireReportPath + " ]");
 		try {
 			String jqueryScript = "<script type=\"text/javascript\" src=\"scripts/jquery-1.7.2.min.js\"></script>";
 			String functionsScript = "<script type=\"text/javascript\" src=\"scripts/functions.js\"></script>";
@@ -52,7 +53,7 @@ public class FixSurefireReport extends AbstractMojo {
 			File surefireReportFile = new File(surefireReportPath);
 			FileUtils.writeLines(surefireReportFile, lines, true);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 	}
 

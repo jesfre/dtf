@@ -10,10 +10,10 @@
 	</testcase>
 
 	<testcase name="testing_onload" url="/" run="true" success="true">
-		<assert type="assertAlertPresent" param1="Okas"/>
-		<assert type="assertAlertPresent" param1="Ok"/>
-		<action actionType="click" locatorType="link" locatorValue="Add Owner"/>
-		<assert type="assertTextPresent" param1="New Owner"/>
+		<action actionType="getAlert" additionalParameter="algo"/>
+		<action actionType="click" locatorType="link" locatorValue="Find owners"/>
+		<assert type="assertTextPresent" param1="Find Owners"/>
+		<assert type="assertAlertPresent" param1="XXXXXXX"/>
 		<captureScreenshot/>
 	</testcase>
 

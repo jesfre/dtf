@@ -11,7 +11,6 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.Level;
 import org.apache.log4j.NDC;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -114,7 +113,7 @@ public class DextraWebDriverTestCase {
 
 	/**
 	 * @param screenshotFileName
-	 * @return
+	 * @return the path to the screenshot file.
 	 */
 	public String captureScreenshot(String screenshotFileName) {
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -127,22 +126,22 @@ public class DextraWebDriverTestCase {
 			log.error("Can't create screenshot for [ " + screenshotFileName + " ]");
 			log.error(e.getMessage(), e);
 		}
-		return screenshotFileName;
+		return filePath;
 	}
 
 	/**
-	 * @return
+	 * @return the path to the screenshot file.
 	 */
 	public String captureExceptionScreenshot() {
 		String screenshotFileName = "error-" + getTestName() + ".png";
-		captureScreenshot(screenshotFileName);
-		return screenshotFileName;
+		String screenshotfilePath = captureScreenshot(screenshotFileName);
+		return screenshotfilePath;
 	}
 
 	/**
 	 * Creates a message for a Dextra Selenium Exception and fires it.
 	 * @param e
-	 * @param screenshotDirectory
+	 * @param screenshotFilePath
 	 * @throws DextraSeleniumException
 	 */
 	public void fireDextraSeleniumException(Throwable e, String screenshotFilePath) throws DextraSeleniumException {
