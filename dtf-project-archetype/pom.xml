@@ -78,10 +78,6 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
-			<resource>
-				<directory>src/test/resources/config</directory>
-				<filtering>true</filtering>
-			</resource>
 		</resources>
 		<plugins>
 			<plugin>
@@ -191,6 +187,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!--
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>selenium-maven-plugin</artifactId>
@@ -255,10 +252,10 @@
 						<id>integration</id>
 						<phase>process-test-resources</phase>
 						<goals>
-						<!-- 
-						 -->
+						<!  
 							<goal>clean</goal>
 							<goal>xml-testsuites</goal>
+						 >
 						</goals>
 						<configuration>
 							<verbose>${dtf.plugin.verbose}</verbose>
@@ -271,7 +268,7 @@
 							<goal>fix-surefire-reports</goal>
 						</goals>
 					</execution>
-					<!-- 
+					<!
 					<execution>
 						<id>clean</id>
 						<phase>clean</phase>
@@ -279,9 +276,10 @@
 							<goal>clean</goal>
 						</goals>
 					</execution>
-					 -->
+					  >
 				</executions>
 			</plugin>
+			-->
 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -430,7 +428,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.8</version>
+			<version>4.11</version>
 		</dependency>
 		<dependency>
 			<groupId>org.dbunit</groupId>
