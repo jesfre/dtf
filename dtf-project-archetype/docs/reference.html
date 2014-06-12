@@ -13,6 +13,12 @@ $(document).ready(function(){
 	$('#div_extending').hide();
 	$('dt strong').parent().next('dd').toggle();
 	
+	$('#a_concepts').css('cursor', 'pointer');
+	$('#a_parameter').css('cursor', 'pointer');
+	$('#a_whitespace').css('cursor', 'pointer');
+	$('#a_extending').css('cursor', 'pointer');
+	$('dt strong').css('cursor', 'pointer');
+	
 	$('#a_concepts').click(function(){
 		$('#div_concepts').toggle('slow');
 	});
@@ -31,6 +37,21 @@ $(document).ready(function(){
 	
 	$('dt strong').click(function(){
 		$(this).parent().next('dd').toggle('slow');
+	});
+	
+	/*
+	 * If an anchor is clicked and the HREF attribute is one of these, 
+	 * then show the div_concepts block and navigate to the referenced element
+	 */
+	$('a').click(function(){
+		var href = $(this).attr('href');
+		if(href == '#locators') {
+			$('#div_concepts').show();
+		} else if(href == '#element-filters') {
+			$('#div_concepts').show();
+		} else if(href == '#patterns') {
+			$('#div_concepts').show();
+		}
 	});
 });
 </script>
