@@ -8,11 +8,25 @@
 	<testcase name="testing_alert_onload" url="/" run="true" success="true">
 		<action actionType="echo" locatorValue="logging??????	??" />
 		<action actionType="getAlert" additionalParameter="algo"/>
+		<include componentName="micomp"/>
+		<field name="algo">
+			<validateFunctionRef functionRefId="fnASD"/>
+		</field>
+		<afterErrorActions>
+			<action actionType="echo" locatorValue="AN AFTER ERROR ACTION"/>
+			<captureScreenshot/>
+		</afterErrorActions>
+	</testcase>
+	
+	<component name="micomp">
 		<action actionType="click" locatorType="link" locatorValue="Find owners"/>
 		<assert type="assertTextPresent" param1="Find Owners"/>
 		<captureScreenshot/>
-	</testcase>
+	</component>
 
 	<validationRules>
+		<function type="string" id="fnASD" valid="true">
+			<value>ok</value>
+		</function>
 	</validationRules>
 </testsuite>

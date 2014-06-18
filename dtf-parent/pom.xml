@@ -16,6 +16,8 @@
   
   <properties>
   		<selenium-version>2.40.0</selenium-version>
+  		<dtf-api.version>2.0.0</dtf-api.version>
+  		<dtf-generator-maven-plugin.version>2.0.0</dtf-generator-maven-plugin.version>
   </properties>
   
 </project>

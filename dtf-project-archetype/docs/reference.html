@@ -11,7 +11,7 @@ $(document).ready(function(){
 	$('#div_parameter').hide();
 	$('#div_whitespace').hide();
 	$('#div_extending').hide();
-	$('dt strong').parent().next('dd').toggle();
+	$('dt strong').parent().next('dd').hide();
 	
 	$('#a_concepts').css('cursor', 'pointer');
 	$('#a_parameter').css('cursor', 'pointer');
@@ -52,6 +52,14 @@ $(document).ready(function(){
 		} else if(href == '#patterns') {
 			$('#div_concepts').show();
 		}
+	});
+	
+	$('#expandall').click(function(){
+		$('dt strong').parent().next('dd').show();
+	});
+	
+	$('#collapseall').click(function(){
+		$('dt strong').parent().next('dd').hide();
 	});
 });
 </script>
@@ -297,7 +305,7 @@ $(document).ready(function(){
 			usual, at the beginning of the pattern.</p>
 	</div>
 	<a name="actions"></a>
-	<h2>Selenium Actions</h2>
+	<h2>Selenium Actions</h2> <a href="#" id="expandall">Expand All</a> | <a href="#" id="collapseall">Collapse All</a>
 	<dl>
 		<dt>
 			<strong><a name="addLocationStrategy"></a>addLocationStrategy

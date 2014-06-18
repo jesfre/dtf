@@ -2,11 +2,11 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2014.06.17 a las 10:41:31 PM CDT 
+// Generado el: 2014.06.17 a las 10:30:58 PM CDT 
 //
 
 
-package com.dextratech.dtf.xml.testsuite;
+package com.dextratech.dtf.xml.configuration;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -19,22 +19,19 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
 
 /**
- * 
- * 				All command types have this basic format.
- * 			
- * 
- * <p>Clase Java para genericCommand complex type.
+ * <p>Clase Java para testsuite complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="genericCommand">
+ * &lt;complexType name="testsuite">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="target" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="value" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="errorStep" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" />
+ *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="fileName" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="dbSnapshot" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+ *       &lt;attribute name="dbRestore" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+ *       &lt;attribute name="run" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -43,18 +40,21 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "genericCommand")
-public class GenericCommand implements ToString
+@XmlType(name = "testsuite")
+public class Testsuite
+    implements ToString
 {
 
-    @XmlAttribute(name = "name")
+    @XmlAttribute(name = "name", required = true)
     protected String name;
-    @XmlAttribute(name = "target")
-    protected String target;
-    @XmlAttribute(name = "value")
-    protected String value;
-    @XmlAttribute(name = "errorStep")
-    protected Boolean errorStep;
+    @XmlAttribute(name = "fileName")
+    protected String fileName;
+    @XmlAttribute(name = "dbSnapshot")
+    protected Boolean dbSnapshot;
+    @XmlAttribute(name = "dbRestore")
+    protected Boolean dbRestore;
+    @XmlAttribute(name = "run")
+    protected Boolean run;
 
     /**
      * Obtiene el valor de la propiedad name.
@@ -81,79 +81,99 @@ public class GenericCommand implements ToString
     }
 
     /**
-     * Obtiene el valor de la propiedad target.
+     * Obtiene el valor de la propiedad fileName.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getTarget() {
-        return target;
+    public String getFileName() {
+        return fileName;
     }
 
     /**
-     * Define el valor de la propiedad target.
+     * Define el valor de la propiedad fileName.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setTarget(String value) {
-        this.target = value;
+    public void setFileName(String value) {
+        this.fileName = value;
     }
 
     /**
-     * Obtiene el valor de la propiedad value.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getValue() {
-        return value;
-    }
-
-    /**
-     * Define el valor de la propiedad value.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    /**
-     * Obtiene el valor de la propiedad errorStep.
+     * Obtiene el valor de la propiedad dbSnapshot.
      * 
      * @return
      *     possible object is
      *     {@link Boolean }
      *     
      */
-    public boolean isErrorStep() {
-        if (errorStep == null) {
-            return false;
-        } else {
-            return errorStep;
-        }
+    public Boolean isDbSnapshot() {
+        return dbSnapshot;
     }
 
     /**
-     * Define el valor de la propiedad errorStep.
+     * Define el valor de la propiedad dbSnapshot.
      * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
      *     
      */
-    public void setErrorStep(Boolean value) {
-        this.errorStep = value;
+    public void setDbSnapshot(Boolean value) {
+        this.dbSnapshot = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad dbRestore.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDbRestore() {
+        return dbRestore;
+    }
+
+    /**
+     * Define el valor de la propiedad dbRestore.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDbRestore(Boolean value) {
+        this.dbRestore = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad run.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRun() {
+        return run;
+    }
+
+    /**
+     * Define el valor de la propiedad run.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRun(Boolean value) {
+        this.run = value;
     }
 
     public String toString() {
@@ -177,19 +197,24 @@ public class GenericCommand implements ToString
             strategy.appendField(locator, this, "name", buffer, theName);
         }
         {
-            String theTarget;
-            theTarget = this.getTarget();
-            strategy.appendField(locator, this, "target", buffer, theTarget);
+            String theFileName;
+            theFileName = this.getFileName();
+            strategy.appendField(locator, this, "fileName", buffer, theFileName);
         }
         {
-            String theValue;
-            theValue = this.getValue();
-            strategy.appendField(locator, this, "value", buffer, theValue);
+            Boolean theDbSnapshot;
+            theDbSnapshot = this.isDbSnapshot();
+            strategy.appendField(locator, this, "dbSnapshot", buffer, theDbSnapshot);
         }
         {
-            boolean theErrorStep;
-            theErrorStep = ((this.errorStep!= null)?this.isErrorStep():false);
-            strategy.appendField(locator, this, "errorStep", buffer, theErrorStep);
+            Boolean theDbRestore;
+            theDbRestore = this.isDbRestore();
+            strategy.appendField(locator, this, "dbRestore", buffer, theDbRestore);
+        }
+        {
+            Boolean theRun;
+            theRun = this.isRun();
+            strategy.appendField(locator, this, "run", buffer, theRun);
         }
         return buffer;
     }
