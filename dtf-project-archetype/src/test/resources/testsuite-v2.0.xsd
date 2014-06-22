@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.dextratech.com/testsuite"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:ts="http://www.dextratech.com/testsuite">
+	
+	<include schemaLocation="xsd-parts-v2.0/testsuite-v2-actions.xsd"></include>
+
+	<element name="testsuite" type="ts:testsuite"></element>
+	<element name="validationFunctions" type="ts:validationRules"></element>
+	<element name="components" type="ts:components"></element>
+
+	<complexType name="components">
+		<sequence>
+			<element name="component" type="ts:component" maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="testsuite">
+		<sequence>
+			<element name="name" maxOccurs="1" minOccurs="1" type="ts:elementName">
+			</element>
+			<element name="testcase" type="ts:testcase"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+			<element name="component" type="ts:component"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+			<element name="validationRules" type="ts:validationRules" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="testcase">
+		<complexContent>
+			<extension base="ts:actionOption">
+				<sequence>
+					<element name="afterErrorActions" type="ts:actionOption" maxOccurs="1" minOccurs="0">
+						<annotation>
+							<documentation>
+								All fields and actions in the error actions element will be executed without accomplish none of the validation element or errorStep attribute, only valid values will be
+								considered.
+							</documentation>
+						</annotation>
+					</element>
+				</sequence>
+				<attribute name="name" type="ts:elementName">
+
+				</attribute>
+				<attribute name="url" type="string"></attribute>
+				<attribute name="success" type="boolean"></attribute>
+				<attribute name="run" type="boolean" default="true"></attribute>
+				<attribute name="runDefault" type="boolean" default="true"></attribute>
+				<attribute name="defaultAssert" type="ts:elementName"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="component">
+		<complexContent>
+			<extension base="ts:actionOption">
+				<attribute name="name" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="Field">
+		<sequence>
+            <element name="validValueDef" type="ts:validFieldValue" maxOccurs="1" minOccurs="0">
+            	<annotation>
+            		<documentation>Attribute validValue is mandatory over validValueDef, but only if validValue is present.</documentation>
+            	</annotation></element>
+            <choice maxOccurs="unbounded" minOccurs="0">
+				<element name="validate" type="ts:validation" maxOccurs="unbounded" minOccurs="0"></element>
+				<element name="validateFunction" type="ts:validationFunction" maxOccurs="unbounded" minOccurs="0"></element>
+				<element name="validateFunctionRef" type="ts:validationFunctionRef" maxOccurs="unbounded" minOccurs="0"></element>
+
+			</choice>
+		</sequence>
+		<attribute name="name" use="required" type="ts:elementName">
+			<annotation>
+				<documentation>
+					A name for this field to use in the report.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="locatorType" type="ts:locatorType" default="id">
+		</attribute>
+		<attribute name="locatorValue" type="string"></attribute>
+		<attribute name="validValue">
+            <annotation>
+            	<documentation>Attribute validValue is mandatory over validValueDef, but only if validValue is present.</documentation>
+            </annotation>
+            <simpleType>
+				<restriction base="string">
+					<minLength value="0"></minLength>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="errorStep" type="boolean" default="false"></attribute>
+	</complexType>
+
+	<complexType name="validation" mixed="true">
+		<annotation>
+			<documentation>The field and test case will had different behavior depending on the selected validation function.</documentation>
+		</annotation>
+		<attribute name="name" use="required" type="ts:elementName">
+
+		</attribute>
+		<attribute name="valid" type="boolean" default="true"></attribute>
+		<attribute name="assertId" type="ts:elementName"></attribute>
+	</complexType>
+
+	<simpleType name="locatorType">
+		<restriction base="string">
+			<enumeration value="id" />
+			<enumeration value="name" />
+			<enumeration value="css" />
+			<enumeration value="link" />
+			<enumeration value="xpath" />
+			<enumeration value="nothing" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="functionRef">
+        <annotation>
+        	<documentation></documentation>
+        </annotation>		<attribute name="functionRefId" use="required" type="ts:elementName">
+			<annotation>
+				<documentation>
+					Refers to the ID of a Function object. The valid
+					flag of the Function element wich the functionRefId
+					refers will be overriden.
+				</documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+
+	<complexType name="validationFunctionRef">
+		<complexContent>
+			<extension base="ts:functionRef">
+				<attribute name="name" use="optional" type="ts:elementName">
+					<annotation>
+						<documentation>Can be omited. Only functionRef elements allows empty or null name attribute. But, if the name is present, have precedence over functionRefId.</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="valid" type="boolean" default="true">
+					<annotation>
+						<documentation>Overrides the value of the valid attribute of the Function object wich one refers to.</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="assertId" type="ts:elementName"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="function">
+		<annotation>
+			<documentation><![CDATA[Prepare validation functions to use in the <validate> tag of the field elements in a test case.]]></documentation>
+		</annotation>
+		<choice maxOccurs="1" minOccurs="1">
+			<sequence maxOccurs="1" minOccurs="0">
+				<annotation>
+					<documentation></documentation>
+				</annotation>
+				<element name="pattern" type="string" maxOccurs="1"
+					minOccurs="1" block="substitution">
+					<annotation>
+						<documentation>Only useful when functionType=string is selected.
+						</documentation>
+					</annotation>
+				</element>
+			</sequence>
+			<sequence maxOccurs="1" minOccurs="0">
+				<element name="length" type="int" maxOccurs="1"
+					minOccurs="1">
+					<annotation>
+						<documentation>Represents a character or digit length for a value. Useful when functionType=string or integer or float is selected.
+						</documentation>
+					</annotation>
+				</element>
+			</sequence>
+			<sequence maxOccurs="1" minOccurs="0">
+				<element name="value" type="string" maxOccurs="1"
+					minOccurs="1">
+					<annotation>
+						<documentation>Can appear with any functionType for now. This is used to set a static value.
+						</documentation>
+					</annotation>
+				</element>
+			</sequence>
+			<sequence>
+				<element name="minValue" type="double" maxOccurs="1"
+					minOccurs="1">
+					<annotation>
+						<documentation>Only useful when functionType=integer or float is selected.
+						</documentation>
+					</annotation>
+				</element>
+				<element name="maxValue" type="double" maxOccurs="1"
+					minOccurs="1">
+					<annotation>
+						<documentation>Only useful when functionType=integer or float is selected.
+						</documentation>
+					</annotation>
+				</element>
+			</sequence>
+
+			<sequence maxOccurs="1" minOccurs="0">
+				<element name="dateFormat" maxOccurs="1" minOccurs="1" default="dd/MM/yyyy"
+					type="ts:dateFormat">
+                    <annotation>
+                    	<documentation>DateFormat element is used with function types: date, dateFormat and today.</documentation>
+                    </annotation>
+				</element>
+			</sequence>
+
+			<sequence maxOccurs="1" minOccurs="0"><element name="customDateFormat" type="string" maxOccurs="1" minOccurs="1">
+	<annotation>
+		<documentation>CustomDateFormat element is used with function types: date, dateFormat and today.</documentation>
+	</annotation></element></sequence>
+		</choice>
+		<attribute name="type" type="ts:functionType" use="required">
+			<annotation>
+				<documentation>
+					The inner elements mus be used considering the
+					function type used.
+				</documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+
+	<complexType name="validationFunction">
+		<complexContent>
+			<extension base="ts:function">
+				<attribute name="id" use="required" type="ts:elementName"></attribute>
+				<attribute name="valid" type="boolean" default="true"></attribute>
+				<attribute name="assertId" type="ts:elementName"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="validationRules">
+		<sequence>
+			<element name="function" type="ts:validationFunction"
+				maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<simpleType name="functionType">
+        <annotation>
+        	<documentation></documentation>
+        </annotation>
+        <restriction base="string">
+			<enumeration value="string"></enumeration>
+			<enumeration value="integer"></enumeration>
+			<enumeration value="float"></enumeration>
+			<enumeration value="date"></enumeration>
+			<enumeration value="dateTime"></enumeration>
+			<enumeration value="today"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="dateFormat">
+		<annotation>
+			<documentation>Based on these pattern rules:
+Letter	Date or Time Component					Presentation			Examples
+G		Era designator							Text					AD
+y		Year									Year					1996; 96
+Y		Week year								Year					2009; 09
+M		Month in year							Month					July; Jul; 07
+w		Week in year							Number					27
+W		Week in month							Number					2
+D		Day in year								Number					189
+d		Day in month							Number					10
+F		Day of week in month					Number					2
+E		Day name in week						Text					Tuesday; Tue
+u		Day number of week (1 = Monday, ..., 7 = Sunday)	Number			1
+a		Am/pm marker							Text					PM
+H		Hour in day (0-23)						Number					0
+k		Hour in day (1-24)						Number					24
+K		Hour in am/pm (0-11)					Number					0
+h		Hour in am/pm (1-12)					Number					12
+m		Minute in hour							Number					30
+s		Second in minute						Number					55
+S		Millisecond								Number					978
+z		Time zone								General time zone		Pacific Standard Time; PST; GMT-08:00
+Z		Time zone								RFC 822 time zone		-0800
+X		Time zone								ISO 8601 time zone		-08; -0800; -08:00
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="dd/MM/yyyy"></enumeration>
+			<enumeration value="yyyy.MM.dd"></enumeration>
+			<enumeration value="yyyy.MM.dd G 'at' HH:mm:ss z"></enumeration>
+			<enumeration value="h:mm a"></enumeration>
+			<enumeration value="hh 'o''clock' a, zzzz"></enumeration>
+			<enumeration value="K:mm a, z"></enumeration>
+			<enumeration value="EEE, MMM d, ''yy"></enumeration>
+			<enumeration value="EEE, d MMM yyyy HH:mm:ss Z"></enumeration>
+			<enumeration value="yyMMddHHmmssZ"></enumeration>
+			<enumeration value="yyyy-MM-dd"></enumeration>
+			<enumeration value="yyyy-MM-dd'T'HH:mm:ss.SSSZ"></enumeration>
+			<enumeration value="yyyy-MM-dd'T'HH:mm:ss.SSSXXX"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="elementName">
+		<restriction base="string">
+			<pattern value="[a-zA-Z_$][a-zA-Z_$0-9\s]*"></pattern>
+			<minLength value="1"></minLength>
+			<maxLength value="100"></maxLength>
+		</restriction>
+	</simpleType>
+
+	<complexType name="validFieldValue">
+		<sequence maxOccurs="1" minOccurs="1">
+
+			<choice maxOccurs="1" minOccurs="1">
+				<element name="literal" type="string" maxOccurs="1" minOccurs="1"></element>
+				<element name="function" type="ts:function" maxOccurs="1" minOccurs="1"></element>
+                <element name="functionRef" type="ts:functionRef" maxOccurs="1" minOccurs="1"></element>
+            </choice>
+
+		</sequence>
+	</complexType>
+
+</schema>

@@ -1,0 +1,1266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.dextratech.com/testsuite"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:ts="http://www.dextratech.com/testsuite">
+
+	<include schemaLocation="assertion-action.xsd"></include>
+	
+	<complexType name="actionOption">
+		<sequence>
+			<choice maxOccurs="unbounded" minOccurs="0">
+				<element name="field" type="ts:Field" maxOccurs="unbounded" minOccurs="0"></element>
+				<element name="custom" type="ts:GenericCommand" maxOccurs="unbounded" minOccurs="0"></element>
+				<element name="include" type="ts:Include" maxOccurs="unbounded" minOccurs="0"></element>
+				<element name="onload" type="ts:Onload" maxOccurs="unbounded" minOccurs="0"></element>
+				<element name="captureScreenshot" type="ts:CaptureScreenshot" maxOccurs="unbounded" minOccurs="0"></element>
+                <element name="assertion" type="ts:AssertionAction" maxOccurs="unbounded" minOccurs="0"></element>
+                <element name="echo" type="ts:Echo" maxOccurs="unbounded" minOccurs="0"></element>
+				
+				<!-- ACTIONS - START -->
+				<element name="addLocationStrategy" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="strategyName" type="string" use="required"></attribute>
+						<attribute name="functionDefinition" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="addScript" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="scriptContent" type="string" use="required"></attribute>
+						<attribute name="scriptTagId" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="addSelection" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="optionLocator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="allowNativeXpath" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="allow" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="answerOnNextPrompt" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="answer" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="assignId" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="identifier" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="break" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="check" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="chooseCancelOnNextConfirmation" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="chooseOkOnNextConfirmation" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="close" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="createCookie" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="nameValuePair" type="string" use="required"></attribute>
+						<attribute name="optionsString" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="deleteAllVisibleCookies" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="deleteCookie" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="name" type="string" use="required"></attribute>
+						<attribute name="optionsString" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="deselectPopUp" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="dragAndDrop" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="movementsString" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="dragAndDropToObject" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locatorOfObjectToBeDragged" type="string" use="required"></attribute>
+						<attribute name="locatorOfDragDestinationObject" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="dragdrop" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="movementsString" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="fireEvent" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="eventName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="focus" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="highlight" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="ignoreAttributesWithoutValue" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="ignore" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="open" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="url" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="openWindow" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="url" type="string" use="required"></attribute>
+						<attribute name="windowID" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="pause" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="waitTime" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="removeAllSelections" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="removeScript" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="scriptTagId" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="removeSelection" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="optionLocator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="rollup" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="rollupName" type="string" use="required"></attribute>
+						<attribute name="kwargs" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="runScript" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="script" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="select" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="selectLocator" type="string" use="required"></attribute>
+						<attribute name="optionLocator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="selectFrame" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="selectPopUp" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="windowID" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="selectWindow" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="windowID" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="setBrowserLogLevel" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="logLevel" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="setCursorPosition" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="position" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="setMouseSpeed" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="pixels" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="setSpeed" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="value" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="setTimeout" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="timeout" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="submit" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="formLocator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="type" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="value" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="typeKeys" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="value" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="uncheck" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="useXpathLibrary" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="libraryName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				
+				<!-- MOUSE ACTIONS - START -->
+				<element name="click" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="clickAndWait" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="clickAt" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="coordString" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="doubleClick" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="doubleClickAt" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="coordString" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="contextMenu" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="contextMenuAt" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="coordString" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="mouseDown" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="mouseDownAt" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="coordString" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="mouseDownRight" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="mouseDownRightAt" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="coordString" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="mouseMove" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="mouseMoveAt" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="coordString" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="mouseOut" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="mouseOver" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="mouseUp" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="mouseUpAt" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="coordString" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="mouseUpRight" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="mouseUpRightAt" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="coordString" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				
+				<!-- BROWSER ACTIONS - START -->
+				<element name="goBack" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="refresh" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="windowFocus" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="windowMaximize" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				
+				<!-- STORE ACTIONS - START -->
+				<element name="store" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="expression" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeAlert" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeAlertPresent" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeAllButtons" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeAllFields" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeAllLinks" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeAllWindowIds" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeAllWindowNames" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeAllWindowTitles" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeAttribute" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="attributeLocator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeAttributeFromAllWindows" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="attributeName" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeBodyText" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeChecked" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeConfirmation" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeConfirmationPresent" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeCookie" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeCookieByName" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="name" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeCookiePresent" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="name" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeCursorPosition" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeEditable" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeElementHeight" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeElementIndex" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeElementPositionLeft" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeElementPositionTop" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeElementPresent" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeElementWidth" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeEval" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="script" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeExpression" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="expression" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeHtmlSource" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeLocation" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeMouseSpeed" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storePrompt" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storePromptPresent" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeSelectedId" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="selectLocator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeSelectedIds" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="selectLocator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeSelectedIndex" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="selectLocator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeSelectedIndexes" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="selectLocator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeSelectedLabel" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="selectLocator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeSelectedLabels" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="selectLocator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeSelectedValue" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="selectLocator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeSelectedValues" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="selectLocator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeSelectOptions" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="selectLocator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeSomethingSelected" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="selectLocator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeSpeed" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeTable" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="tableCellAddress" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeText" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeTextPresent" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="pattern" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeTitle" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeValue" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeVisible" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="storeXpathCount" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="xpath" type="string" use="required"></attribute>
+						<attribute name="variableName" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				
+				<!-- KEY ACTIONS - START -->
+				<element name="altKeyDown" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="altKeyUp" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="controlKeyDown" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="controlKeyUp" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="metaKeyDown" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="metaKeyUp" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="shiftKeyDown" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="shiftKeyUp" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action"></extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="keyDown" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="keySequence" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="keyPress" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+						<attribute name="keySequence" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				<element name="keyUp" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="ts:Action">
+								<attribute name="locator" type="string" use="required"></attribute>
+								<attribute name="keySequence" type="string" use="required"></attribute>
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+				
+			</choice>
+		</sequence>
+	</complexType>
+	
+	<complexType name="Action">
+		<attribute name="errorStep" type="boolean" default="false"></attribute>
+	</complexType>
+	
+	<complexType name="Echo">
+		<attribute name="message" type="string" use="required"></attribute>
+	</complexType>
+	
+	<complexType name="CaptureScreenshot">
+		<attribute name="pngFilename" use="optional">
+			<simpleType>
+				<restriction base="string">
+					<minLength value="1"></minLength>
+					<maxLength value="50"></maxLength>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="directory" type="string"></attribute>
+	</complexType>
+
+	<complexType name="Include">
+		<attribute name="componentName" type="string"></attribute>
+	</complexType>
+
+	<complexType name="Onload">
+		<attribute name="action" type="ts:onloadAction" default="closeAlert">
+		</attribute>
+		<attribute name="errorStep" type="boolean" default="false"></attribute>
+	</complexType>
+
+	<simpleType name="onloadAction">
+		<restriction base="string">
+			<enumeration value="closeAlert" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="GenericCommand">
+		<annotation>
+			<documentation>
+				All command types have this basic format.
+			</documentation>
+		</annotation>
+		<attribute name="name" type="string"></attribute>
+		<attribute name="parameter1" type="string"></attribute>
+		<attribute name="parameter2" type="string"></attribute>
+		<attribute name="errorStep" type="boolean" default="false"></attribute>
+	</complexType>
+	
+</schema>

@@ -1,0 +1,11 @@
+isAlertPresent
+isChecked
+isConfirmationPresent
+isCookiePresent
+isEditable
+isElementPresent
+isOrdered
+isPromptPresent
+isSomethingSelected
+isTextPresent
+isVisible

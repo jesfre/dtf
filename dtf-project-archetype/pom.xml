@@ -206,9 +206,9 @@
 						<phase>process-test-resources</phase>
 						<goals>
 						<!--  
+						-->
 							<goal>clean</goal>
 							<goal>xml-testsuites</goal>
-						-->
 						</goals>
 						<configuration>
 							<verbose>${dtf.plugin.verbose}</verbose>

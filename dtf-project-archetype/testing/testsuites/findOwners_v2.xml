@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns="http://www.dextratech.com/testsuite" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dextratech.com/testsuite ../../src/test/resources/testsuite-v2.0.xsd ">
+
+	<!-- Names must be valid for [a-zA-Z_$][a-zA-Z_$0-9\s]* -->
+
+	<name>Alta de mascota</name>
+	
+	<testcase name="alta_1" url="/owners/find.html" run="true" success="true">
+		<echo message="Entrando a Alta de mascota!!!"/>
+		<clickAndWait locator="link=Add Owner"/>
+		<assertion type="assert">
+			<textPresent pattern="New Owner"/>
+		</assertion>
+		<captureScreenshot/>
+		<type locator="id=firstName" value="Eclipse"/>
+		<type locator="id=lastName" value="Ok"/>
+		<type locator="id=address" value="Miguel Hgo. #4"/>
+		<type locator="id=city" value="Jucho"/>
+		<type locator="id=telephone" value="1234567890"/>
+		<field name="firstNameField" locatorType="id" locatorValue="firstName">
+			<validValueDef><literal>algo</literal></validValueDef>
+			<validateFunction type="string" id="sapo">
+				<value>sapo</value>
+			</validateFunction>
+			<validate name="coco">coco</validate>
+		</field>
+		<captureScreenshot pngFilename="despues_de-guardar.png"/>
+		<clickAndWait locator="xpath=//*[@id='add-owner-form']/div[6]/button"/>
+		<assertion type="assert">
+			<textPresent pattern="Owner Information"/>
+		</assertion>
+		<captureScreenshot/>
+		
+	</testcase>
+
+	<validationRules>
+	</validationRules>
+</testsuite>

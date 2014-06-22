@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.dextratech.com/testsuite"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:ts="http://www.dextratech.com/testsuite">
+
+	<complexType name="AssertionAction">
+		<annotation>
+			<documentation>
+				An assertion may require one or two parameters,
+				depending on the type of the choosen assertion.
+			</documentation>
+		</annotation>
+		<choice maxOccurs="1" minOccurs="1">
+			<element name="alert" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="alertNotPresent" type="string" maxOccurs="1" minOccurs="0"></element>
+			<element name="alertPresent" type="string" maxOccurs="1" minOccurs="0"></element>
+			<element name="allButtons" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="allFields" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="allLinks" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="allWindowIds" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="allWindowNames" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="allWindowTitles" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="attribute" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="attributeLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="attributeFromAllWindows" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="attributeName" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="bodyText" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="checked" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="confirmation" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="confirmationNotPresent" type="string" maxOccurs="1" minOccurs="0"></element>
+			<element name="confirmationPresent" type="string" maxOccurs="1" minOccurs="0"></element>
+			<element name="cookie" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="cookieByName" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="name" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="cookieNotPresent" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="name" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="cookiePresent" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="name" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="cursorPosition" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="editable" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="elementHeight" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="elementIndex" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="elementNotPresent" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="elementPositionLeft" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="elementPositionTop" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="elementPresent" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="elementWidth" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="errorOnNext" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="message" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="eval" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="script" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="expression" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="expression" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="failureOnNext" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="message" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="htmlSource" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="location" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="mouseSpeed" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notAlert" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notAllButtons" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notAllFields" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notAllLinks" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notAllWindowIds" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notAllWindowNames" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notAllWindowTitles" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notAttribute" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="attributeLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notAttributeFromAllWindows" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="attributeName" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notBodyText" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notChecked" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notConfirmation" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notCookie" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notCookieByName" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="name" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notCursorPosition" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notEditable" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notElementHeight" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notElementIndex" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notElementPositionLeft" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notElementPositionTop" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notElementWidth" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notErrorOnNext" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="message" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notEval" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="script" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notExpression" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="expression" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notFailureOnNext" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="message" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notHtmlSource" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notLocation" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notMouseSpeed" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notOrdered" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator1" type="string" use="required"></attribute>
+					<attribute name="locator2" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notPrompt" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notSelected" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="optionLocator" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notSelectedId" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notSelectedIds" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notSelectedIndex" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notSelectedIndexes" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notSelectedLabel" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notSelectedLabels" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notSelectedValue" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notSelectedValues" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notSelectOptions" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notSomethingSelected" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notSpeed" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notTable" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="tableCellAddress" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notText" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notTitle" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notValue" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notVisible" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notWhetherThisFrameMatchFrameExpression" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="currentFrameString" type="string" use="required"></attribute>
+					<attribute name="target" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notWhetherThisWindowMatchWindowExpression" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="currentWindowString" type="string" use="required"></attribute>
+					<attribute name="target" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="notXpathCount" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="xpath" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="ordered" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator1" type="string" use="required"></attribute>
+					<attribute name="locator2" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="prompt" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="promptNotPresent" type="string" maxOccurs="1" minOccurs="0"></element>
+			<element name="promptPresent" type="string" maxOccurs="1" minOccurs="0"></element>
+			<element name="selected" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="optionLocator" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="selectedId" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="selectedIds" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="selectedIndex" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="selectedIndexes" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="selectedLabel" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="selectedLabels" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="selectedValue" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="selectedValues" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="selectOptions" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="somethingSelected" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="selectLocator" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="speed" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="table" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="tableCellAddress" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="text" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="textNotPresent" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="textPresent" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="title" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="value" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="visible" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="locator" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="whetherThisFrameMatchFrameExpression" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="currentFrameString" type="string" use="required"></attribute>
+					<attribute name="target" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="whetherThisWindowMatchWindowExpression" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="currentWindowString" type="string" use="required"></attribute>
+					<attribute name="target" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+			<element name="xpathCount" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<attribute name="xpath" type="string" use="required"></attribute>
+					<attribute name="pattern" type="string" use="required"></attribute>
+				</complexType>
+			</element>
+		</choice>
+		<attribute name="id" type="ts:elementName"></attribute>
+		<attribute name="type" type="ts:AssertionType" use="required"></attribute>
+		<attribute name="errorStep" type="boolean" default="false"></attribute>
+	</complexType>
+	
+	<simpleType name="AssertionType">
+		<restriction base="string">
+			<enumeration value="assert" />
+			<enumeration value="verify" />
+			<enumeration value="waitFor" />
+		</restriction>
+	</simpleType>
+	
+</schema>

@@ -3,6 +3,9 @@
  */
 package com.dextratech.dtf.plugin.testsuite.generator.builder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -10,18 +13,13 @@ import org.apache.commons.logging.LogFactory;
 import com.dextratech.dtf.common.SeleniumCommand;
 import com.dextratech.dtf.common.SeleniumCommand.Type;
 import com.dextratech.dtf.plugin.testsuite.generator.FunctionRegistry;
-import com.dextratech.dtf.xml.testsuite.Action;
 import com.dextratech.dtf.xml.testsuite.CaptureScreenshot;
-import com.dextratech.dtf.xml.testsuite.Field;
-import com.dextratech.dtf.xml.testsuite.GenericCommand;
-import com.dextratech.dtf.xml.testsuite.LocatorType;
-import com.dextratech.dtf.xml.testsuite.SeleneseCommand;
 
 /**
  * @author <a href="jorge.ruiz.aquino@gmail.com">Jorge Ruiz Aquino</a>
  * 17/06/2014
  */
-public class CaptureScreenshotCommandBuilder extends SeleniumCommandBuilder {
+public class CaptureScreenshotCommandBuilder implements SeleniumCommandBuilder {
 	private Log log = LogFactory.getLog(CaptureScreenshotCommandBuilder.class);
 
 	/** 
@@ -41,15 +39,18 @@ public class CaptureScreenshotCommandBuilder extends SeleniumCommandBuilder {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public SeleniumCommand buildCommand(Object o, FunctionRegistry functionRegistry) {
-		SeleniumCommand command = null;
+	public List<SeleniumCommand> buildCommand(Object o, FunctionRegistry functionRegistry) throws Exception {
+		List<SeleniumCommand> commandList = new ArrayList<SeleniumCommand>();
 		if (o instanceof CaptureScreenshot) {
 			log.trace("The object is a CaptureScreenshot.");
+			SeleniumCommand command = null;
 			CaptureScreenshot screenshot = (CaptureScreenshot) o;
 			command = composeCommand(screenshot);
 			command.setType(Type.CAPTURE_SCREENSHOT);
+			command.setOriginalCommand(o);
+			commandList.add(command);
 		}
-		return command;
+		return commandList;
 	}
 
 	/**
@@ -59,7 +60,7 @@ public class CaptureScreenshotCommandBuilder extends SeleniumCommandBuilder {
 	 */
 	private SeleniumCommand composeCommand(CaptureScreenshot screenshot) {
 		SeleniumCommand command;
-		String commandName = SeleneseCommand.CAPTURE_SCREENSHOT.value();
+		String commandName = getCommandName();
 		/*
 		 * Full path of the file is not more needed.
 		 */
@@ -75,5 +76,10 @@ public class CaptureScreenshotCommandBuilder extends SeleniumCommandBuilder {
 		String target = filename + ".png";
 		command = new SeleniumCommand(commandName, target, "");
 		return command;
+	}
+
+	@Override
+	public String getCommandName() {
+		return "captureScreenshot";
 	}
 }

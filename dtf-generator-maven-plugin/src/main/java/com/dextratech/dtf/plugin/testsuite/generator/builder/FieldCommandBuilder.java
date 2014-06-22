@@ -3,6 +3,7 @@
  */
 package com.dextratech.dtf.plugin.testsuite.generator.builder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -17,7 +18,6 @@ import com.dextratech.dtf.xml.testsuite.Field;
 import com.dextratech.dtf.xml.testsuite.Function;
 import com.dextratech.dtf.xml.testsuite.FunctionRef;
 import com.dextratech.dtf.xml.testsuite.LocatorType;
-import com.dextratech.dtf.xml.testsuite.SeleneseCommand;
 import com.dextratech.dtf.xml.testsuite.ValidFieldValue;
 
 /**
@@ -26,22 +26,25 @@ import com.dextratech.dtf.xml.testsuite.ValidFieldValue;
  * 17/06/2014
  * @param <T>
  */
-public class FieldCommandBuilder extends SeleniumCommandBuilder {
+public class FieldCommandBuilder implements SeleniumCommandBuilder {
 	private Log log = LogFactory.getLog(FieldCommandBuilder.class);
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public SeleniumCommand buildCommand(Object o, FunctionRegistry functionRegistry) {
-		SeleniumCommand command = null;
+	public List<SeleniumCommand> buildCommand(Object o, FunctionRegistry functionRegistry) throws Exception {
+		List<SeleniumCommand> commandList = new ArrayList<SeleniumCommand>();
 		if (o instanceof Field) {
 			log.trace("The object is a Field.");
+			SeleniumCommand command = null;
 			Field field = (Field) o;
 			command = composeCommand(field, functionRegistry);
 			command.setType(Type.FIELD);
+			command.setOriginalCommand(o);
+			commandList.add(command);
 		}
-		return command;
+		return commandList;
 	}
 
 	/**
@@ -83,11 +86,44 @@ public class FieldCommandBuilder extends SeleniumCommandBuilder {
 			}
 		}
 
-		SeleniumCommand seleniumCommand = new SeleniumCommand(SeleneseCommand.TYPE.value(), finalLocator, testingValue, errorStep);
+		String commandName = getCommandName();
+		SeleniumCommand seleniumCommand = new SeleniumCommand(commandName, finalLocator, testingValue, errorStep);
 		List<Object> validationList = field.getValidateOrValidateFunctionOrValidateFunctionRef();
 		seleniumCommand.setValidations(validationList);
 
 		log.debug("Composed command : " + seleniumCommand.toString());
 		return seleniumCommand;
+	}
+
+	@Override
+	public String getCommandName() {
+		return "type";
+	}
+
+	/**
+	 * Create a string that represents the locator expression for Selenese.
+	 * @param locatorType
+	 * @param locatorValue
+	 * @return
+	 */
+	protected String createLocator(LocatorType locatorType, String locatorValue) {
+		if (locatorType == null) {
+			return locatorValue;
+		}
+		String locator = "";
+		switch (locatorType) {
+		case XPATH:
+			// Return the value itself because a xpath locator is expressed like //a[contains(text(),'Entrar')]
+			locator = locatorValue;
+			break;
+		case NOTHING:
+			locator = locatorValue;
+			break;
+		default:
+			// Return locatorType=locatorValue because all other locator are expressed like id=j_username
+			locator = locatorType.value() + "=" + locatorValue;
+			break;
+		}
+		return locator;
 	}
 }

@@ -1,0 +1,663 @@
+<!-- ACTIONS - START -->
+<element name="addLocationStrategy" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="strategyName" type="string" use="required"></attribute>
+		<attribute name="functionDefinition" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="addScript" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="scriptContent" type="string" use="required"></attribute>
+		<attribute name="scriptTagId" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="addSelection" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="optionLocator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="allowNativeXpath" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="allow" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="answerOnNextPrompt" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="answer" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="assignId" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="identifier" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="break" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="check" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="chooseCancelOnNextConfirmation" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="chooseOkOnNextConfirmation" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="close" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="createCookie" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="nameValuePair" type="string" use="required"></attribute>
+		<attribute name="optionsString" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="deleteAllVisibleCookies" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="deleteCookie" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="optionsString" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="deselectPopUp" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="dragAndDrop" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="movementsString" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="dragAndDropToObject" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locatorOfObjectToBeDragged" type="string" use="required"></attribute>
+		<attribute name="locatorOfDragDestinationObject" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="dragdrop" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="movementsString" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="fireEvent" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="eventName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="focus" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="highlight" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="ignoreAttributesWithoutValue" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="ignore" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="open" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="url" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="openWindow" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="url" type="string" use="required"></attribute>
+		<attribute name="windowID" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="pause" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="waitTime" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="removeAllSelections" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="removeScript" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="scriptTagId" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="removeSelection" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="optionLocator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="rollup" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="rollupName" type="string" use="required"></attribute>
+		<attribute name="kwargs" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="runScript" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="script" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="select" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="selectLocator" type="string" use="required"></attribute>
+		<attribute name="optionLocator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="selectFrame" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="selectPopUp" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="windowID" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="selectWindow" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="windowID" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="setBrowserLogLevel" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="logLevel" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="setCursorPosition" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="position" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="setMouseSpeed" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="pixels" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="setSpeed" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="value" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="setTimeout" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="timeout" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="submit" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="formLocator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="type" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="value" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="typeKeys" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="value" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="uncheck" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="useXpathLibrary" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="libraryName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+
+<!-- MOUSE ACTIONS - START -->
+<element name="click" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="clickAndWait" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="clickAt" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="coordString" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="doubleClick" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="doubleClickAt" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="coordString" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="contextMenu" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="contextMenuAt" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="coordString" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="mouseDown" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="mouseDownAt" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="coordString" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="mouseDownRight" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="mouseDownRightAt" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="coordString" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="mouseMove" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="mouseMoveAt" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="coordString" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="mouseOut" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="mouseOver" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="mouseUp" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="mouseUpAt" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="coordString" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="mouseUpRight" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="mouseUpRightAt" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="coordString" type="string" use="required"></attribute>
+	</complexType>
+</element>
+
+<!-- BROWSER ACTIONS - START -->
+<element name="goBack" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="refresh" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="windowFocus" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="windowMaximize" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+
+<!-- STORE ACTIONS - START -->
+<element name="store" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="expression" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeAlert" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeAlertPresent" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeAllButtons" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeAllFields" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeAllLinks" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeAllWindowIds" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeAllWindowNames" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeAllWindowTitles" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeAttribute" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="attributeLocator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeAttributeFromAllWindows" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="attributeName" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeBodyText" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeChecked" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeConfirmation" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeConfirmationPresent" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeCookie" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeCookieByName" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeCookiePresent" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeCursorPosition" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeEditable" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeElementHeight" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeElementIndex" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeElementPositionLeft" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeElementPositionTop" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeElementPresent" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeElementWidth" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeEval" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="script" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeExpression" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="expression" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeHtmlSource" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeLocation" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeMouseSpeed" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeOrdered" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator1" type="string" use="required"></attribute>
+		<attribute name="locator2" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storePrompt" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storePromptPresent" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeSelectedId" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="selectLocator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeSelectedIds" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="selectLocator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeSelectedIndex" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="selectLocator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeSelectedIndexes" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="selectLocator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeSelectedLabel" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="selectLocator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeSelectedLabels" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="selectLocator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeSelectedValue" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="selectLocator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeSelectedValues" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="selectLocator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeSelectOptions" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="selectLocator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeSomethingSelected" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="selectLocator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeSpeed" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeTable" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="tableCellAddress" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeText" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeTextPresent" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="pattern" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeTitle" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeValue" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeVisible" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeWhetherThisFrameMatchFrameExpression" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="currentFrameString" type="string" use="required"></attribute>
+		<attribute name="target" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeWhetherThisWindowMatchWindowExpression" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="currentWindowString" type="string" use="required"></attribute>
+		<attribute name="target" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="storeXpathCount" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="xpath" type="string" use="required"></attribute>
+		<attribute name="variableName" type="string" use="required"></attribute>
+	</complexType>
+</element>
+
+<!-- KEY ACTIONS - START -->
+<element name="altKeyDown" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="altKeyUp" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="controlKeyDown" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="controlKeyUp" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="metaKeyDown" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="metaKeyUp" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="shiftKeyDown" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="shiftKeyUp" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+<element name="keyDown" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="keySequence" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="keyPress" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="keySequence" type="string" use="required"></attribute>
+	</complexType>
+</element>
+<element name="keyUp" maxOccurs="unbounded" minOccurs="0">
+	<complexType>
+		<attribute name="locator" type="string" use="required"></attribute>
+		<attribute name="keySequence" type="string" use="required"></attribute>
+	</complexType>
+</element>

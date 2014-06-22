@@ -3,37 +3,40 @@
  */
 package com.dextratech.dtf.plugin.testsuite.generator.builder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.dextratech.dtf.common.SeleniumCommand;
 import com.dextratech.dtf.common.SeleniumCommand.Type;
 import com.dextratech.dtf.plugin.testsuite.generator.FunctionRegistry;
-import com.dextratech.dtf.xml.testsuite.Action;
-import com.dextratech.dtf.xml.testsuite.Field;
 import com.dextratech.dtf.xml.testsuite.GenericCommand;
-import com.dextratech.dtf.xml.testsuite.LocatorType;
 
 /**
  * @author <a href="jorge.ruiz.aquino@gmail.com">Jorge Ruiz Aquino</a>
  * 17/06/2014
  */
-public class GenericCommandBuilder extends SeleniumCommandBuilder {
+public class GenericCommandBuilder implements SeleniumCommandBuilder {
 	private Log log = LogFactory.getLog(GenericCommandBuilder.class);
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public SeleniumCommand buildCommand(Object o, FunctionRegistry functionRegistry) {
-		SeleniumCommand command = null;
+	public List<SeleniumCommand> buildCommand(Object o, FunctionRegistry functionRegistry) throws Exception {
+		List<SeleniumCommand> commandList = new ArrayList<SeleniumCommand>();
 		if (o instanceof GenericCommand) {
 			log.trace("The object is a GenericCommand.");
+			SeleniumCommand command = null;
 			GenericCommand generic = (GenericCommand) o;
 			command = composeCommand(generic);
 			command.setType(Type.CUSTOM);
+			command.setOriginalCommand(o);
+			commandList.add(command);
 		}
-		return command;
+		return commandList;
 	}
 
 	/**
@@ -44,13 +47,17 @@ public class GenericCommandBuilder extends SeleniumCommandBuilder {
 	 */
 	private SeleniumCommand composeCommand(GenericCommand generic) {
 		String name = generic.getName();
-		String target = generic.getTarget();
-		String value = generic.getValue();
+		String target = generic.getParameter1();
+		String value = generic.getParameter2();
 		boolean errorStep = generic.isErrorStep();
 
 		SeleniumCommand seleniumCommand = new SeleniumCommand(name, target, value, errorStep);
 		log.debug("Composed command : " + seleniumCommand.toString());
 		return seleniumCommand;
+	}
 
+	@Override
+	public String getCommandName() {
+		return null;
 	}
 }

@@ -1,0 +1,69 @@
+?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns="http://www.dextratech.com/testsuite" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dextratech.com/testsuite ../../src/test/resources/testsuite.xsd ">
+
+	<!-- Names must be valid for [a-zA-Z_$][a-zA-Z_$0-9\s]* -->
+
+	<name>nombre</name>
+
+	<testcase>
+		
+		<action actionType=""/>
+		
+		<assert/>
+		
+		<captureScreenshot/>
+		
+		<custom/>
+		
+		<include/>
+		
+		<onload action="closeAlert"/>
+		
+		<field name="">
+			<validate name=""></validate>
+			<validateFunction type="string" id="">
+				<customDateFormat></customDateFormat>
+				<dateFormat></dateFormat>
+				<length></length>
+				<maxValue></maxValue>
+				<minValue></minValue>
+				<pattern></pattern>
+				<value></value>
+			</validateFunction>
+			<validValueDef>
+				<function type="string"></function>
+				<functionRef functionRefId=""/>
+				<literal></literal>
+			</validValueDef>
+			<validateFunctionRef functionRefId=""/>
+		</field>
+		
+		<afterErrorActions>
+			<action/>
+			<assert/>
+			<captureScreenshot/>
+			<custom/>
+			<field name=""></field>
+			<include/>
+			<onload/>
+		</afterErrorActions>
+		
+	</testcase>
+	
+	<component>
+		<action/>
+		<assert/>
+		<captureScreenshot/>
+		<custom/>
+		<field name=""></field>
+		<include/>
+		<onload/>
+	</component>
+	
+	<validationRules>
+		<function type="string" id="">
+			
+		</function>
+	</validationRules>
+
+</testsuite>

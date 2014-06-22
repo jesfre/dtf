@@ -54,13 +54,25 @@ $(document).ready(function(){
 		}
 	});
 	
-	$('#expandall').click(function(){
-		$('dt strong').parent().next('dd').show();
+	/*
+	 * Expands or collapses all command's description elements
+	 */
+	$('.expandcollapse').click(function(e){
+		e.preventDefault();
+		var ddElements = $(this).next('dl').children('dd');
+		if($(this).hasClass('expanded')) {
+			ddElements.hide();
+			$(this).text('Expand All');
+			$(this).removeClass('expanded')
+			$(this).addClass('collapsed')
+		} else {
+			ddElements.show();
+			$(this).text('Collapse All');
+			$(this).removeClass('collapsed')
+			$(this).addClass('expanded')
+		}
 	});
 	
-	$('#collapseall').click(function(){
-		$('dt strong').parent().next('dd').hide();
-	});
 });
 </script>
 
@@ -305,7 +317,8 @@ $(document).ready(function(){
 			usual, at the beginning of the pattern.</p>
 	</div>
 	<a name="actions"></a>
-	<h2>Selenium Actions</h2> <a href="#" id="expandall">Expand All</a> | <a href="#" id="collapseall">Collapse All</a>
+	<h2>Selenium Actions</h2>
+	<a href="#" class="expandcollapse">Expand All</a>
 	<dl>
 		<dt>
 			<strong><a name="addLocationStrategy"></a>addLocationStrategy
@@ -1660,6 +1673,7 @@ $(document).ready(function(){
 	</dl>
 	<a name="accessors"></a>
 	<h2>Selenium Accessors</h2>
+	<a href="#" class="expandcollapse">Expand All</a>
 	<dl>
 		<dt>
 			<strong><a name="assertErrorOnNext"></a>assertErrorOnNext (

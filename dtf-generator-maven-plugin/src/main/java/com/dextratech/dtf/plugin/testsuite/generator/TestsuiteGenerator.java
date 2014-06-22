@@ -35,7 +35,7 @@ import com.dextratech.dtf.plugin.utils.DataHelper;
 import com.dextratech.dtf.plugin.utils.VelocityUtils;
 import com.dextratech.dtf.plugin.xml.configuration.Configuration;
 import com.dextratech.dtf.xml.testsuite.ActionOption;
-import com.dextratech.dtf.xml.testsuite.Assertion;
+import com.dextratech.dtf.xml.testsuite.AssertionAction;
 import com.dextratech.dtf.xml.testsuite.Component;
 import com.dextratech.dtf.xml.testsuite.Components;
 import com.dextratech.dtf.xml.testsuite.Function;
@@ -286,7 +286,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 				// If exists, generates the actions to run after errors
 				ActionOption afterErrorActions = testcase.getAfterErrorActions();
 				if (afterErrorActions != null) {
-					List<Object> afterErrorCommandObjectList = afterErrorActions.getFieldOrActionOrAssert();
+					List<Object> afterErrorCommandObjectList = afterErrorActions.getFieldOrCustomOrInclude();
 					List<SeleniumCommand> afterErrorCommandList = htmlTestsuiteGenerator.getCommandList(afterErrorCommandObjectList);
 
 					String afterErrorActionsHtmlFileName = htmlTestsuiteGenerator.generateAfterErrrorScript(testcase, afterErrorCommandList, testcaseOutDir, testcaseName);
@@ -299,7 +299,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 					}
 				}
 
-				List<Object> fieldsAndActions = testcase.getFieldOrActionOrAssert();
+				List<Object> fieldsAndActions = testcase.getFieldOrCustomOrInclude();
 				List<SeleniumCommand> commandList = htmlTestsuiteGenerator.getCommandList(fieldsAndActions);
 				int testcaseCounter = 0;
 
@@ -405,7 +405,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 		for (SeleniumCommand sc2Copy : commandList) {
 			boolean includeThis = true;
 			if (sc2Copy.getType() == Type.ASSERT) {
-				Assertion assertion = (Assertion) sc2Copy.getOriginalCommand();
+				AssertionAction assertion = (AssertionAction) sc2Copy.getOriginalCommand();
 				String assertId = assertion.getId();
 				if (StringUtils.isNotBlank(assertId) && !assertId.equals(assertionId)) {
 					includeThis = false;

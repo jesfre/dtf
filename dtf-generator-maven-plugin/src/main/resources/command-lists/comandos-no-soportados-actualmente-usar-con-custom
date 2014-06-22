@@ -1,0 +1,5 @@
+#selectAndWait
+#typeAndWait
+storeWhetherThisFrameMatchFrameExpression(currentFrameString,target,variableName)
+storeWhetherThisWindowMatchWindowExpression(currentWindowString,target,variableName)
+storeOrdered(locator1,locator2,variableName)

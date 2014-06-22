@@ -20,6 +20,7 @@ import com.dextratech.dtf.plugin.Constants;
 import com.dextratech.dtf.plugin.testsuite.generator.builder.ActionCommandBuilder;
 import com.dextratech.dtf.plugin.testsuite.generator.builder.AssertionCommandBuilder;
 import com.dextratech.dtf.plugin.testsuite.generator.builder.CaptureScreenshotCommandBuilder;
+import com.dextratech.dtf.plugin.testsuite.generator.builder.EchoCommandBuilder;
 import com.dextratech.dtf.plugin.testsuite.generator.builder.FieldCommandBuilder;
 import com.dextratech.dtf.plugin.testsuite.generator.builder.GenericCommandBuilder;
 import com.dextratech.dtf.plugin.testsuite.generator.builder.OnloadCommandBuilder;
@@ -53,6 +54,7 @@ public class HTMLTestsuiteGenerator {
 		commandBuilderList.add(new AssertionCommandBuilder());
 		commandBuilderList.add(new GenericCommandBuilder());
 		commandBuilderList.add(new OnloadCommandBuilder());
+		commandBuilderList.add(new EchoCommandBuilder());
 		commandBuilderList.add(new CaptureScreenshotCommandBuilder(testcaseName));
 	}
 
@@ -146,7 +148,7 @@ public class HTMLTestsuiteGenerator {
 	public List<SeleniumCommand> getCommandList(List<Object> fieldsAndActions) throws DextraSeleniumException {
 		List<SeleniumCommand> commandList = new ArrayList<SeleniumCommand>();
 		for (Object o : fieldsAndActions) {
-			SeleniumCommand command = null;
+			List<SeleniumCommand> commands = null;
 			if (o instanceof Include) {
 				/* When the object is a Include instance, 
 				 * then may search the component defined by the componentName in the registry of components.
@@ -156,7 +158,7 @@ public class HTMLTestsuiteGenerator {
 				String componentName = include.getComponentName();
 				Component component = componentRegistry.getComponent(componentName);
 				if (component != null) {
-					List<Object> innerFieldsAndActions = component.getFieldOrActionOrAssert();
+					List<Object> innerFieldsAndActions = component.getFieldOrCustomOrInclude();
 					List<SeleniumCommand> innerCommandList = getCommandList(innerFieldsAndActions);
 					commandList.addAll(innerCommandList);
 				} else {
@@ -165,15 +167,18 @@ public class HTMLTestsuiteGenerator {
 			} else {
 				// Looks for and uses the correct command builder
 				for (SeleniumCommandBuilder commandBuilder : commandBuilderList) {
-					command = commandBuilder.buildCommand(o, functionRegistry);
-					if (command != null)
+					try {
+						commands = commandBuilder.buildCommand(o, functionRegistry);
+					} catch (Exception e) {
+						throw new DextraSeleniumException(e);
+					}
+					if (commands != null && commands.size() > 0)
 						break;
 				}
 			}
 
-			if (command != null) {
-				command.setOriginalCommand(o);
-				commandList.add(command);
+			if (commands != null && commands.size() > 0) {
+				commandList.addAll(commands);
 			}
 		}
 		return commandList;

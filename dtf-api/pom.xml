@@ -78,6 +78,7 @@
                 <configuration>
                 	<schemaDirectory>${basedir}/../dtf-project-archetype/src/test/resources</schemaDirectory>
                 	<generateDirectory>${basedir}/src/main/java</generateDirectory>
+                	<specVersion>2.1</specVersion>
                     <plugins>
                         <plugin>
                             <groupId>org.jvnet.jaxb2_commons</groupId>
@@ -104,7 +105,7 @@
                         <configuration>
 		                    <generatePackage>com.dextratech.dtf.xml.testsuite</generatePackage>
                         	<schemaIncludes>
-	                        	<include>testsuite.xsd</include>
+	                        	<include>testsuite-v2.0.xsd</include>
                         	</schemaIncludes>
 		                    <strict>false</strict>
 		                    <extension>true</extension>

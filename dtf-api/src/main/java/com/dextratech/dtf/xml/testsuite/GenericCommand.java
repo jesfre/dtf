@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2014.06.17 a las 10:41:31 PM CDT 
+// Generado el: 2014.06.22 a las 12:48:00 AM CDT 
 //
 
 
@@ -23,17 +23,17 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  * 				All command types have this basic format.
  * 			
  * 
- * <p>Clase Java para genericCommand complex type.
+ * <p>Clase Java para GenericCommand complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="genericCommand">
+ * &lt;complexType name="GenericCommand">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="target" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="value" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="parameter1" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="parameter2" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="errorStep" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -43,16 +43,16 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "genericCommand")
+@XmlType(name = "GenericCommand")
 public class GenericCommand implements ToString
 {
 
     @XmlAttribute(name = "name")
     protected String name;
-    @XmlAttribute(name = "target")
-    protected String target;
-    @XmlAttribute(name = "value")
-    protected String value;
+    @XmlAttribute(name = "parameter1")
+    protected String parameter1;
+    @XmlAttribute(name = "parameter2")
+    protected String parameter2;
     @XmlAttribute(name = "errorStep")
     protected Boolean errorStep;
 
@@ -81,51 +81,51 @@ public class GenericCommand implements ToString
     }
 
     /**
-     * Obtiene el valor de la propiedad target.
+     * Obtiene el valor de la propiedad parameter1.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getTarget() {
-        return target;
+    public String getParameter1() {
+        return parameter1;
     }
 
     /**
-     * Define el valor de la propiedad target.
+     * Define el valor de la propiedad parameter1.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setTarget(String value) {
-        this.target = value;
+    public void setParameter1(String value) {
+        this.parameter1 = value;
     }
 
     /**
-     * Obtiene el valor de la propiedad value.
+     * Obtiene el valor de la propiedad parameter2.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getValue() {
-        return value;
+    public String getParameter2() {
+        return parameter2;
     }
 
     /**
-     * Define el valor de la propiedad value.
+     * Define el valor de la propiedad parameter2.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setValue(String value) {
-        this.value = value;
+    public void setParameter2(String value) {
+        this.parameter2 = value;
     }
 
     /**
@@ -177,14 +177,14 @@ public class GenericCommand implements ToString
             strategy.appendField(locator, this, "name", buffer, theName);
         }
         {
-            String theTarget;
-            theTarget = this.getTarget();
-            strategy.appendField(locator, this, "target", buffer, theTarget);
+            String theParameter1;
+            theParameter1 = this.getParameter1();
+            strategy.appendField(locator, this, "parameter1", buffer, theParameter1);
         }
         {
-            String theValue;
-            theValue = this.getValue();
-            strategy.appendField(locator, this, "value", buffer, theValue);
+            String theParameter2;
+            theParameter2 = this.getParameter2();
+            strategy.appendField(locator, this, "parameter2", buffer, theParameter2);
         }
         {
             boolean theErrorStep;

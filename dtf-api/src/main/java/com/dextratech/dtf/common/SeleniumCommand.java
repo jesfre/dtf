@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class SeleniumCommand {
 	public enum Type {
-		ACTION, ASSERT, CAPTURE_SCREENSHOT, CUSTOM, FIELD, ONLOAD;
+		ACTION, ASSERT, CAPTURE_SCREENSHOT, CUSTOM, FIELD, ONLOAD, ECHO;
 	}
 
 	private Type type = null;
