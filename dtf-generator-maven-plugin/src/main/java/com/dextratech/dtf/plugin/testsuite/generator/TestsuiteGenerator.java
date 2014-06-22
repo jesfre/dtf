@@ -95,7 +95,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 		// Iterate the directory to obtain all testsuites from XML files
 		if (testsuitesLocation.exists()) {
 			if (testsuitesLocation.isDirectory()) {
-				if (globalConfigurationFile != null && globalConfigurationFile.exists()) {
+				if (settingsFile != null && settingsFile.exists()) {
 					prefix = "Suite";
 					packagePostfix = "";
 					if (!testSuitesBasePackage.equals(packagePostfix)) {
@@ -109,7 +109,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 					loadGlobalComponents();
 
 					log.trace("Fetching and loading testsuites...");
-					Configuration config = setupGlobalConfigurations();
+					Configuration config = setupSettings();
 					List<com.dextratech.dtf.plugin.xml.configuration.Testsuite> testsuiteList = config.getTestsuite();
 					int testsuiteCounter = 0;
 
@@ -537,22 +537,4 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 		this.validationFunctionsXmlPath = validationFunctionsXMLPath;
 	}
 
-	/*
-	 * TODO to delete
-	 */
-	public static void main(String[] args) {
-		TestsuiteGenerator generator = new TestsuiteGenerator();
-		generator.setTestsuitesXMLLocation("D:/dev/projects/DEXTRA-testing-framework/Dextra_Testing_Framework/dtf-project-archetype/src/test/resources/config/testsuites/");
-		generator.setGeneratedHtmlTestsuitesPath(new File("D:/dev/projects/DEXTRA-testing-framework/Dextra_Testing_Framework/dtf-project-archetype/src/test/resources/generated-testsuites/"));
-		generator.setGlobalConfigurationFile(new File("D:/dev/projects/DEXTRA-testing-framework/Dextra_Testing_Framework/dtf-project-archetype/src/test/resources/config/globalConfiguration.xml"));
-		try {
-			generator.execute();
-		} catch (MojoExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MojoFailureException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

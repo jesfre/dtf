@@ -13,7 +13,7 @@ import javax.xml.bind.Unmarshaller;
 import com.dextratech.dtf.plugin.xml.configuration.Configuration;
 
 /**
- * Handles the global configuration.
+ * Handles the global settings.
  * @author <a href="jorge.ruiz.aquino@gmail.com">Jorge Ruiz Aquino</a>
  * 04/06/2014
  */
@@ -27,7 +27,7 @@ public class ConfigurationHandler {
 	}
 
 	/**
-	 * Load the global configuration.
+	 * Load the global settings.
 	 * @param xmlFilePath the path to the configuration file
 	 * @return the configuration
 	 * @throws JAXBException the jAXB exception
@@ -54,7 +54,7 @@ public class ConfigurationHandler {
 	 */
 	public static void main(String[] args) {
 		try {
-			File xmlFile = new File("E:/dev/projects/titulacion/sources/dtf2/dtf-project-archetype/testing/conf/globalConfiguration.xml");
+			File xmlFile = new File("E:/dev/projects/titulacion/sources/dtf2/dtf-project-archetype/testing/conf/settings.xml");
 			ConfigurationHandler ch = new ConfigurationHandler(xmlFile);
 			File file = ch.getConfigurationFile();
 			System.out.println("File is: " + file);

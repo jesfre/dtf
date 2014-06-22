@@ -118,7 +118,7 @@ public class DextraWebDriverTestCase {
 	public String captureScreenshot(String screenshotFileName) {
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		// Now you can do whatever you need to do with it, for example copy somewhere
-		String filePath = screenshotDirectory + Constants.SEPARATOR + screenshotFileName;
+		String filePath = screenshotDirectory + Constants.SEPARATOR + testName + Constants.SEPARATOR + screenshotFileName;
 		try {
 			FileUtils.copyFile(scrFile, new File(filePath));
 			log("Saved screenshot [ " + screenshotFileName + " ]");

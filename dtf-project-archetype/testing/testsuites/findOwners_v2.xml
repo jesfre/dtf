@@ -24,12 +24,12 @@
 			</validateFunction>
 			<validate name="coco">coco</validate>
 		</field>
-		<captureScreenshot pngFilename="despues_de-guardar.png"/>
+		<captureScreenshot/>
 		<clickAndWait locator="xpath=//*[@id='add-owner-form']/div[6]/button"/>
 		<assertion type="assert">
 			<textPresent pattern="Owner Information"/>
 		</assertion>
-		<captureScreenshot/>
+		<captureScreenshot pngFilename="despues_de-guardar.png"/>
 		
 	</testcase>
 

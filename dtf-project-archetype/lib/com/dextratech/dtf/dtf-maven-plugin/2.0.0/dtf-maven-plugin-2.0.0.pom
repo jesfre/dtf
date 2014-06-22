@@ -1,0 +1,284 @@
+<!-- Developed by Dextra Technologies www.dextratech.com -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>dtf-maven-plugin</artifactId>
+	<version>${dtf-generator-maven-plugin.version}</version>
+	<packaging>maven-plugin</packaging>
+	<name>Dextra Testing Framework Maven Plugin</name>
+	<url>http://maven.apache.org</url>
+	
+	<parent>
+  		<groupId>com.dextratech.dtf</groupId>
+  		<artifactId>dtf-parent</artifactId>
+	  	<version>2.0.0</version>
+	  	<relativePath>../dtf-parent/pom.xml</relativePath>
+  	</parent>
+	
+	<developers>
+		<developer>
+			<id>jruiza</id>
+			<name>Jorge Ruiz Aquino</name>
+			<email>jesfre.gy@gmail.com</email>
+		</developer>
+	</developers>
+	
+	<repositories>
+		<repository>
+			<id>local-repo-dep</id>
+			<url>file://${basedir}/lib</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>local-repo-plugin</id>
+			<url>file://${basedir}/lib</url>
+		</pluginRepository>
+	</pluginRepositories>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.dextratech.dtf</groupId>
+			<artifactId>dtf-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-project</artifactId>
+			<version>2.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>${selenium-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.htmlparser</groupId>
+			<artifactId>htmlparser</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6.12</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.10.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mozilla</groupId>
+			<artifactId>rhino</artifactId>
+			<version>1.7R3</version>
+		</dependency>
+		
+		<!-- xeger -->
+		<dependency>
+			<groupId>com.google.code</groupId>
+			<artifactId>xeger</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>dk.brics.automaton</groupId>
+			<artifactId>automaton</artifactId>
+			<version>1.11-8</version>
+		</dependency>
+		<!-- Dependency for toString and common methods in JAXB classes -->
+		<dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics-runtime</artifactId>
+            <version>0.6.2</version>
+        </dependency>
+	</dependencies>
+	
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+						<compilerArguments>
+							<verbose />
+							<bootclasspath>${java.home}/lib/rt.jar</bootclasspath>
+						</compilerArguments>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<configuration>
+						<outputDirectory>${project.build.directory}/dependencies</outputDirectory>
+						<overWriteReleases>false</overWriteReleases>
+						<overWriteSnapshots>false</overWriteSnapshots>
+						<overWriteIfNewer>true</overWriteIfNewer>
+					</configuration>
+				</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.jvnet.jaxb2.maven2
+										</groupId>
+										<artifactId>
+											maven-jaxb2-plugin
+										</artifactId>
+										<versionRange>
+											[0.8.0,)
+										</versionRange>
+										<goals>
+											<goal>generate</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>copy-to-archetype-lib</id>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>========== Updating app template local repo in dtf-project-archetype/lib ==========</echo>
+
+								<echo>Deleting artifact in dtf-project-archetype/lib...</echo>
+								<delete dir="${dtf-maven-plugin-repo-dir-structure}" />
+
+								<echo>Init copying ${project.artifactId}-${project.version}.jar to dtf-project-archetype/lib...</echo>
+								<copy todir="${dtf-maven-plugin-repo-dir-structure}/${project.version}" overwrite="true">
+									<fileset dir="${project.build.directory}/">
+										<include name="${project.artifactId}-${project.version}.jar"/>
+									</fileset>
+								</copy>
+
+								<echo>Init copying pom.xml to dtf-project-archetype/lib...</echo>
+								<copy
+									todir="${dtf-maven-plugin-repo-dir-structure}/${project.version}" overwrite="true">
+									<fileset dir="${basedir}/">
+										<include name="pom.xml" />
+									</fileset>
+									<globmapper from="pom.xml" to="${project.artifactId}-${project.version}.pom" />
+								</copy>
+
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.9.0</version>
+                <configuration>
+                	<schemaDirectory>${basedir}/../dtf-project-archetype/src/test/resources</schemaDirectory>
+                	<generateDirectory>${basedir}/src/main/java</generateDirectory>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.jvnet.jaxb2_commons</groupId>
+                            <artifactId>jaxb2-basics</artifactId>
+                            <version>0.6.2</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.jvnet.jaxb2_commons</groupId>
+                            <artifactId>jaxb2-basics-annotate</artifactId>
+                            <version>0.6.2</version>
+                        </plugin>
+                    </plugins>
+                    <args>
+                        <arg>-Xannotate</arg>
+                        <arg>-XtoString</arg>
+                    </args>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-configuration-classes</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+		                    <generatePackage>com.dextratech.dtf.xml.configuration</generatePackage>
+                        	<schemaIncludes>
+	                        	<include>configuration.xsd</include>
+                        	</schemaIncludes>
+		                    <strict>false</strict>
+		                    <extension>true</extension>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+		</plugins>
+	</build>
+	
+	<properties>
+		<selenium-version>2.40.0</selenium-version>
+		<project-archetype-location>${basedir}/../dtf-project-archetype/</project-archetype-location>
+		<dtf-maven-plugin-repo-dir-structure>${project-archetype-location}/lib/com/dextratech/dtf/${project.artifactId}/</dtf-maven-plugin-repo-dir-structure>
+	</properties>
+</project>

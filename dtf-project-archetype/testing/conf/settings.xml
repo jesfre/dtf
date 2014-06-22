@@ -1,68 +1,18 @@
-<!-- Developed by Dextra Technologies www.dextratech.com -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
- 
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.dextratech.dtf</groupId>
-  <artifactId>my-parent</artifactId>
-  <version>0.0.0</version>
-  <packaging>pom</packaging>
-  
-  <properties>
-  
-		<!-- Configuration for DTF clean task -->
-		<dtf.plugin.clean.testsuites>true</dtf.plugin.clean.testsuites>
-		<dtf.plugin.clean.java>true</dtf.plugin.clean.java>
-		<dtf.plugin.clean.screenshots>true</dtf.plugin.clean.screenshots>
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://www.dextratech.com/dtf/configuration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.dextratech.com/dtf/configuration ../../src/test/resources/configuration.xsd ">
+<!-- 
+Developed by Dextra Technologies www.dextratech.com 
+-->
+
+	<appUrl>http://localhost:9966/petclinic/</appUrl>
+	<browser name="*googlechrome" executablePath="E:\\dev\\projects\\titulacion\\sources\\chrome-drivers\\chromedriver.exe"/>
+	<timeout>80000</timeout>
+	<speed>500</speed>
+
+	<testsuite name="find-owners" run="true" fileName="findOwners_v2.xml" dbRestore="true" dbSnapshot="false"/>
 	
-		<!-- NOT_NEEDED_TO_CONFIGURE - START -->
-		<!-- Default values for dtf-maven-plugin -->
-		<dtf.plugin.verbose>true</dtf.plugin.verbose>
-		<dtf.plugin.seleniumHost>localhost</dtf.plugin.seleniumHost>
-		<dtf.plugin.seleniumPort>4444</dtf.plugin.seleniumPort>
-		<dtf.plugin.browser>*firefox</dtf.plugin.browser>
-		<dtf.plugin.browser.maximized>true</dtf.plugin.browser.maximized>
-		<dtf.plugin.baseUrl>http://localhost:8080/</dtf.plugin.baseUrl>
-		<dtf.plugin.timeout>5000</dtf.plugin.timeout>
-		<dtf.plugin.speed>1000</dtf.plugin.speed>
-		<dtf.plugin.format>JUnit4WebDriver</dtf.plugin.format>
-		<!-- 
-		<dtf.plugin.format>JUnit4RC</dtf.plugin.format>
-		 -->
-		
-		<selenium.suite>src/test/selenium/testSuite1.html</selenium.suite>
-		<selenium.startURL>http://google.com.mx</selenium.startURL>
-		<!-- Default paths -->
-		<dtf-testsuites-dir>${basedir}/testing/testsuites</dtf-testsuites-dir>
-		<global-configuration-file>${basedir}/testing/conf/globalConfiguration.xml</global-configuration-file>
-		<generated-html-testsuites-dir>${basedir}/testing/generated/testsuites</generated-html-testsuites-dir>
-		<generated-screenshots-dir>${basedir}/testing/generated/screenshots</generated-screenshots-dir>
-		<generated-reports-dir>${basedir}/testing/generated/reports</generated-reports-dir>
-		<generated-java-testsuites-dir>${basedir}/src/test/java</generated-java-testsuites-dir>
-		<userExtensions-dir>${basedir}/testing/conf/user-extensions</userExtensions-dir>
-
-		<spring.version>3.0.5.RELEASE</spring.version>
-		<hibernate.version>3.6.1.Final</hibernate.version>
-		<dtf.version>2.0.0</dtf.version>
-		<!-- NOT_NEEDED_TO_CONFIGURE - END -->
-
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<report.browser>C:/Program Files (x86)/Google/Chrome/Application/chrome.exe</report.browser>
-		<default.base.package>com.dextratech.dtf</default.base.package>
-
-		<!-- Database settings used by DBUnit to backup and restore the DB after tests -->
-		<db.name>test</db.name>
-		<dbunit.dataset>${basedir}/src/test/resources/generated-testsuites/export.xml</dbunit.dataset>
-		<hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
-		<dbunit.dataTypeFactoryName>org.dbunit.ext.mysql.MySqlDataTypeFactory</dbunit.dataTypeFactoryName>
-		<dbunit.operation.type>CLEAN_INSERT</dbunit.operation.type>
-		<jdbc.groupId>mysql</jdbc.groupId>
-		<jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-		<jdbc.version>5.1.14</jdbc.version>
-		<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-		<jdbc.url>jdbc:mysql://localhost/${db.name}?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;autoReconnect=true</jdbc.url>
-		<jdbc.username>root</jdbc.username>
-		<jdbc.password>root</jdbc.password>
-		
-	</properties>
-  
-</project>
+	<testsuite name="testOnload" run="false" fileName="test-onload.xml" dbRestore="false" dbSnapshot="false"/>
+	
+</configuration>

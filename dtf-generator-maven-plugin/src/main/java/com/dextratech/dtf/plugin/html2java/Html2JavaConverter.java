@@ -158,14 +158,14 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 	abstract public void execute() throws MojoExecutionException, MojoFailureException;
 
 	/**
-	 * Setup the global configurations.
+	 * Setup the global settings.
 	 * @return the configuration
 	 */
-	protected Configuration setupGlobalConfigurations() {
-		log.debug("Using Xml configuration file: " + globalConfigurationFile.getName());
+	protected Configuration setupSettings() {
+		log.debug("Using Xml configuration file: " + settingsFile.getName());
 		Configuration config = null;
 		try {
-			ConfigurationHandler configurationHandler = new ConfigurationHandler(globalConfigurationFile);
+			ConfigurationHandler configurationHandler = new ConfigurationHandler(settingsFile);
 			config = configurationHandler.getConfiguration();
 			//			seleniumHost = config.getSeleniumHost();
 			//			seleniumPort = config.getSeleniumPort();
@@ -187,7 +187,7 @@ public abstract class Html2JavaConverter extends DtfAbstractMojo {
 			timeout = config.getTimeout();
 			speed = config.getSpeed();
 
-			log.debug("\t> Converting test using global configurations...");
+			log.debug("\t> Converting test using global settings...");
 			log.debug("\t> seleniumHost: " + seleniumHost);
 			log.debug("\t> seleniumPort: " + seleniumPort);
 			log.debug("\t> browser: " + browser);

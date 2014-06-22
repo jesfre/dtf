@@ -23,10 +23,10 @@ public abstract class DtfAbstractMojo extends AbstractMojo {
 	protected boolean verbose;
 
 	/**
-	 * Location of the file where the global configurations (seleniumHost, seleniumPort, timeout, speed, browser, url, user, password, testCaseList) can be found.
-	 * @parameter expression="${global-configuration-file}"
+	 * Location of the file where the global settings (seleniumHost, seleniumPort, timeout, speed, browser, url, user, password, testCaseList) can be found.
+	 * @parameter expression="${settings-file}"
 	 */
-	protected File globalConfigurationFile;
+	protected File settingsFile;
 
 	/**
 	 * Host of Selenium server
@@ -208,12 +208,12 @@ public abstract class DtfAbstractMojo extends AbstractMojo {
 		this.speed = speed;
 	}
 
-	public File getGlobalConfigurationFile() {
-		return globalConfigurationFile;
+	public File getSettingsFile() {
+		return settingsFile;
 	}
 
-	public void setGlobalConfigurationFile(File globalConfigurationFile) {
-		this.globalConfigurationFile = globalConfigurationFile;
+	public void setSettingsFile(File settingsFile) {
+		this.settingsFile = settingsFile;
 	}
 
 }
