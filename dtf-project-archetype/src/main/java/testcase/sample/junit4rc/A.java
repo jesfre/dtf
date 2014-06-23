@@ -1,7 +1,7 @@
 package testcase.sample.junit4rc;
 
-import com.dextratech.dtf.DextraTestCase;
 import com.dextratech.dtf.exception.DextraSeleniumException;
+import com.dextratech.dtf.selenium.DextraTestCase;
 import com.thoughtworks.selenium.*;
 
 import org.junit.After;

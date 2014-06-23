@@ -111,7 +111,7 @@ function formatHeader(testCase) {
 		replace(/\$\{browserMaximized\}/g, browserMaximized).
 		replace(/\$\{timeout\}/g, timeout).
 		replace(/\$\{speed\}/g, speed).
-		replace(/\$\{dbSnapshot\}/g, (dbSnapshot == 'true')?"\t\tsuper.setUp();\n":"").
+		replace(/\$\{dbSnapshot\}/g, (dbSnapshot == 'true')?"\t\tsuper.setUp();":"").
 		replace(/\$\{driver\}/g, driver).
 		replace(/\$\{screenshotsDirectory\}/g, screenshotsDirectory).
 		replace(/\\/g, '/').
@@ -134,7 +134,7 @@ function formatFooter(testCase) {
   var formatLocal = testCase.formatLocal(this.name);
   var footer = (options.getFooter ? options.getFooter() : options.footer).
 	replace(/\$\{screenshotsDirectory\}/g, screenshotsDirectory).
-	replace(/\$\{dbRestore\}/g, (dbRestore == 'true')?"\t\tsuper.tearDown();\n":"").
+	replace(/\$\{dbRestore\}/g, (dbRestore == 'true')?"\t\tsuper.tearDown();":"").
 	replace(/\\/g, '/');
   formatLocal.footer = footer;
   return formatLocal.footer;

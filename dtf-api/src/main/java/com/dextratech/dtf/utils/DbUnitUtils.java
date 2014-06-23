@@ -13,6 +13,9 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
@@ -31,9 +34,11 @@ import com.dextratech.dtf.common.Constants;
  * 10/12/2012
  */
 public class DbUnitUtils {
+	private static Log log = LogFactory.getLog(DbUnitUtils.class);
 	private static ApplicationContext ctx = new ClassPathXmlApplicationContext(Constants.APPLICATION_CONTEXT_XML);
 	
 	public static void cleanInsert() throws Exception {
+		log.debug("Executing the cleanInsert of the database...");
 		operation(DatabaseOperation.CLEAN_INSERT);
 	}
 	
@@ -42,15 +47,20 @@ public class DbUnitUtils {
 	}
 	
 	public static void export() throws FileNotFoundException, IOException, SQLException, DatabaseUnitException {
+		log.debug("Executing the exporting of the database...");
 		IDataSet dataset = getConnection().createDataSet();
 		String datasetFile = getProperty(Constants.PROP_DATASET_FILE);
+		log.trace("Using the dataset file [ " + datasetFile + " ]");
 		File file = new File(datasetFile);
+		if (!file.exists()) {
+			FileUtils.write(file, "");
+		}
 		XmlDataSet.write(dataset, new FileOutputStream(file));
 	}
 
 	private static IDataSet getDataSet() throws Exception {
 		String datasetFile = getProperty(Constants.PROP_DATASET_FILE);
-		
+		log.trace("Using the dataset file [ " + datasetFile + " ]");
 		Resource res = ctx.getResource("file:"+datasetFile);
 		InputStream inputStream = res.getInputStream();
 		IDataSet dataset = new XmlDataSet(inputStream);

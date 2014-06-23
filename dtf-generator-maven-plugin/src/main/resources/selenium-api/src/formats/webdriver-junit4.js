@@ -361,6 +361,7 @@ options.footer =
         indents(0) + "\n" +
         indents(1) + "@After\n" +
         indents(1) + "public void tearDown() throws Exception {\n" +
+        indents(2) + "${dbRestore}\n" +
         indents(2) + "driver.quit();\n" +
         indents(2) + "String verificationErrorString = verificationErrors.toString();\n" +
         indents(2) + "if (!\"\".equals(verificationErrorString)) {\n" +
