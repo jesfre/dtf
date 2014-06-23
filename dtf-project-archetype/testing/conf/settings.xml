@@ -13,6 +13,8 @@ Developed by Dextra Technologies www.dextratech.com
 
 	<testsuite name="find-owners" run="true" fileName="findOwners_v2.xml" dbRestore="true" dbSnapshot="true"/>
 	
+	<testsuite name="testing_folder" run="false" fileName="test-folfer/tf.xml" dbRestore="false" dbSnapshot="false"/>
+	
 	<testsuite name="testOnload" run="false" fileName="test-onload.xml" dbRestore="false" dbSnapshot="false"/>
 	
 </configuration>

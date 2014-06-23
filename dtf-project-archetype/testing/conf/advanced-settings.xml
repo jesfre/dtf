@@ -21,17 +21,6 @@
 		<db.username>root</db.username>
 		<db.password>root</db.password>
 		
-		<!-- 
-			Database profiles:
-			- mysql
-			- derby
-			- h2
-			- hsqldb
-			- oracle
-			- postgresql
-			- sqlserver
-		-->
-		
 		<!-- NOT_NEEDED_TO_CONFIGURE - START -->
 		
 		<!-- Default values for dtf-maven-plugin -->
