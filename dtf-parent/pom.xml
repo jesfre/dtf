@@ -26,49 +26,53 @@
   </properties>
   
   <build>
-  	<plugins>
-  		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-antrun-plugin</artifactId>
-			<version>1.1</version>
-			<executions>
-				<execution>
-					<id>copy-to-final-package</id>
-					<phase>install</phase>
-					<goals>
-						<goal>run</goal>
-					</goals>
-					<configuration>
-						<tasks>
-							<echo>==========	Building the final package	==========</echo>
-							<echo>Copying "dtf-project-archetype" files to ${final-package.location}</echo>
-							<mkdir dir="${final-package.location}"/>
-							<zip destfile="${final-package.location}/${final-package.filename}" update="true">
-								<fileset dir="${dtf-project-archetype.location}/">
-									<exclude name="src/main/java*" />
-									<exclude name="src/main/java/**/*" />
-									<exclude name="src/test/java/**/*" />
-									<exclude name=".settings*" />
-									<exclude name=".settings/**/*" />
-									<exclude name="docs*" />
-									<exclude name="docs/**/*" />
-									<exclude name="target*" />
-									<exclude name="target/**/*" />
-									<exclude name="archetype.properties" />
-									<exclude name=".classpath" />
-									<exclude name=".project" />
-									<exclude name="*.bat" />
-									<exclude name="**/*.log" />
-									<exclude name="**/*.git*" />
-								</fileset>
-							</zip>
-							<echo>Final package. Done.</echo>
-						</tasks>
-					</configuration>
-				</execution>
-			</executions>
-		</plugin>
-  	</plugins>
+  	<pluginManagement>
+	  	<plugins>
+	  		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>copy-to-archetype-lib</id>
+					</execution>
+					<execution>
+						<id>copy-to-final-package</id>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>==========	Building the final package	==========</echo>
+								<echo>Copying "dtf-project-archetype" files to ${final-package.location}</echo>
+								<mkdir dir="${final-package.location}"/>
+								<zip destfile="${final-package.location}/${final-package.filename}" update="true">
+									<fileset dir="${dtf-project-archetype.location}/">
+										<exclude name="src/main/java*" />
+										<exclude name="src/main/java/**/*" />
+										<exclude name="src/test/java/**/*" />
+										<exclude name=".settings*" />
+										<exclude name=".settings/**/*" />
+										<exclude name="docs*" />
+										<exclude name="docs/**/*" />
+										<exclude name="target*" />
+										<exclude name="target/**/*" />
+										<exclude name="archetype.properties" />
+										<exclude name=".classpath" />
+										<exclude name=".project" />
+										<exclude name="*.bat" />
+										<exclude name="**/*.log" />
+										<exclude name="**/*.git*" />
+									</fileset>
+								</zip>
+								<echo>Final package. Done.</echo>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+	  	</plugins>
+  	</pluginManagement>
   </build>
   
 </project>
