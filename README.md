@@ -1,6 +1,6 @@
 dtf | Dextra Testing Framework
 ===
-Dextra Testing Framework is a set of projects with tools and libraries that works together as a guideline to support automation testing with Selenium in a easiest way than the Selenium manner.
+Dextra Testing Framework is a set of projects with tools and libraries that works together as a guideline to support automation testing with Selenium in an easiest way than the Selenium manner.
 
 This project has been released by Dextra Technologies as OpenSource under the MIT license.
 
