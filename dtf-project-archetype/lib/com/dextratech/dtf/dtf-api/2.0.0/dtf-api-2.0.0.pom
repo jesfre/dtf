@@ -76,6 +76,7 @@
                 <artifactId>maven-jaxb2-plugin</artifactId>
                 <version>0.9.0</version>
                 <configuration>
+                	<forceRegenerate>false</forceRegenerate>
                 	<schemaDirectory>${basedir}/../dtf-project-archetype/src/test/resources</schemaDirectory>
                 	<generateDirectory>${basedir}/src/main/java</generateDirectory>
                 	<specVersion>2.1</specVersion>
