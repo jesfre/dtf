@@ -231,7 +231,7 @@
 					</execution>
 					<execution>
 						<id>copy-to-final-package</id>
-						<phase>install</phase>
+						<phase>none</phase>
 					</execution>
 				</executions>
 			</plugin>

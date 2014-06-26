@@ -68,6 +68,10 @@
 							</tasks>
 						</configuration>
 					</execution>
+					<execution>
+						<id>copy-to-final-package</id>
+						<phase>none</phase>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>

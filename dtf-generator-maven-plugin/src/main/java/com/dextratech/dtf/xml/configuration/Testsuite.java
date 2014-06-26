@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2014.06.23 a las 01:33:24 AM CDT 
+// Generado el: 2014.06.26 a las 12:46:37 AM CDT 
 //
 
 
@@ -29,8 +29,8 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="fileName" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="dbSnapshot" type="{http://www.w3.org/2001/XMLSchema}boolean" />
- *       &lt;attribute name="dbRestore" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+ *       &lt;attribute name="dbSnapshot" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" />
+ *       &lt;attribute name="dbRestore" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" />
  *       &lt;attribute name="run" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -112,8 +112,12 @@ public class Testsuite
      *     {@link Boolean }
      *     
      */
-    public Boolean isDbSnapshot() {
-        return dbSnapshot;
+    public boolean isDbSnapshot() {
+        if (dbSnapshot == null) {
+            return false;
+        } else {
+            return dbSnapshot;
+        }
     }
 
     /**
@@ -136,8 +140,12 @@ public class Testsuite
      *     {@link Boolean }
      *     
      */
-    public Boolean isDbRestore() {
-        return dbRestore;
+    public boolean isDbRestore() {
+        if (dbRestore == null) {
+            return false;
+        } else {
+            return dbRestore;
+        }
     }
 
     /**
@@ -202,13 +210,13 @@ public class Testsuite
             strategy.appendField(locator, this, "fileName", buffer, theFileName);
         }
         {
-            Boolean theDbSnapshot;
-            theDbSnapshot = this.isDbSnapshot();
+            boolean theDbSnapshot;
+            theDbSnapshot = ((this.dbSnapshot!= null)?this.isDbSnapshot():false);
             strategy.appendField(locator, this, "dbSnapshot", buffer, theDbSnapshot);
         }
         {
-            Boolean theDbRestore;
-            theDbRestore = this.isDbRestore();
+            boolean theDbRestore;
+            theDbRestore = ((this.dbRestore!= null)?this.isDbRestore():false);
             strategy.appendField(locator, this, "dbRestore", buffer, theDbRestore);
         }
         {

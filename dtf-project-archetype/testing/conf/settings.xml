@@ -10,8 +10,10 @@ Developed by Dextra Technologies www.dextratech.com
 	<browser name="*googlechrome" executablePath="E:\\dev\\projects\\titulacion\\sources\\chrome-drivers\\chromedriver.exe"/>
 	<timeout>80000</timeout>
 	<speed>500</speed>
+	
+	<testsuite name="validations" run="true" fileName="test-combinations/fields_and_validations.xml"/>
 
-	<testsuite name="find-owners" run="true" fileName="findOwners_v2.xml" dbRestore="true" dbSnapshot="true"/>
+	<testsuite name="find-owners" run="false" fileName="findOwners_v2.xml" dbRestore="false" dbSnapshot="false"/>
 	
 	<testsuite name="testing_folder" run="false" fileName="test-folfer/tf.xml" dbRestore="false" dbSnapshot="false"/>
 	

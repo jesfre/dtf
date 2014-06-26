@@ -25,9 +25,9 @@
     <complexType name="testsuite">
     	<attribute name="name" type="string" use="required"></attribute>
     	<attribute name="fileName" type="string" use="optional"></attribute>
-    	<attribute name="dbSnapshot" use="optional" type="boolean">
+    	<attribute name="dbSnapshot" use="optional" type="boolean" default="false">
     	</attribute>
-    	<attribute name="dbRestore" use="optional" type="boolean">
+    	<attribute name="dbRestore" use="optional" type="boolean" default="false">
     	</attribute>
     	<attribute name="run" type="boolean" use="optional">
     	</attribute>

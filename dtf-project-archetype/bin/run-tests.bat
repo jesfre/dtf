@@ -1,5 +1,5 @@
 @echo off
-call env.bat
+call setEnv.bat
 @echo Running tests...
 cd ..
 call mvn clean

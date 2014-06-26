@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.dextratech.dtf.common.SeleniumCommand;
 import com.dextratech.dtf.common.SeleniumCommand.Type;
+import com.dextratech.dtf.exception.InvalidValueException;
 import com.dextratech.dtf.plugin.testsuite.generator.FunctionRegistry;
 import com.dextratech.dtf.plugin.utils.DataHelper;
 import com.dextratech.dtf.xml.testsuite.Field;
@@ -54,36 +55,17 @@ public class FieldCommandBuilder implements SeleniumCommandBuilder {
 	 * @param field the field
 	 * @param functionRegistry the function registry
 	 * @return the selenium command
+	 * @throws InvalidValueException 
 	 */
-	public SeleniumCommand composeCommand(Field field, FunctionRegistry functionRegistry) {
+	public SeleniumCommand composeCommand(Field field, FunctionRegistry functionRegistry) throws InvalidValueException {
 		LocatorType locatorType = field.getLocatorType();
 		String locatorValue = field.getLocatorValue();
 		String finalLocator = createLocator(locatorType, locatorValue);
 		boolean errorStep = field.isErrorStep();
 
-		/*
-		 * Gets the valid value from attribute or from a validFieldValue element.
-		 * Attribute validValue is mandatory.
-		 */
-		String testingValue = field.getValidValue();
+		String testingValue = getValidValue(field, functionRegistry);
 		if (testingValue == null) {
-			ValidFieldValue validFieldValue = field.getValidValueDef();
-			if (validFieldValue != null) {
-				String literal = validFieldValue.getLiteral();
-				Function fn = validFieldValue.getFunction();
-				FunctionRef fnRef = validFieldValue.getFunctionRef();
-				if (StringUtils.isNotBlank(literal)) {
-					testingValue = literal;
-
-				} else if (fn != null) {
-					testingValue = DataHelper.getTestValue(fn);
-
-				} else if (fnRef != null) {
-					String fnRefId = fnRef.getFunctionRefId();
-					Function fnReferred = functionRegistry.getFunction(fnRefId);
-					testingValue = DataHelper.getTestValue(fnReferred);
-				}
-			}
+			throw new InvalidValueException("field.validValueDef is not a valid value.");
 		}
 
 		String commandName = getCommandName();
@@ -93,6 +75,40 @@ public class FieldCommandBuilder implements SeleniumCommandBuilder {
 
 		log.debug("Composed command : " + seleniumCommand.toString());
 		return seleniumCommand;
+	}
+
+	/**
+	 * Gets the valid value from the validValue or validValueDef element.
+	 *
+	 * @param field the field
+	 * @param functionRegistry the function registry
+	 * @return the valid value
+	 */
+	private String getValidValue(Field field, FunctionRegistry functionRegistry) {
+		// Use the validValue element
+		String testingValue = field.getValidValue();
+		if (testingValue != null) {
+			return testingValue;
+		}
+		// Use the validValueDef element
+		ValidFieldValue validFieldValue = field.getValidValueDef();
+		if (validFieldValue != null) {
+			String literal = validFieldValue.getLiteral();
+			Function fn = validFieldValue.getFunction();
+			FunctionRef fnRef = validFieldValue.getFunctionRef();
+			if (StringUtils.isNotBlank(literal)) {
+				testingValue = literal;
+
+			} else if (fn != null) {
+				testingValue = DataHelper.getTestValue(fn);
+
+			} else if (fnRef != null) {
+				String fnRefId = fnRef.getFunctionRefId();
+				Function fnReferred = functionRegistry.getFunction(fnRefId);
+				testingValue = DataHelper.getTestValue(fnReferred);
+			}
+		}
+		return testingValue;
 	}
 
 	@Override

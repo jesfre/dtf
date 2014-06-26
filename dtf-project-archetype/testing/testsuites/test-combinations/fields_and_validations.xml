@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns="http://www.dextratech.com/testsuite" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dextratech.com/testsuite ../../../src/test/resources/testsuite-v2.0.xsd ">
+
+	<!-- Names must be valid for [a-zA-Z_$][a-zA-Z_$0-9\s]* -->
+
+	<name>Test de combinaciones</name>
+	
+	<testcase name="combination_1" url="/owners/new" run="true" success="true">
+	
+		<field name="firstname" locatorType="id" locatorValue="firstname">
+			<validValueDef><literal>ok</literal></validValueDef>
+			<validate name="fn1">test 1</validate>
+		</field>
+		
+		<field name="city" locatorType="id" locatorValue="city">
+			<validValueDef><literal>cacahuatepec</literal></validValueDef>
+			<validateFunction type="string" id="length8"><length>8</length></validateFunction>
+		</field>
+		
+		<field name="telephone" locatorType="id" locatorValue="telephone">
+			<validValue>1234567890</validValue>
+			<validateFunction type="string" id="length2"><length>2</length></validateFunction>
+			<validate name="alpha">numero equivocado</validate>
+			<validateFunction type="string" id="min2">
+				<minValue>2</minValue>
+				<maxValue>9999999999</maxValue>
+			</validateFunction>
+		</field>
+		
+		<field name="lastname" locatorType="id" locatorValue="lastname">
+			<validValueDef><literal>roro</literal></validValueDef>
+		</field>
+		<field name="address" locatorType="id" locatorValue="address">
+			<validValue>callecita</validValue>
+		</field>
+	
+	</testcase>
+
+</testsuite>

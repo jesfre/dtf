@@ -133,7 +133,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 
 						log.debug("Processing [ " + fileName + " ]");
 
-						boolean isRunnable = tst.isRun();
+						boolean isRunnable = tst.isRun() != null && tst.isRun();
 						if (isRunnable == false) {
 							log.warn("[ " + fileName + " ] is not runnable.");
 							continue;
@@ -145,8 +145,8 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 							throw new MojoExecutionException("The testsuite file [ " + filePath + " ] doesn't exist.");
 						}
 
-						boolean dbSnapshot = tst.isDbSnapshot();
-						boolean dbRestore = tst.isDbRestore();
+						boolean dbSnapshot = tst.isDbSnapshot() != null && tst.isDbSnapshot();
+						boolean dbRestore = tst.isDbRestore() != null && tst.isDbRestore();
 						if (testsuiteFile.exists()) {
 							try {
 
@@ -315,6 +315,8 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 							String value = "";
 							String assertionId = null;
 							boolean causeError = false;
+
+							// TODO extract like AssertionsCommandBuilder and other *CommandBuilders
 
 							if (vObject instanceof Validation) {
 								Validation validation = (Validation) vObject;
