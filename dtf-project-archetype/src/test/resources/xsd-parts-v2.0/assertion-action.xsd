@@ -16,8 +16,8 @@
 					<attribute name="pattern" type="string" use="required"></attribute>
 				</complexType>
 			</element>
-			<element name="alertNotPresent" type="string" maxOccurs="1" minOccurs="0"></element>
-			<element name="alertPresent" type="string" maxOccurs="1" minOccurs="0"></element>
+			<element name="alertNotPresent" maxOccurs="1" minOccurs="0"><complexType></complexType></element>
+			<element name="alertPresent" maxOccurs="1" minOccurs="0"><complexType></complexType></element>
 			<element name="allButtons" maxOccurs="1" minOccurs="0">
 				<complexType>
 					<attribute name="pattern" type="string" use="required"></attribute>
@@ -75,8 +75,8 @@
 					<attribute name="pattern" type="string" use="required"></attribute>
 				</complexType>
 			</element>
-			<element name="confirmationNotPresent" type="string" maxOccurs="1" minOccurs="0"></element>
-			<element name="confirmationPresent" type="string" maxOccurs="1" minOccurs="0"></element>
+			<element name="confirmationNotPresent" maxOccurs="1" minOccurs="0"><complexType></complexType></element>
+			<element name="confirmationPresent" maxOccurs="1" minOccurs="0"><complexType></complexType></element>
 			<element name="cookie" maxOccurs="1" minOccurs="0">
 				<complexType>
 					<attribute name="pattern" type="string" use="required"></attribute>
@@ -475,8 +475,8 @@
 					<attribute name="pattern" type="string" use="required"></attribute>
 				</complexType>
 			</element>
-			<element name="promptNotPresent" type="string" maxOccurs="1" minOccurs="0"></element>
-			<element name="promptPresent" type="string" maxOccurs="1" minOccurs="0"></element>
+			<element name="promptNotPresent" maxOccurs="1" minOccurs="0"><complexType></complexType></element>
+			<element name="promptPresent" maxOccurs="1" minOccurs="0"><complexType></complexType></element>
 			<element name="selected" maxOccurs="1" minOccurs="0">
 				<complexType>
 					<attribute name="selectLocator" type="string" use="required"></attribute>

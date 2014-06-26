@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2014.06.26 a las 12:46:33 AM CDT 
+// Generado el: 2014.06.26 a las 03:45:57 AM CDT 
 //
 
 
@@ -91,14 +91,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ValidationFunction }
-     * 
-     */
-    public ValidationFunction createValidationFunction() {
-        return new ValidationFunction();
-    }
-
-    /**
      * Create an instance of {@link Function }
      * 
      */
@@ -147,19 +139,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ValidFieldValue }
-     * 
-     */
-    public ValidFieldValue createValidFieldValue() {
-        return new ValidFieldValue();
-    }
-
-    /**
      * Create an instance of {@link Onload }
      * 
      */
     public Onload createOnload() {
         return new Onload();
+    }
+
+    /**
+     * Create an instance of {@link ValidFieldValue }
+     * 
+     */
+    public ValidFieldValue createValidFieldValue() {
+        return new ValidFieldValue();
     }
 
     /**
@@ -200,6 +192,14 @@ public class ObjectFactory {
      */
     public Echo createEcho() {
         return new Echo();
+    }
+
+    /**
+     * Create an instance of {@link ValidationFunction }
+     * 
+     */
+    public ValidationFunction createValidationFunction() {
+        return new ValidationFunction();
     }
 
     /**
@@ -1243,6 +1243,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link AssertionAction.AlertNotPresent }
+     * 
+     */
+    public AssertionAction.AlertNotPresent createAssertionActionAlertNotPresent() {
+        return new AssertionAction.AlertNotPresent();
+    }
+
+    /**
+     * Create an instance of {@link AssertionAction.AlertPresent }
+     * 
+     */
+    public AssertionAction.AlertPresent createAssertionActionAlertPresent() {
+        return new AssertionAction.AlertPresent();
+    }
+
+    /**
      * Create an instance of {@link AssertionAction.AllButtons }
      * 
      */
@@ -1328,6 +1344,22 @@ public class ObjectFactory {
      */
     public AssertionAction.Confirmation createAssertionActionConfirmation() {
         return new AssertionAction.Confirmation();
+    }
+
+    /**
+     * Create an instance of {@link AssertionAction.ConfirmationNotPresent }
+     * 
+     */
+    public AssertionAction.ConfirmationNotPresent createAssertionActionConfirmationNotPresent() {
+        return new AssertionAction.ConfirmationNotPresent();
+    }
+
+    /**
+     * Create an instance of {@link AssertionAction.ConfirmationPresent }
+     * 
+     */
+    public AssertionAction.ConfirmationPresent createAssertionActionConfirmationPresent() {
+        return new AssertionAction.ConfirmationPresent();
     }
 
     /**
@@ -1904,6 +1936,22 @@ public class ObjectFactory {
      */
     public AssertionAction.Prompt createAssertionActionPrompt() {
         return new AssertionAction.Prompt();
+    }
+
+    /**
+     * Create an instance of {@link AssertionAction.PromptNotPresent }
+     * 
+     */
+    public AssertionAction.PromptNotPresent createAssertionActionPromptNotPresent() {
+        return new AssertionAction.PromptNotPresent();
+    }
+
+    /**
+     * Create an instance of {@link AssertionAction.PromptPresent }
+     * 
+     */
+    public AssertionAction.PromptPresent createAssertionActionPromptPresent() {
+        return new AssertionAction.PromptPresent();
     }
 
     /**

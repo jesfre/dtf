@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2014.06.26 a las 12:46:33 AM CDT 
+// Generado el: 2014.06.26 a las 03:45:57 AM CDT 
 //
 
 
@@ -38,13 +38,12 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  *         &lt;/choice>
  *         &lt;choice maxOccurs="unbounded" minOccurs="0">
  *           &lt;element name="validate" type="{http://www.dextratech.com/testsuite}validation" maxOccurs="unbounded" minOccurs="0"/>
- *           &lt;element name="validateFunction" type="{http://www.dextratech.com/testsuite}validationFunction" maxOccurs="unbounded" minOccurs="0"/>
+ *           &lt;element name="validateFunction" type="{http://www.dextratech.com/testsuite}ValidationFunction" maxOccurs="unbounded" minOccurs="0"/>
  *           &lt;element name="validateFunctionRef" type="{http://www.dextratech.com/testsuite}validationFunctionRef" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;/choice>
  *       &lt;/sequence>
  *       &lt;attribute name="name" use="required" type="{http://www.dextratech.com/testsuite}elementName" />
- *       &lt;attribute name="locatorType" type="{http://www.dextratech.com/testsuite}locatorType" default="id" />
- *       &lt;attribute name="locatorValue" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="locator" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="errorStep" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -72,10 +71,8 @@ public class Field implements ToString
     protected List<Object> validateOrValidateFunctionOrValidateFunctionRef;
     @XmlAttribute(name = "name", required = true)
     protected String name;
-    @XmlAttribute(name = "locatorType")
-    protected LocatorType locatorType;
-    @XmlAttribute(name = "locatorValue")
-    protected String locatorValue;
+    @XmlAttribute(name = "locator")
+    protected String locator;
     @XmlAttribute(name = "errorStep")
     protected Boolean errorStep;
 
@@ -183,55 +180,27 @@ public class Field implements ToString
     }
 
     /**
-     * Obtiene el valor de la propiedad locatorType.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LocatorType }
-     *     
-     */
-    public LocatorType getLocatorType() {
-        if (locatorType == null) {
-            return LocatorType.ID;
-        } else {
-            return locatorType;
-        }
-    }
-
-    /**
-     * Define el valor de la propiedad locatorType.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LocatorType }
-     *     
-     */
-    public void setLocatorType(LocatorType value) {
-        this.locatorType = value;
-    }
-
-    /**
-     * Obtiene el valor de la propiedad locatorValue.
+     * Obtiene el valor de la propiedad locator.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getLocatorValue() {
-        return locatorValue;
+    public String getLocator() {
+        return locator;
     }
 
     /**
-     * Define el valor de la propiedad locatorValue.
+     * Define el valor de la propiedad locator.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setLocatorValue(String value) {
-        this.locatorValue = value;
+    public void setLocator(String value) {
+        this.locator = value;
     }
 
     /**
@@ -298,14 +267,9 @@ public class Field implements ToString
             strategy.appendField(locator, this, "name", buffer, theName);
         }
         {
-            LocatorType theLocatorType;
-            theLocatorType = this.getLocatorType();
-            strategy.appendField(locator, this, "locatorType", buffer, theLocatorType);
-        }
-        {
-            String theLocatorValue;
-            theLocatorValue = this.getLocatorValue();
-            strategy.appendField(locator, this, "locatorValue", buffer, theLocatorValue);
+            String theLocator;
+            theLocator = this.getLocator();
+            strategy.appendField(locator, this, "locator", buffer, theLocator);
         }
         {
             boolean theErrorStep;

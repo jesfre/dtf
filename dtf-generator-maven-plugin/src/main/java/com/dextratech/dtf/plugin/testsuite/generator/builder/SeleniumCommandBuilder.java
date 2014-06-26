@@ -7,8 +7,6 @@ import java.util.List;
 
 import com.dextratech.dtf.common.SeleniumCommand;
 import com.dextratech.dtf.plugin.testsuite.generator.FunctionRegistry;
-import com.dextratech.dtf.xml.testsuite.Field;
-import com.dextratech.dtf.xml.testsuite.LocatorType;
 
 /**
  * An interface to build all required commands for Selenium.

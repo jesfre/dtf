@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2014.06.26 a las 12:46:33 AM CDT 
+// Generado el: 2014.06.26 a las 03:45:57 AM CDT 
 //
 
 
@@ -42,8 +42,22 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
- *         &lt;element name="alertNotPresent" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="alertPresent" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="alertNotPresent" minOccurs="0">
+ *           &lt;complexType>
+ *             &lt;complexContent>
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *               &lt;/restriction>
+ *             &lt;/complexContent>
+ *           &lt;/complexType>
+ *         &lt;/element>
+ *         &lt;element name="alertPresent" minOccurs="0">
+ *           &lt;complexType>
+ *             &lt;complexContent>
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *               &lt;/restriction>
+ *             &lt;/complexContent>
+ *           &lt;/complexType>
+ *         &lt;/element>
  *         &lt;element name="allButtons" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
@@ -145,8 +159,22 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
- *         &lt;element name="confirmationNotPresent" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="confirmationPresent" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="confirmationNotPresent" minOccurs="0">
+ *           &lt;complexType>
+ *             &lt;complexContent>
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *               &lt;/restriction>
+ *             &lt;/complexContent>
+ *           &lt;/complexType>
+ *         &lt;/element>
+ *         &lt;element name="confirmationPresent" minOccurs="0">
+ *           &lt;complexType>
+ *             &lt;complexContent>
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *               &lt;/restriction>
+ *             &lt;/complexContent>
+ *           &lt;/complexType>
+ *         &lt;/element>
  *         &lt;element name="cookie" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
@@ -833,8 +861,22 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
- *         &lt;element name="promptNotPresent" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="promptPresent" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="promptNotPresent" minOccurs="0">
+ *           &lt;complexType>
+ *             &lt;complexContent>
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *               &lt;/restriction>
+ *             &lt;/complexContent>
+ *           &lt;/complexType>
+ *         &lt;/element>
+ *         &lt;element name="promptPresent" minOccurs="0">
+ *           &lt;complexType>
+ *             &lt;complexContent>
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *               &lt;/restriction>
+ *             &lt;/complexContent>
+ *           &lt;/complexType>
+ *         &lt;/element>
  *         &lt;element name="selected" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
@@ -1179,8 +1221,8 @@ public class AssertionAction implements ToString
 {
 
     protected AssertionAction.Alert alert;
-    protected String alertNotPresent;
-    protected String alertPresent;
+    protected AssertionAction.AlertNotPresent alertNotPresent;
+    protected AssertionAction.AlertPresent alertPresent;
     protected AssertionAction.AllButtons allButtons;
     protected AssertionAction.AllFields allFields;
     protected AssertionAction.AllLinks allLinks;
@@ -1192,8 +1234,8 @@ public class AssertionAction implements ToString
     protected AssertionAction.BodyText bodyText;
     protected AssertionAction.Checked checked;
     protected AssertionAction.Confirmation confirmation;
-    protected String confirmationNotPresent;
-    protected String confirmationPresent;
+    protected AssertionAction.ConfirmationNotPresent confirmationNotPresent;
+    protected AssertionAction.ConfirmationPresent confirmationPresent;
     protected AssertionAction.Cookie cookie;
     protected AssertionAction.CookieByName cookieByName;
     protected AssertionAction.CookieNotPresent cookieNotPresent;
@@ -1266,8 +1308,8 @@ public class AssertionAction implements ToString
     protected AssertionAction.NotXpathCount notXpathCount;
     protected AssertionAction.Ordered ordered;
     protected AssertionAction.Prompt prompt;
-    protected String promptNotPresent;
-    protected String promptPresent;
+    protected AssertionAction.PromptNotPresent promptNotPresent;
+    protected AssertionAction.PromptPresent promptPresent;
     protected AssertionAction.Selected selected;
     protected AssertionAction.SelectedId selectedId;
     protected AssertionAction.SelectedIds selectedIds;
@@ -1326,10 +1368,10 @@ public class AssertionAction implements ToString
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link AssertionAction.AlertNotPresent }
      *     
      */
-    public String getAlertNotPresent() {
+    public AssertionAction.AlertNotPresent getAlertNotPresent() {
         return alertNotPresent;
     }
 
@@ -1338,10 +1380,10 @@ public class AssertionAction implements ToString
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link AssertionAction.AlertNotPresent }
      *     
      */
-    public void setAlertNotPresent(String value) {
+    public void setAlertNotPresent(AssertionAction.AlertNotPresent value) {
         this.alertNotPresent = value;
     }
 
@@ -1350,10 +1392,10 @@ public class AssertionAction implements ToString
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link AssertionAction.AlertPresent }
      *     
      */
-    public String getAlertPresent() {
+    public AssertionAction.AlertPresent getAlertPresent() {
         return alertPresent;
     }
 
@@ -1362,10 +1404,10 @@ public class AssertionAction implements ToString
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link AssertionAction.AlertPresent }
      *     
      */
-    public void setAlertPresent(String value) {
+    public void setAlertPresent(AssertionAction.AlertPresent value) {
         this.alertPresent = value;
     }
 
@@ -1638,10 +1680,10 @@ public class AssertionAction implements ToString
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link AssertionAction.ConfirmationNotPresent }
      *     
      */
-    public String getConfirmationNotPresent() {
+    public AssertionAction.ConfirmationNotPresent getConfirmationNotPresent() {
         return confirmationNotPresent;
     }
 
@@ -1650,10 +1692,10 @@ public class AssertionAction implements ToString
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link AssertionAction.ConfirmationNotPresent }
      *     
      */
-    public void setConfirmationNotPresent(String value) {
+    public void setConfirmationNotPresent(AssertionAction.ConfirmationNotPresent value) {
         this.confirmationNotPresent = value;
     }
 
@@ -1662,10 +1704,10 @@ public class AssertionAction implements ToString
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link AssertionAction.ConfirmationPresent }
      *     
      */
-    public String getConfirmationPresent() {
+    public AssertionAction.ConfirmationPresent getConfirmationPresent() {
         return confirmationPresent;
     }
 
@@ -1674,10 +1716,10 @@ public class AssertionAction implements ToString
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link AssertionAction.ConfirmationPresent }
      *     
      */
-    public void setConfirmationPresent(String value) {
+    public void setConfirmationPresent(AssertionAction.ConfirmationPresent value) {
         this.confirmationPresent = value;
     }
 
@@ -3414,10 +3456,10 @@ public class AssertionAction implements ToString
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link AssertionAction.PromptNotPresent }
      *     
      */
-    public String getPromptNotPresent() {
+    public AssertionAction.PromptNotPresent getPromptNotPresent() {
         return promptNotPresent;
     }
 
@@ -3426,10 +3468,10 @@ public class AssertionAction implements ToString
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link AssertionAction.PromptNotPresent }
      *     
      */
-    public void setPromptNotPresent(String value) {
+    public void setPromptNotPresent(AssertionAction.PromptNotPresent value) {
         this.promptNotPresent = value;
     }
 
@@ -3438,10 +3480,10 @@ public class AssertionAction implements ToString
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link AssertionAction.PromptPresent }
      *     
      */
-    public String getPromptPresent() {
+    public AssertionAction.PromptPresent getPromptPresent() {
         return promptPresent;
     }
 
@@ -3450,10 +3492,10 @@ public class AssertionAction implements ToString
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link AssertionAction.PromptPresent }
      *     
      */
-    public void setPromptPresent(String value) {
+    public void setPromptPresent(AssertionAction.PromptPresent value) {
         this.promptPresent = value;
     }
 
@@ -4082,12 +4124,12 @@ public class AssertionAction implements ToString
             strategy.appendField(locator, this, "alert", buffer, theAlert);
         }
         {
-            String theAlertNotPresent;
+            AssertionAction.AlertNotPresent theAlertNotPresent;
             theAlertNotPresent = this.getAlertNotPresent();
             strategy.appendField(locator, this, "alertNotPresent", buffer, theAlertNotPresent);
         }
         {
-            String theAlertPresent;
+            AssertionAction.AlertPresent theAlertPresent;
             theAlertPresent = this.getAlertPresent();
             strategy.appendField(locator, this, "alertPresent", buffer, theAlertPresent);
         }
@@ -4147,12 +4189,12 @@ public class AssertionAction implements ToString
             strategy.appendField(locator, this, "confirmation", buffer, theConfirmation);
         }
         {
-            String theConfirmationNotPresent;
+            AssertionAction.ConfirmationNotPresent theConfirmationNotPresent;
             theConfirmationNotPresent = this.getConfirmationNotPresent();
             strategy.appendField(locator, this, "confirmationNotPresent", buffer, theConfirmationNotPresent);
         }
         {
-            String theConfirmationPresent;
+            AssertionAction.ConfirmationPresent theConfirmationPresent;
             theConfirmationPresent = this.getConfirmationPresent();
             strategy.appendField(locator, this, "confirmationPresent", buffer, theConfirmationPresent);
         }
@@ -4517,12 +4559,12 @@ public class AssertionAction implements ToString
             strategy.appendField(locator, this, "prompt", buffer, thePrompt);
         }
         {
-            String thePromptNotPresent;
+            AssertionAction.PromptNotPresent thePromptNotPresent;
             thePromptNotPresent = this.getPromptNotPresent();
             strategy.appendField(locator, this, "promptNotPresent", buffer, thePromptNotPresent);
         }
         {
-            String thePromptPresent;
+            AssertionAction.PromptPresent thePromptPresent;
             thePromptPresent = this.getPromptPresent();
             strategy.appendField(locator, this, "promptPresent", buffer, thePromptPresent);
         }
@@ -4725,6 +4767,94 @@ public class AssertionAction implements ToString
                 thePattern = this.getPattern();
                 strategy.appendField(locator, this, "pattern", buffer, thePattern);
             }
+            return buffer;
+        }
+
+    }
+
+
+    /**
+     * <p>Clase Java para anonymous complex type.
+     * 
+     * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+     * 
+     * <pre>
+     * &lt;complexType>
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "")
+    public static class AlertNotPresent
+        implements ToString
+    {
+
+
+        public String toString() {
+            final ToStringStrategy strategy = JAXBToStringStrategy.INSTANCE;
+            final StringBuilder buffer = new StringBuilder();
+            append(null, buffer, strategy);
+            return buffer.toString();
+        }
+
+        public StringBuilder append(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
+            strategy.appendStart(locator, this, buffer);
+            appendFields(locator, buffer, strategy);
+            strategy.appendEnd(locator, this, buffer);
+            return buffer;
+        }
+
+        public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
+            return buffer;
+        }
+
+    }
+
+
+    /**
+     * <p>Clase Java para anonymous complex type.
+     * 
+     * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+     * 
+     * <pre>
+     * &lt;complexType>
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "")
+    public static class AlertPresent
+        implements ToString
+    {
+
+
+        public String toString() {
+            final ToStringStrategy strategy = JAXBToStringStrategy.INSTANCE;
+            final StringBuilder buffer = new StringBuilder();
+            append(null, buffer, strategy);
+            return buffer.toString();
+        }
+
+        public StringBuilder append(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
+            strategy.appendStart(locator, this, buffer);
+            appendFields(locator, buffer, strategy);
+            strategy.appendEnd(locator, this, buffer);
+            return buffer;
+        }
+
+        public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
             return buffer;
         }
 
@@ -5625,6 +5755,94 @@ public class AssertionAction implements ToString
                 thePattern = this.getPattern();
                 strategy.appendField(locator, this, "pattern", buffer, thePattern);
             }
+            return buffer;
+        }
+
+    }
+
+
+    /**
+     * <p>Clase Java para anonymous complex type.
+     * 
+     * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+     * 
+     * <pre>
+     * &lt;complexType>
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "")
+    public static class ConfirmationNotPresent
+        implements ToString
+    {
+
+
+        public String toString() {
+            final ToStringStrategy strategy = JAXBToStringStrategy.INSTANCE;
+            final StringBuilder buffer = new StringBuilder();
+            append(null, buffer, strategy);
+            return buffer.toString();
+        }
+
+        public StringBuilder append(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
+            strategy.appendStart(locator, this, buffer);
+            appendFields(locator, buffer, strategy);
+            strategy.appendEnd(locator, this, buffer);
+            return buffer;
+        }
+
+        public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
+            return buffer;
+        }
+
+    }
+
+
+    /**
+     * <p>Clase Java para anonymous complex type.
+     * 
+     * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+     * 
+     * <pre>
+     * &lt;complexType>
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "")
+    public static class ConfirmationPresent
+        implements ToString
+    {
+
+
+        public String toString() {
+            final ToStringStrategy strategy = JAXBToStringStrategy.INSTANCE;
+            final StringBuilder buffer = new StringBuilder();
+            append(null, buffer, strategy);
+            return buffer.toString();
+        }
+
+        public StringBuilder append(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
+            strategy.appendStart(locator, this, buffer);
+            appendFields(locator, buffer, strategy);
+            strategy.appendEnd(locator, this, buffer);
+            return buffer;
+        }
+
+        public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
             return buffer;
         }
 
@@ -12313,6 +12531,94 @@ public class AssertionAction implements ToString
                 thePattern = this.getPattern();
                 strategy.appendField(locator, this, "pattern", buffer, thePattern);
             }
+            return buffer;
+        }
+
+    }
+
+
+    /**
+     * <p>Clase Java para anonymous complex type.
+     * 
+     * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+     * 
+     * <pre>
+     * &lt;complexType>
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "")
+    public static class PromptNotPresent
+        implements ToString
+    {
+
+
+        public String toString() {
+            final ToStringStrategy strategy = JAXBToStringStrategy.INSTANCE;
+            final StringBuilder buffer = new StringBuilder();
+            append(null, buffer, strategy);
+            return buffer.toString();
+        }
+
+        public StringBuilder append(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
+            strategy.appendStart(locator, this, buffer);
+            appendFields(locator, buffer, strategy);
+            strategy.appendEnd(locator, this, buffer);
+            return buffer;
+        }
+
+        public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
+            return buffer;
+        }
+
+    }
+
+
+    /**
+     * <p>Clase Java para anonymous complex type.
+     * 
+     * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+     * 
+     * <pre>
+     * &lt;complexType>
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "")
+    public static class PromptPresent
+        implements ToString
+    {
+
+
+        public String toString() {
+            final ToStringStrategy strategy = JAXBToStringStrategy.INSTANCE;
+            final StringBuilder buffer = new StringBuilder();
+            append(null, buffer, strategy);
+            return buffer.toString();
+        }
+
+        public StringBuilder append(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
+            strategy.appendStart(locator, this, buffer);
+            appendFields(locator, buffer, strategy);
+            strategy.appendEnd(locator, this, buffer);
+            return buffer;
+        }
+
+        public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
             return buffer;
         }
 

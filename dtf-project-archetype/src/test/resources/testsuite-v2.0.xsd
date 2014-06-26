@@ -6,7 +6,7 @@
 	<include schemaLocation="xsd-parts-v2.0/testsuite-v2-actions.xsd"></include>
 
 	<element name="testsuite" type="ts:testsuite"></element>
-	<element name="validationFunctions" type="ts:validationRules"></element>
+	<element name="validationFunctions" type="ts:ValidationRules"></element>
 	<element name="components" type="ts:components"></element>
 
 	<complexType name="components">
@@ -25,7 +25,7 @@
 			<element name="component" type="ts:component"
 				maxOccurs="unbounded" minOccurs="0">
 			</element>
-			<element name="validationRules" type="ts:validationRules" maxOccurs="1" minOccurs="0"></element>
+			<element name="validation-functions" type="ts:ValidationRules" maxOccurs="1" minOccurs="0"></element>
 		</sequence>
 	</complexType>
 	
@@ -77,7 +77,7 @@
 					maxOccurs="unbounded" minOccurs="0">
 				</element>
 				<element name="validateFunction"
-					type="ts:validationFunction" maxOccurs="unbounded" minOccurs="0">
+					type="ts:ValidationFunction" maxOccurs="unbounded" minOccurs="0">
 				</element>
 				<element name="validateFunctionRef"
 					type="ts:validationFunctionRef" maxOccurs="unbounded"
@@ -93,11 +93,8 @@
 				</documentation>
 			</annotation>
 
-		</attribute>
-		<attribute name="locatorType" type="ts:locatorType"
-			default="id">
-		</attribute>
-		<attribute name="locatorValue" type="string"></attribute>
+		</attribute>
+		<attribute name="locator" type="string"></attribute>
 
 		<attribute name="errorStep" type="boolean" default="false"></attribute>
 	</complexType>
@@ -112,17 +109,6 @@
 		<attribute name="valid" type="boolean" default="true"></attribute>
 		<attribute name="assertId" type="ts:elementName"></attribute>
 	</complexType>
-
-	<simpleType name="locatorType">
-		<restriction base="string">
-			<enumeration value="id" />
-			<enumeration value="name" />
-			<enumeration value="css" />
-			<enumeration value="link" />
-			<enumeration value="xpath" />
-			<enumeration value="nothing" />
-		</restriction>
-	</simpleType>
 
 	<complexType name="functionRef">
         <annotation>
@@ -232,7 +218,7 @@
 		</attribute>
 	</complexType>
 
-	<complexType name="validationFunction">
+	<complexType name="ValidationFunction">
 		<complexContent>
 			<extension base="ts:function">
 				<attribute name="id" use="required" type="ts:elementName"></attribute>
@@ -242,9 +228,9 @@
 		</complexContent>
 	</complexType>
 
-	<complexType name="validationRules">
+	<complexType name="ValidationRules">
 		<sequence>
-			<element name="function" type="ts:validationFunction"
+			<element name="function" type="ts:ValidationFunction"
 				maxOccurs="unbounded" minOccurs="0"></element>
 		</sequence>
 	</complexType>

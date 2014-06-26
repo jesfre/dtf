@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2014.06.26 a las 12:46:33 AM CDT 
+// Generado el: 2014.06.26 a las 03:45:57 AM CDT 
 //
 
 
@@ -19,12 +19,12 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
 
 /**
- * <p>Clase Java para validationFunction complex type.
+ * <p>Clase Java para ValidationFunction complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="validationFunction">
+ * &lt;complexType name="ValidationFunction">
  *   &lt;complexContent>
  *     &lt;extension base="{http://www.dextratech.com/testsuite}function">
  *       &lt;attribute name="id" use="required" type="{http://www.dextratech.com/testsuite}elementName" />
@@ -38,7 +38,7 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "validationFunction")
+@XmlType(name = "ValidationFunction")
 public class ValidationFunction
     extends Function
     implements ToString

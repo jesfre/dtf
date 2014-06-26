@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2014.06.26 a las 12:46:33 AM CDT 
+// Generado el: 2014.06.26 a las 03:45:57 AM CDT 
 //
 
 
@@ -33,7 +33,7 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  *         &lt;element name="name" type="{http://www.dextratech.com/testsuite}elementName"/>
  *         &lt;element name="testcase" type="{http://www.dextratech.com/testsuite}testcase" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="component" type="{http://www.dextratech.com/testsuite}component" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="validationRules" type="{http://www.dextratech.com/testsuite}validationRules" minOccurs="0"/>
+ *         &lt;element name="validation-functions" type="{http://www.dextratech.com/testsuite}ValidationRules" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -47,7 +47,7 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
     "name",
     "testcase",
     "component",
-    "validationRules"
+    "validationFunctions"
 })
 public class Testsuite
     implements ToString
@@ -57,7 +57,8 @@ public class Testsuite
     protected String name;
     protected List<Testcase> testcase;
     protected List<Component> component;
-    protected ValidationRules validationRules;
+    @XmlElement(name = "validation-functions")
+    protected ValidationRules validationFunctions;
 
     /**
      * Obtiene el valor de la propiedad name.
@@ -142,27 +143,27 @@ public class Testsuite
     }
 
     /**
-     * Obtiene el valor de la propiedad validationRules.
+     * Obtiene el valor de la propiedad validationFunctions.
      * 
      * @return
      *     possible object is
      *     {@link ValidationRules }
      *     
      */
-    public ValidationRules getValidationRules() {
-        return validationRules;
+    public ValidationRules getValidationFunctions() {
+        return validationFunctions;
     }
 
     /**
-     * Define el valor de la propiedad validationRules.
+     * Define el valor de la propiedad validationFunctions.
      * 
      * @param value
      *     allowed object is
      *     {@link ValidationRules }
      *     
      */
-    public void setValidationRules(ValidationRules value) {
-        this.validationRules = value;
+    public void setValidationFunctions(ValidationRules value) {
+        this.validationFunctions = value;
     }
 
     public String toString() {
@@ -196,9 +197,9 @@ public class Testsuite
             strategy.appendField(locator, this, "component", buffer, theComponent);
         }
         {
-            ValidationRules theValidationRules;
-            theValidationRules = this.getValidationRules();
-            strategy.appendField(locator, this, "validationRules", buffer, theValidationRules);
+            ValidationRules theValidationFunctions;
+            theValidationFunctions = this.getValidationFunctions();
+            strategy.appendField(locator, this, "validationFunctions", buffer, theValidationFunctions);
         }
         return buffer;
     }

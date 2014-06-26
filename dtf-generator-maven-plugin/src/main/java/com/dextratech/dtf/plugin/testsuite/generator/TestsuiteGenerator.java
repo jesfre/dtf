@@ -29,6 +29,7 @@ import com.dextratech.dtf.common.Constants;
 import com.dextratech.dtf.common.SeleniumCommand;
 import com.dextratech.dtf.common.SeleniumCommand.Type;
 import com.dextratech.dtf.exception.DextraSeleniumException;
+import com.dextratech.dtf.exception.NotFoundElementException;
 import com.dextratech.dtf.plugin.html2java.Html2JavaConverter;
 import com.dextratech.dtf.plugin.parser.TestHtmlParser;
 import com.dextratech.dtf.plugin.utils.DataHelper;
@@ -154,17 +155,15 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 								generateHTMLScripts(testsuite, generatedHtmlTestsuitesPath, ++testsuiteCounter, dbSnapshot, dbRestore);
 
 							} catch (JAXBException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								log.error(e.getMessage(), e);
 							} catch (URISyntaxException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								log.error(e.getMessage(), e);
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								log.error(e.getMessage(), e);
 							} catch (DextraSeleniumException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								log.error(e.getMessage(), e);
+							} catch (NotFoundElementException e) {
+								log.error(e.getMessage(), e);
 							}
 						} else {
 							log.error("File not found: " + filePath);
@@ -243,8 +242,9 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 	 * @throws URISyntaxException
 	 * @throws IOException
 	 * @throws DextraSeleniumException
+	 * @throws NotFoundElementException 
 	 */
-	public void generateHTMLScripts(Testsuite testsuite, File testSuitesDirectory, int testsuiteCounter, boolean dbSnapshot, boolean dbRestore) throws URISyntaxException, IOException, DextraSeleniumException {
+	public void generateHTMLScripts(Testsuite testsuite, File testSuitesDirectory, int testsuiteCounter, boolean dbSnapshot, boolean dbRestore) throws URISyntaxException, IOException, DextraSeleniumException, NotFoundElementException {
 		List<String> testcaseFilenames = new ArrayList<String>();
 		String testsuiteFilename = testsuite.getName();
 		String testsuiteOutDir = testSuitesDirectory.getAbsolutePath();
@@ -253,7 +253,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 		List<Testcase> testcaseList = testsuite.getTestcase();
 
 		FunctionRegistry tmpFunctionRegistry = new FunctionRegistry(vFunctionRegistry);
-		ValidationRules vRules = testsuite.getValidationRules();
+		ValidationRules vRules = testsuite.getValidationFunctions();
 		if (testcaseList.size() > 0 && vRules != null) {
 			tmpFunctionRegistry.addAll(vRules.getFunction());
 		}
@@ -401,9 +401,11 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 	 * And removes all assert commands that are part of customized validations for fields
 	 * @param commandList
 	 * @param assertionId
+	 * @throws NotFoundElementException 
 	 */
-	private List<SeleniumCommand> createDeepCopyForValidation(List<SeleniumCommand> commandList, String assertionId) {
+	private List<SeleniumCommand> createDeepCopyForValidation(List<SeleniumCommand> commandList, String assertionId) throws NotFoundElementException {
 		List<SeleniumCommand> copyCommandList = new ArrayList<SeleniumCommand>();
+		boolean foundAssertionIdInList = false;
 		for (SeleniumCommand sc2Copy : commandList) {
 			boolean includeThis = true;
 			if (sc2Copy.getType() == Type.ASSERT) {
@@ -412,6 +414,10 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 				if (StringUtils.isNotBlank(assertId) && !assertId.equals(assertionId)) {
 					includeThis = false;
 				}
+				// Makes sure that the assertionId looked for is not the assert tested in this loop
+				if (!foundAssertionIdInList) {
+					foundAssertionIdInList = assertId != null && includeThis && assertId.equals(assertionId);
+				}
 			}
 			if (includeThis) {
 				SeleniumCommand scCopy = new SeleniumCommand();
@@ -419,6 +425,11 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 				copyCommandList.add(scCopy);
 			}
 		}
+		
+		if(StringUtils.isNotBlank(assertionId) && !foundAssertionIdInList) {
+			throw new NotFoundElementException("Assertion with id [ " + assertionId + " ] not found.");
+		}
+		
 		return copyCommandList;
 	}
 

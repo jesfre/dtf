@@ -18,7 +18,6 @@ import com.dextratech.dtf.plugin.utils.DataHelper;
 import com.dextratech.dtf.xml.testsuite.Field;
 import com.dextratech.dtf.xml.testsuite.Function;
 import com.dextratech.dtf.xml.testsuite.FunctionRef;
-import com.dextratech.dtf.xml.testsuite.LocatorType;
 import com.dextratech.dtf.xml.testsuite.ValidFieldValue;
 
 /**
@@ -58,9 +57,7 @@ public class FieldCommandBuilder implements SeleniumCommandBuilder {
 	 * @throws InvalidValueException 
 	 */
 	public SeleniumCommand composeCommand(Field field, FunctionRegistry functionRegistry) throws InvalidValueException {
-		LocatorType locatorType = field.getLocatorType();
-		String locatorValue = field.getLocatorValue();
-		String finalLocator = createLocator(locatorType, locatorValue);
+		String locator = field.getLocator();
 		boolean errorStep = field.isErrorStep();
 
 		String testingValue = getValidValue(field, functionRegistry);
@@ -69,7 +66,7 @@ public class FieldCommandBuilder implements SeleniumCommandBuilder {
 		}
 
 		String commandName = getCommandName();
-		SeleniumCommand seleniumCommand = new SeleniumCommand(commandName, finalLocator, testingValue, errorStep);
+		SeleniumCommand seleniumCommand = new SeleniumCommand(commandName, locator, testingValue, errorStep);
 		List<Object> validationList = field.getValidateOrValidateFunctionOrValidateFunctionRef();
 		seleniumCommand.setValidations(validationList);
 
@@ -116,30 +113,4 @@ public class FieldCommandBuilder implements SeleniumCommandBuilder {
 		return "type";
 	}
 
-	/**
-	 * Create a string that represents the locator expression for Selenese.
-	 * @param locatorType
-	 * @param locatorValue
-	 * @return
-	 */
-	protected String createLocator(LocatorType locatorType, String locatorValue) {
-		if (locatorType == null) {
-			return locatorValue;
-		}
-		String locator = "";
-		switch (locatorType) {
-		case XPATH:
-			// Return the value itself because a xpath locator is expressed like //a[contains(text(),'Entrar')]
-			locator = locatorValue;
-			break;
-		case NOTHING:
-			locator = locatorValue;
-			break;
-		default:
-			// Return locatorType=locatorValue because all other locator are expressed like id=j_username
-			locator = locatorType.value() + "=" + locatorValue;
-			break;
-		}
-		return locator;
-	}
 }
