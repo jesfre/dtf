@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,8 @@ import com.dextratech.dtf.xml.testsuite.Function;
 import com.dextratech.dtf.xml.testsuite.Testcase;
 import com.dextratech.dtf.xml.testsuite.Testsuite;
 import com.dextratech.dtf.xml.testsuite.Validation;
+import com.dextratech.dtf.xml.testsuite.ValidationCombination;
+import com.dextratech.dtf.xml.testsuite.ValidationCombinationsType;
 import com.dextratech.dtf.xml.testsuite.ValidationFunction;
 import com.dextratech.dtf.xml.testsuite.ValidationFunctionRef;
 import com.dextratech.dtf.xml.testsuite.ValidationRules;
@@ -286,6 +289,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 				// If exists, generates the actions to run after errors
 				ActionOption afterErrorActions = testcase.getAfterErrorActions();
 				if (afterErrorActions != null) {
+					log.trace("After error actions found.");
 					List<Object> afterErrorCommandObjectList = afterErrorActions.getFieldOrCustomOrInclude();
 					List<SeleniumCommand> afterErrorCommandList = htmlTestsuiteGenerator.getCommandList(afterErrorCommandObjectList);
 
@@ -301,86 +305,100 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 
 				List<Object> fieldsAndActions = testcase.getFieldOrCustomOrInclude();
 				List<SeleniumCommand> commandList = htmlTestsuiteGenerator.getCommandList(fieldsAndActions);
-				int testcaseCounter = 0;
 
-				/* Searchs for validations in each command 
-				 * to generate a new test case for each validation found.
-				 */
-				for (int i = 0; i < commandList.size(); i++) {
-					SeleniumCommand sc = commandList.get(i);
-					List<Object> validationObjectList = sc.getValidations();
-					if (validationObjectList.size() > 0) {
-						for (Object vObject : validationObjectList) {
-							String validationName = null;
-							String value = "";
-							String assertionId = null;
-							boolean causeError = false;
+				boolean combineDefaults = true;
+				boolean excludeValidValuesCombination = false;
+				boolean hasCombinations = false;
 
-							// TODO extract like AssertionsCommandBuilder and other *CommandBuilders
+				ValidationCombinationsType valdationCombinationsType = testcase.getCombineValidations();
+				boolean hasCombineValidationsElement = valdationCombinationsType != null;
+				List<ValidationCombination> validationCombinationList = null;
+				if (hasCombineValidationsElement) {
+					validationCombinationList = valdationCombinationsType.getCombine();
+					hasCombinations = validationCombinationList != null && validationCombinationList.size() > 0;
+					combineDefaults = valdationCombinationsType.isCombineDefaults();
+					excludeValidValuesCombination = valdationCombinationsType.isExcludeValidValuesCombination();
 
-							if (vObject instanceof Validation) {
-								Validation validation = (Validation) vObject;
-								causeError = !validation.isValid();
-								validationName = validation.getName();
-								value = validation.getContent();
-								assertionId = validation.getAssertId();
-
-							} else if (vObject instanceof ValidationFunction) {
-								// For a function object, the ID will be used as validation name
-								ValidationFunction vFunction = (ValidationFunction) vObject;
-								causeError = !vFunction.isValid();
-								validationName = vFunction.getId();
-								value = DataHelper.getTestValue(vFunction);
-								assertionId = vFunction.getAssertId();
-
-							} else if (vObject instanceof ValidationFunctionRef) {
-								ValidationFunctionRef vFunction = (ValidationFunctionRef) vObject;
-								causeError = !vFunction.isValid();
-								validationName = vFunction.getName();
-								String fnId = vFunction.getFunctionRefId();
-								if (StringUtils.isBlank(validationName)) {
-									validationName = fnId;
-								}
-
-								Function fn = tmpFunctionRegistry.getFunction(fnId);
-								value = DataHelper.getTestValue(fn);
-								assertionId = vFunction.getAssertId();
-							}
-
-							List<SeleniumCommand> copyCommandList = createDeepCopyForValidation(commandList, assertionId);
-							SeleniumCommand copySc = copyCommandList.get(i);
-							copySc.setValue(value);
-							copySc.setErrorStep(causeError);
-							copySc.setTestingCommand4Testcase(true);
-
-							// Build a new testcase name for each validation found
-							String newTestcaseName = WordUtils.capitalizeFully(testcaseName) + "_" + (++testcaseCounter);
-							if (StringUtils.isNotBlank(validationName)) {
-								newTestcaseName += "_" + WordUtils.capitalizeFully(validationName);
-							}
-							newTestcaseName = StringUtils.deleteWhitespace(newTestcaseName);
-							String htmlFilename = newTestcaseName + ".html";
-
-							log.debug("Generating testcase for: ===" + testcaseName + " ===");
-							htmlTestsuiteGenerator.generateTestcaseScript(testcase, copyCommandList, testcaseOutDir, newTestcaseName, htmlFilename);
-							testcaseFilenames.add(htmlFilename);
-
-							String testcaseClassName = generateJavaTestcase(testcase, testcaseOutDir, htmlFilename, javaTestSuiteDir, finalPackageTarget, newTestcaseName, dbSnapshot, dbRestore, afterErrorActionsSentences);
-							testClassNameList.add(testcaseClassName + ".class");
-						}
+					if (combineDefaults) {
+						log.trace("Default combinations will be generated.");
+					} else {
+						log.info("Default combinations will be avoided.");
 					}
+
+					if (excludeValidValuesCombination) {
+						log.info("Combinations of valid values will be avoided.");
+					} else {
+						log.trace("Combinations of valid values will be generated.");
+					}
+
+				} else {
+					log.debug("Doesn't has combineValidations element.");
 				}
 
-				if (testcase.isRunDefault()) {
-					List<SeleniumCommand> copyCommandList = createDeepCopyForValidation(commandList, defaultAssert);
+				/*
+				 * Here the combination of valid values will be created.
+				 */
+				if (testcase.isRunDefault() && !excludeValidValuesCombination) {
+					log.info("Creating valid values combination.");
+					createValidValuesCombination(
+							dbSnapshot,
+							dbRestore,
+							testcaseFilenames,
+							htmlTestsuiteGenerator,
+							testcase,
+							testClassNameList,
+							testcaseOutDir,
+							testcaseName,
+							afterErrorActionsSentences,
+							defaultAssert,
+							finalPackageTarget,
+							javaTestSuiteDir,
+							commandList);
+				}
 
-					// Generates the default test case, with all valid values for fields, that have to be run at last.
-					String htmlFilename = WordUtils.capitalizeFully(testcaseName) + ".html";
-					log.debug("Generating testcase for: ===" + testcaseName + " ===");
-					htmlTestsuiteGenerator.generateTestcaseScript(testcase, copyCommandList, testcaseOutDir, testcaseName, htmlFilename);
-					testcaseFilenames.add(htmlFilename);
-					String testcaseClassName = generateJavaTestcase(testcase, testcaseOutDir, htmlFilename, javaTestSuiteDir, finalPackageTarget, testcaseName, dbSnapshot, dbRestore, afterErrorActionsSentences);
-					testClassNameList.add(testcaseClassName + ".class");
+				/*
+				 * Looks for validations in each command
+				 * to generate a new test case for each validation found.
+				 * Here the default combinations will be created.
+				 */
+				if (combineDefaults) {
+					log.info("Creating default combinations.");
+					createDefaultCombinations(
+							dbSnapshot,
+							dbRestore,
+							testcaseFilenames,
+							tmpFunctionRegistry,
+							htmlTestsuiteGenerator,
+							testcase,
+							testClassNameList,
+							testcaseOutDir,
+							testcaseName,
+							afterErrorActionsSentences,
+							finalPackageTarget,
+							javaTestSuiteDir,
+							commandList);
+				}
+
+				/*
+				 * Looks for customized combinations of validations to create a Java testcase for each one.
+				 */
+				if (hasCombinations || validationCombinationList == null) {
+					log.info("Creating custom combinations.");
+					createCustomCombinations(
+							dbSnapshot,
+							dbRestore,
+							testcaseFilenames,
+							tmpFunctionRegistry,
+							htmlTestsuiteGenerator,
+							testcase,
+							testClassNameList,
+							testcaseOutDir,
+							testcaseName,
+							afterErrorActionsSentences,
+							finalPackageTarget,
+							javaTestSuiteDir,
+							commandList,
+							validationCombinationList);
 				}
 
 				// Generates a test suite Java file to invoke the list of test cases.
@@ -395,10 +413,230 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 	}
 
 	/**
+	 * Creates the custom combinations.
+	 *
+	 * @param dbSnapshot the db snapshot
+	 * @param dbRestore the db restore
+	 * @param testcaseFilenames the testcase filenames
+	 * @param tmpFunctionRegistry the tmp function registry
+	 * @param htmlTestsuiteGenerator the html testsuite generator
+	 * @param testcase the testcase
+	 * @param testClassNameList the test class name list
+	 * @param testcaseOutDir the testcase out dir
+	 * @param testcaseName the testcase name
+	 * @param afterErrorActionsSentences the after error actions sentences
+	 * @param finalPackageTarget the final package target
+	 * @param javaTestSuiteDir the java test suite dir
+	 * @param commandList the command list
+	 * @param validationCombinationList the validation combination list
+	 * @throws DextraSeleniumException the dextra selenium exception
+	 * @throws NotFoundElementException the not found element exception
+	 * @throws URISyntaxException the uRI syntax exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	private void createCustomCombinations(boolean dbSnapshot, boolean dbRestore, List<String> testcaseFilenames, FunctionRegistry tmpFunctionRegistry, HTMLTestsuiteGenerator htmlTestsuiteGenerator, Testcase testcase, List<String> testClassNameList, String testcaseOutDir, String testcaseName, String afterErrorActionsSentences, String finalPackageTarget, String javaTestSuiteDir, List<SeleniumCommand> commandList, List<ValidationCombination> validationCombinationList) throws DextraSeleniumException, NotFoundElementException, URISyntaxException, IOException {
+		log.trace("Found [ " + validationCombinationList.size() + " ] combinations.");
+		int testcaseCounter = 0;
+		for (ValidationCombination combination : validationCombinationList) {
+			String combinationId = combination.getId();
+			String combinationAssertId = combination.getAssertId();
+			String commaSeparatedValidationIds = combination.getValidations();
+			String[] validationIdArray = StringUtils.split(commaSeparatedValidationIds, ',');
+
+			// Clone the original command list
+			List<SeleniumCommand> newCommandList4Combination = new ArrayList<SeleniumCommand>(commandList.size());
+			for (SeleniumCommand sc : commandList) {
+				try {
+					newCommandList4Combination.add(sc.clone());
+				} catch (CloneNotSupportedException e) {
+					log.error(e.getMessage(), e);
+					throw new DextraSeleniumException(e);
+				}
+			}
+
+			// Remove from the list the fields that doesn't match any validationId in the combination
+			List<String> foundValidationList = new ArrayList<String>();
+			for (int i = 0; i < newCommandList4Combination.size(); i++) {
+				SeleniumCommand sc = newCommandList4Combination.get(i);
+				List<Object> validationObjectList = sc.getValidations();
+				if (validationObjectList.size() > 0) {
+					for (Object vObject : validationObjectList) {
+						ValidationContent validationContent = getValidationContent(tmpFunctionRegistry, vObject);
+						String validationName = validationContent.getValidationName();
+						boolean isValidationInCombination = Arrays.asList(validationIdArray).contains(validationName);
+						if (isValidationInCombination) {
+							sc.setValue(validationContent.getValue());
+							sc.setErrorStep(validationContent.isCauseError());
+							sc.setTestingCommand4Testcase(true);
+							foundValidationList.add(validationName);
+						}
+					}
+				}
+			}
+			if (foundValidationList.size() != validationIdArray.length) {
+				throw new NotFoundElementException(
+						"Some validation couldn't be found while testing combination with Id [" + combinationId + "]. "
+								+ "Expected validations are " + Arrays.toString(validationIdArray) + ", but found " + foundValidationList.toString());
+			}
+
+			List<SeleniumCommand> copyCommandList = createDeepCopyForValidation(newCommandList4Combination, combinationAssertId);
+			// Build a new testcase name for each validation found
+			String newTestcaseName = capitalize(testcaseName) + "_Comb_" + (++testcaseCounter);
+			if (StringUtils.isNotBlank(combinationId)) {
+				newTestcaseName += "_" + capitalize(combinationId);
+			}
+			newTestcaseName = StringUtils.deleteWhitespace(newTestcaseName);
+			String htmlFilename = newTestcaseName + ".html";
+
+			log.debug("Generating testcase for: ===" + testcaseName + " ===");
+			htmlTestsuiteGenerator.generateTestcaseScript(testcase, copyCommandList, testcaseOutDir, newTestcaseName, htmlFilename);
+			testcaseFilenames.add(htmlFilename);
+
+			String testcaseClassName = generateJavaTestcase(testcase, testcaseOutDir, htmlFilename, javaTestSuiteDir, finalPackageTarget, newTestcaseName, dbSnapshot, dbRestore, afterErrorActionsSentences);
+			testClassNameList.add(testcaseClassName + ".class");
+		}
+	}
+
+	/**
+	 * Creates the valid values combination.
+	 *
+	 * @param dbSnapshot the db snapshot
+	 * @param dbRestore the db restore
+	 * @param testcaseFilenames the testcase filenames
+	 * @param htmlTestsuiteGenerator the html testsuite generator
+	 * @param testcase the testcase
+	 * @param testClassNameList the test class name list
+	 * @param testcaseOutDir the testcase out dir
+	 * @param testcaseName the testcase name
+	 * @param afterErrorActionsSentences the after error actions sentences
+	 * @param defaultAssert the default assert
+	 * @param finalPackageTarget the final package target
+	 * @param javaTestSuiteDir the java test suite dir
+	 * @param commandList the command list
+	 * @throws NotFoundElementException the not found element exception
+	 * @throws URISyntaxException the uRI syntax exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	private void createValidValuesCombination(boolean dbSnapshot, boolean dbRestore, List<String> testcaseFilenames, HTMLTestsuiteGenerator htmlTestsuiteGenerator, Testcase testcase, List<String> testClassNameList, String testcaseOutDir, String testcaseName, String afterErrorActionsSentences, String defaultAssert, String finalPackageTarget, String javaTestSuiteDir, List<SeleniumCommand> commandList) throws NotFoundElementException, URISyntaxException, IOException {
+		List<SeleniumCommand> copyCommandList = createDeepCopyForValidation(commandList, defaultAssert);
+
+		// Generates the default test case, with all valid values for fields, that have to be run at last.
+		String htmlFilename = capitalize(testcaseName) + ".html";
+		log.debug("Generating testcase for: ===" + testcaseName + " ===");
+		htmlTestsuiteGenerator.generateTestcaseScript(testcase, copyCommandList, testcaseOutDir, testcaseName, htmlFilename);
+		testcaseFilenames.add(htmlFilename);
+		String testcaseClassName = generateJavaTestcase(testcase, testcaseOutDir, htmlFilename, javaTestSuiteDir, finalPackageTarget, testcaseName, dbSnapshot, dbRestore, afterErrorActionsSentences);
+		testClassNameList.add(testcaseClassName + ".class");
+	}
+
+	/**
+	 * Creates the default combinations of field validations with valid values.
+	 *
+	 * @param dbSnapshot the db snapshot
+	 * @param dbRestore the db restore
+	 * @param testcaseFilenames the testcase filenames
+	 * @param tmpFunctionRegistry the tmp function registry
+	 * @param htmlTestsuiteGenerator the html testsuite generator
+	 * @param testcase the testcase
+	 * @param testClassNameList the test class name list
+	 * @param testcaseOutDir the testcase out dir
+	 * @param testcaseName the testcase name
+	 * @param afterErrorActionsSentences the after error actions sentences
+	 * @param finalPackageTarget the final package target
+	 * @param javaTestSuiteDir the java test suite dir
+	 * @param commandList the command list
+	 * @throws NotFoundElementException the not found element exception
+	 * @throws URISyntaxException the uRI syntax exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	private void createDefaultCombinations(final boolean dbSnapshot, final boolean dbRestore, final List<String> testcaseFilenames, final FunctionRegistry tmpFunctionRegistry, final HTMLTestsuiteGenerator htmlTestsuiteGenerator, final Testcase testcase, final List<String> testClassNameList, final String testcaseOutDir, final String testcaseName, final String afterErrorActionsSentences, final String finalPackageTarget, final String javaTestSuiteDir, final List<SeleniumCommand> commandList) throws NotFoundElementException, URISyntaxException, IOException {
+		int testcaseCounter = 0;
+		for (int i = 0; i < commandList.size(); i++) {
+			SeleniumCommand sc = commandList.get(i);
+			List<Object> validationObjectList = sc.getValidations();
+			if (validationObjectList.size() > 0) {
+				for (Object vObject : validationObjectList) {
+					ValidationContent validationContent = getValidationContent(tmpFunctionRegistry, vObject);
+
+					List<SeleniumCommand> copyCommandList = createDeepCopyForValidation(commandList, validationContent.getAssertionId());
+					int indexOfSC = copyCommandList.indexOf(sc);
+					SeleniumCommand copySc = copyCommandList.get(indexOfSC);
+					copySc.setValue(validationContent.getValue());
+					copySc.setErrorStep(validationContent.isCauseError());
+					copySc.setTestingCommand4Testcase(true);
+
+					// Build a new testcase name for each validation found
+					String newTestcaseName = capitalize(testcaseName) + "_" + (++testcaseCounter);
+					if (StringUtils.isNotBlank(validationContent.getValidationName())) {
+						newTestcaseName += "_" + capitalize(validationContent.getValidationName());
+					}
+					newTestcaseName = StringUtils.deleteWhitespace(newTestcaseName);
+					String htmlFilename = newTestcaseName + ".html";
+
+					log.debug("Generating testcase for: ===" + testcaseName + " ===");
+					htmlTestsuiteGenerator.generateTestcaseScript(testcase, copyCommandList, testcaseOutDir, newTestcaseName, htmlFilename);
+					testcaseFilenames.add(htmlFilename);
+
+					String testcaseClassName = generateJavaTestcase(testcase, testcaseOutDir, htmlFilename, javaTestSuiteDir, finalPackageTarget, newTestcaseName, dbSnapshot, dbRestore, afterErrorActionsSentences);
+					testClassNameList.add(testcaseClassName + ".class");
+				}
+			}
+		}
+	}
+
+	/**
+	 * Gets the validation content from the validationObject.
+	 *
+	 * @param tmpFunctionRegistry the tmp function registry
+	 * @param validationObject the validation object
+	 * @return the validation content
+	 */
+	private ValidationContent getValidationContent(final FunctionRegistry tmpFunctionRegistry, Object validationObject) {
+		String validationName = null;
+		String validationValue = "";
+		String assertionId = null;
+		boolean causeError = false;
+
+		// TODO extract like AssertionsCommandBuilder and other *CommandBuilders
+		// TODO make static properties to handle global values like testcaseFilenames, testClassNameList, and others.
+
+		if (validationObject instanceof Validation) {
+			Validation validation = (Validation) validationObject;
+			causeError = !validation.isValid();
+			validationName = validation.getName();
+			validationValue = validation.getContent();
+			assertionId = validation.getAssertId();
+
+		} else if (validationObject instanceof ValidationFunction) {
+			// For a function object, the ID will be used as validation name
+			ValidationFunction vFunction = (ValidationFunction) validationObject;
+			causeError = !vFunction.isValid();
+			validationName = vFunction.getId();
+			validationValue = DataHelper.getTestValue(vFunction);
+			assertionId = vFunction.getAssertId();
+
+		} else if (validationObject instanceof ValidationFunctionRef) {
+			ValidationFunctionRef vFunction = (ValidationFunctionRef) validationObject;
+			causeError = !vFunction.isValid();
+			validationName = vFunction.getName();
+			String fnId = vFunction.getFunctionRefId();
+			if (StringUtils.isBlank(validationName)) {
+				validationName = fnId;
+			}
+
+			Function fn = tmpFunctionRegistry.getFunction(fnId);
+			validationValue = DataHelper.getTestValue(fn);
+			assertionId = vFunction.getAssertId();
+		}
+		ValidationContent validationContent = new ValidationContent(validationName, validationValue, assertionId, causeError);
+		return validationContent;
+	}
+
+	/**
+	 * Removes all assert commands that doensn't match the assertionId parameter.
 	 * Creates a copy of the commands because of some commands must be modified
 	 * in order to create a different test case for each validation.
 	 * For each Selenium Command must have to create a deep copy, because a reference copy makes confusion errors about its final valid value.
-	 * And removes all assert commands that are part of customized validations for fields
 	 * @param commandList
 	 * @param assertionId
 	 * @throws NotFoundElementException 
@@ -414,7 +652,10 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 				if (StringUtils.isNotBlank(assertId) && !assertId.equals(assertionId)) {
 					includeThis = false;
 				}
-				// Makes sure that the assertionId looked for is not the assert tested in this loop
+				/*
+				 * Makes sure that the assertionId looked for is not the assert tested in this loop
+				 * If the looked assertion can't been found, then throws an exception.
+				 */
 				if (!foundAssertionIdInList) {
 					foundAssertionIdInList = assertId != null && includeThis && assertId.equals(assertionId);
 				}
@@ -474,7 +715,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 		// Remove spaces and capitalize all words of the test suite name
 		String testSuiteName = testcaseName;
 		testSuiteName = StringUtils.replace(testSuiteName, "_", " ");
-		testSuiteName = WordUtils.capitalize(testSuiteName);
+		testSuiteName = capitalize(testSuiteName);
 		testSuiteName = StringUtils.replace(testSuiteName, " ", "");
 		testSuiteName = prefix + testSuiteName;
 		params.put("testSuiteClassName", testSuiteName);
@@ -534,6 +775,14 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 		return testName;
 	}
 
+	/**
+	 * @param string
+	 * @return
+	 */
+	private String capitalize(String string) {
+		return WordUtils.capitalize(string, new char[] { '.', ' ', '_', '-' });
+	}
+
 	public String getTestsuitesXMLLocation() {
 		return testsuitesXMLLocation;
 	}
@@ -548,6 +797,56 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 
 	public void setValidationFunctionsXmlPath(String validationFunctionsXMLPath) {
 		this.validationFunctionsXmlPath = validationFunctionsXMLPath;
+	}
+
+}
+
+class ValidationContent {
+	private String validationName = null;
+	private String value = "";
+	private String assertionId = null;
+	private boolean causeError = false;
+
+	public ValidationContent() {
+	}
+
+	public ValidationContent(String validationName, String value, String assertionId, boolean causeError) {
+		this.validationName = validationName;
+		this.value = value;
+		this.assertionId = assertionId;
+		this.causeError = causeError;
+	}
+
+	public String getValidationName() {
+		return validationName;
+	}
+
+	public void setValidationName(String validationName) {
+		this.validationName = validationName;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getAssertionId() {
+		return assertionId;
+	}
+
+	public void setAssertionId(String assertionId) {
+		this.assertionId = assertionId;
+	}
+
+	public boolean isCauseError() {
+		return causeError;
+	}
+
+	public void setCauseError(boolean causeError) {
+		this.causeError = causeError;
 	}
 
 }

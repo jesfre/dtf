@@ -11,7 +11,7 @@ import java.util.List;
  * @author <a href="mailto:jorge.ruiz.aquino@gmail.com">Jorge Ruiz Aquino</a>
  *         03/05/2013
  */
-public class SeleniumCommand {
+public class SeleniumCommand implements Cloneable {
 	public enum Type {
 		ACTION, ASSERT, CAPTURE_SCREENSHOT, CUSTOM, FIELD, ONLOAD, ECHO;
 	}
@@ -80,6 +80,20 @@ public class SeleniumCommand {
 		this.value = value;
 		this.errorStep = errorStep;
 		this.testingCommand4Testcase = testingCommand4Testcase;
+	}
+
+	@Override
+	public SeleniumCommand clone() throws CloneNotSupportedException {
+		SeleniumCommand sc = new SeleniumCommand();
+		sc.setType(this.type);
+		sc.setName(this.name);
+		sc.setTarget(this.target);
+		sc.setValue(this.value);
+		sc.setErrorStep(this.errorStep);
+		sc.setTestingCommand4Testcase(this.testingCommand4Testcase);
+		sc.setOriginalCommand(this.originalCommand);
+		sc.setValidations(this.validations);
+		return sc;
 	}
 
 	public String getName() {
@@ -164,7 +178,25 @@ public class SeleniumCommand {
 
 	@Override
 	public String toString() {
-		return "SeleniumCommand [name=" + name + ", target=" + target + ", value=" + value + ", errorStep=" + errorStep + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("SeleniumCommand [type=");
+		builder.append(type);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", target=");
+		builder.append(target);
+		builder.append(", value=");
+		builder.append(value);
+		builder.append(", errorStep=");
+		builder.append(errorStep);
+		builder.append(", originalCommand=");
+		builder.append(originalCommand);
+		builder.append(", testingCommand4Testcase=");
+		builder.append(testingCommand4Testcase);
+		builder.append(", validations=");
+		builder.append(validations);
+		builder.append("]");
+		return builder.toString();
 	}
 
 	@Override
@@ -174,6 +206,7 @@ public class SeleniumCommand {
 		result = prime * result + (errorStep ? 1231 : 1237);
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((target == null) ? 0 : target.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
@@ -199,6 +232,8 @@ public class SeleniumCommand {
 				return false;
 		} else if (!target.equals(other.target))
 			return false;
+		if (type != other.type)
+			return false;
 		if (value == null) {
 			if (other.value != null)
 				return false;
@@ -206,4 +241,5 @@ public class SeleniumCommand {
 			return false;
 		return true;
 	}
+
 }

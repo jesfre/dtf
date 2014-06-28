@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2014.06.26 a las 03:45:57 AM CDT 
+// Generado el: 2014.06.28 a las 01:47:58 AM CDT 
 //
 
 
@@ -91,11 +91,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ValidationCombinationsType }
+     * 
+     */
+    public ValidationCombinationsType createValidationCombinationsType() {
+        return new ValidationCombinationsType();
+    }
+
+    /**
      * Create an instance of {@link Function }
      * 
      */
     public Function createFunction() {
         return new Function();
+    }
+
+    /**
+     * Create an instance of {@link ValidationCombination }
+     * 
+     */
+    public ValidationCombination createValidationCombination() {
+        return new ValidationCombination();
     }
 
     /**

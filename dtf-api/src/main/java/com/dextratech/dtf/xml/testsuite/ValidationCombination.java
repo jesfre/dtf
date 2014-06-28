@@ -19,23 +19,17 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
 
 /**
- * <p>Clase Java para CaptureScreenshot complex type.
+ * <p>Clase Java para ValidationCombination complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="CaptureScreenshot">
+ * &lt;complexType name="ValidationCombination">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute name="pngFilename">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *             &lt;minLength value="1"/>
- *             &lt;maxLength value="50"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *       &lt;attribute name="directory" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="validations" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="assertId" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -44,61 +38,88 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CaptureScreenshot")
-public class CaptureScreenshot implements ToString
+@XmlType(name = "ValidationCombination")
+public class ValidationCombination
+    implements ToString
 {
 
-    @XmlAttribute(name = "pngFilename")
-    protected String pngFilename;
-    @XmlAttribute(name = "directory")
-    protected String directory;
+    @XmlAttribute(name = "id", required = true)
+    protected String id;
+    @XmlAttribute(name = "validations", required = true)
+    protected String validations;
+    @XmlAttribute(name = "assertId")
+    protected String assertId;
 
     /**
-     * Obtiene el valor de la propiedad pngFilename.
+     * Obtiene el valor de la propiedad id.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getPngFilename() {
-        return pngFilename;
+    public String getId() {
+        return id;
     }
 
     /**
-     * Define el valor de la propiedad pngFilename.
+     * Define el valor de la propiedad id.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setPngFilename(String value) {
-        this.pngFilename = value;
+    public void setId(String value) {
+        this.id = value;
     }
 
     /**
-     * Obtiene el valor de la propiedad directory.
+     * Obtiene el valor de la propiedad validations.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getDirectory() {
-        return directory;
+    public String getValidations() {
+        return validations;
     }
 
     /**
-     * Define el valor de la propiedad directory.
+     * Define el valor de la propiedad validations.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setDirectory(String value) {
-        this.directory = value;
+    public void setValidations(String value) {
+        this.validations = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad assertId.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAssertId() {
+        return assertId;
+    }
+
+    /**
+     * Define el valor de la propiedad assertId.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAssertId(String value) {
+        this.assertId = value;
     }
 
     public String toString() {
@@ -117,14 +138,19 @@ public class CaptureScreenshot implements ToString
 
     public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
         {
-            String thePngFilename;
-            thePngFilename = this.getPngFilename();
-            strategy.appendField(locator, this, "pngFilename", buffer, thePngFilename);
+            String theId;
+            theId = this.getId();
+            strategy.appendField(locator, this, "id", buffer, theId);
         }
         {
-            String theDirectory;
-            theDirectory = this.getDirectory();
-            strategy.appendField(locator, this, "directory", buffer, theDirectory);
+            String theValidations;
+            theValidations = this.getValidations();
+            strategy.appendField(locator, this, "validations", buffer, theValidations);
+        }
+        {
+            String theAssertId;
+            theAssertId = this.getAssertId();
+            strategy.appendField(locator, this, "assertId", buffer, theAssertId);
         }
         return buffer;
     }

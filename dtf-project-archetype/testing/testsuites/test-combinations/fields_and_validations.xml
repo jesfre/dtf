@@ -21,7 +21,7 @@
 			<validValue>1234567890</validValue>
 			<validateFunction type="string" id="length2"><length>2</length></validateFunction>
 			<validate name="alpha">numero equivocado</validate>
-			<validateFunction type="string" id="min2" assertId="assert3">
+			<validateFunction type="integer" id="min2" assertId="assert3">
 				<minValue>2</minValue>
 				<maxValue>9999999999</maxValue>
 			</validateFunction>
@@ -40,6 +40,7 @@
 		</field>
 		<field name="address" locator="id=address">
 			<validValue>callecita</validValue>
+			<validate name="ultimateAddress">por alli</validate>
 		</field>
 	
 		<assertion type="assert" id="assert2">
@@ -50,10 +51,16 @@
 			<alertNotPresent/>
 		</assertion>
 		
-		<assertion type="assert">
+		<assertion type="assert" id="assertCombination1">
 			<alertPresent></alertPresent>
 		</assertion>
-		
+
+		<combineValidations combineDefaults="true" excludeValidValuesCombination="false">
+			<combine id="combinationAAA" validations="fn1,alpha" assertId="assertCombination1"/>
+			<combine id="combinationBBB" validations="min2,fn1"/>
+			<combine validations="ultimateAddress,length2" id="combinationCCC"/>
+		</combineValidations>
+
 	</testcase>
 	
 	<validation-functions>

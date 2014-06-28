@@ -33,14 +33,19 @@
 		<complexContent>
 			<extension base="ts:actionOption">
 				<sequence>
-					<element name="afterErrorActions" type="ts:actionOption" maxOccurs="1" minOccurs="0">
+					<element name="afterErrorActions"
+						type="ts:actionOption" maxOccurs="1" minOccurs="0">
 						<annotation>
 							<documentation>
-								All fields and actions in the error actions element will be executed without accomplish none of the validation element or errorStep attribute, only valid values will be
-								considered.
+								All fields and actions in the error
+								actions element will be executed without
+								accomplish none of the validation
+								element or errorStep attribute, only
+								valid values will be considered.
 							</documentation>
 						</annotation>
 					</element>
+					<element name="combineValidations" type="ts:ValidationCombinationsType"></element>
 				</sequence>
 				<attribute name="name" type="ts:elementName">
 
@@ -313,4 +318,22 @@ X		Time zone								ISO 8601 time zone		-08; -0800; -08:00
 		</sequence>
 	</complexType>
 
+
+	<complexType name="ValidationCombinationsType">
+		<sequence>
+			<element name="combine" type="ts:ValidationCombination" maxOccurs="unbounded" minOccurs="1"></element>
+		</sequence>
+		<attribute name="combineDefaults" type="boolean" use="optional"
+			default="true">
+		</attribute>
+		<attribute name="excludeValidValuesCombination" type="boolean"
+			use="optional" default="false">
+		</attribute>
+	</complexType>
+
+	<complexType name="ValidationCombination">
+        <attribute name="id" type="string" use="required"></attribute>
+        <attribute name="validations" type="string" use="required"></attribute>
+		<attribute name="assertId" type="string" use="optional"></attribute>
+	</complexType>
 </schema>

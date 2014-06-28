@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2014.06.26 a las 03:45:57 AM CDT 
+// Generado el: 2014.06.28 a las 01:47:58 AM CDT 
 //
 
 
@@ -11,6 +11,7 @@ package com.dextratech.dtf.xml.testsuite;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy;
 import org.jvnet.jaxb2_commons.lang.ToString;
@@ -29,6 +30,7 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  *     &lt;extension base="{http://www.dextratech.com/testsuite}actionOption">
  *       &lt;sequence>
  *         &lt;element name="afterErrorActions" type="{http://www.dextratech.com/testsuite}actionOption" minOccurs="0"/>
+ *         &lt;element name="combineValidations" type="{http://www.dextratech.com/testsuite}ValidationCombinationsType"/>
  *       &lt;/sequence>
  *       &lt;attribute name="name" type="{http://www.dextratech.com/testsuite}elementName" />
  *       &lt;attribute name="url" type="{http://www.w3.org/2001/XMLSchema}string" />
@@ -45,7 +47,8 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "testcase", propOrder = {
-    "afterErrorActions"
+    "afterErrorActions",
+    "combineValidations"
 })
 public class Testcase
     extends ActionOption
@@ -53,6 +56,8 @@ public class Testcase
 {
 
     protected ActionOption afterErrorActions;
+    @XmlElement(required = true)
+    protected ValidationCombinationsType combineValidations;
     @XmlAttribute(name = "name")
     protected String name;
     @XmlAttribute(name = "url")
@@ -88,6 +93,30 @@ public class Testcase
      */
     public void setAfterErrorActions(ActionOption value) {
         this.afterErrorActions = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad combineValidations.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ValidationCombinationsType }
+     *     
+     */
+    public ValidationCombinationsType getCombineValidations() {
+        return combineValidations;
+    }
+
+    /**
+     * Define el valor de la propiedad combineValidations.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ValidationCombinationsType }
+     *     
+     */
+    public void setCombineValidations(ValidationCombinationsType value) {
+        this.combineValidations = value;
     }
 
     /**
@@ -262,6 +291,11 @@ public class Testcase
             ActionOption theAfterErrorActions;
             theAfterErrorActions = this.getAfterErrorActions();
             strategy.appendField(locator, this, "afterErrorActions", buffer, theAfterErrorActions);
+        }
+        {
+            ValidationCombinationsType theCombineValidations;
+            theCombineValidations = this.getCombineValidations();
+            strategy.appendField(locator, this, "combineValidations", buffer, theCombineValidations);
         }
         {
             String theName;
