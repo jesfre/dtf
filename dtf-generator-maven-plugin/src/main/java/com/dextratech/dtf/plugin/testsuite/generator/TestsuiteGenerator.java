@@ -382,7 +382,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 				/*
 				 * Looks for customized combinations of validations to create a Java testcase for each one.
 				 */
-				if (hasCombinations || validationCombinationList == null) {
+				if (hasCombinations || validationCombinationList != null) {
 					log.info("Creating custom combinations.");
 					createCustomCombinations(
 							dbSnapshot,

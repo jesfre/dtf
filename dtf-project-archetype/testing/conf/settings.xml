@@ -8,14 +8,20 @@ Developed by Dextra Technologies www.dextratech.com
 
 	<appUrl>http://localhost:9966/petclinic/</appUrl>
 	<browser name="*googlechrome" executablePath="E:\\dev\\projects\\titulacion\\sources\\chrome-drivers\\chromedriver.exe"/>
-	<timeout>80000</timeout>
+	<timeout>5000</timeout>
 	<speed>500</speed>
 	
 	<testsuite name="validations" run="true" fileName="test-combinations/fields_and_validations.xml"/>
-
-	<testsuite name="find-owners" run="false" fileName="findOwners_v2.xml" dbRestore="false" dbSnapshot="false"/>
 	
-	<testsuite name="testing_folder" run="false" fileName="test-folfer/tf.xml" dbRestore="false" dbSnapshot="false"/>
+	<testsuite name="ordering1xx" run="true" fileName="ordering/order1.xml"/>
+	
+	<testsuite name="ordering2Z" run="true" fileName="ordering/order2.xml"/>
+	
+	<testsuite name="find-owners" run="true" fileName="findOwners_v2.xml" dbRestore="false" dbSnapshot="false"/>
+	
+	<testsuite name="ordering3F" run="true" fileName="ordering/order3.xml"/>
+	
+	<testsuite name="testing_folder" run="true" fileName="test-folfer/tf.xml" dbRestore="false" dbSnapshot="false"/>
 	
 	<testsuite name="testOnload" run="false" fileName="test-onload.xml" dbRestore="false" dbSnapshot="false"/>
 	

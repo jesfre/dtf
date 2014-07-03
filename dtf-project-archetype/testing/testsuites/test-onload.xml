@@ -10,6 +10,7 @@
 		<action actionType="getAlert" additionalParameter="algo"/>
 		<include componentName="micomp"/>
 		<field name="algo">
+			<validValueDef><literal>asdasdasda</literal></validValueDef>
 			<validateFunctionRef functionRefId="fnASD"/>
 		</field>
 		<afterErrorActions>

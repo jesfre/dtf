@@ -5,7 +5,7 @@
 
 	<name>Test de combinaciones</name>
 	
-	<testcase name="combination_1" url="/owners/new" run="true" success="true" defaultAssert="default">
+	<testcase name="xcombination_1" url="/owners/new" run="true" success="true" defaultAssert="default">
 	
 		<field name="firstname" locator="id=firstname">
 			<validValueDef><literal>ok</literal></validValueDef>
@@ -54,10 +54,14 @@
 		<assertion type="assert" id="assertCombination1">
 			<alertPresent></alertPresent>
 		</assertion>
+		
+		<assertion type="waitFor">
+			<elementPositionTop locator="yayayay" pattern="kikikiki"/>
+		</assertion>
 
 		<combineValidations combineDefaults="true" excludeValidValuesCombination="false">
-			<combine id="combinationAAA" validations="fn1,alpha" assertId="assertCombination1"/>
 			<combine id="combinationBBB" validations="min2,fn1"/>
+			<combine id="combinationAAA" validations="fn1,alpha" assertId="assertCombination1"/>
 			<combine validations="ultimateAddress,length2" id="combinationCCC"/>
 		</combineValidations>
 

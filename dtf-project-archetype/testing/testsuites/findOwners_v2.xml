@@ -17,7 +17,7 @@
 		<type locator="id=address" value="Miguel Hgo. #4"/>
 		<type locator="id=city" value="Jucho"/>
 		<type locator="id=telephone" value="1234567890"/>
-		<field name="firstNameField" locatorType="id" locatorValue="firstName">
+		<field name="firstNameField" locator="firstName">
 			<validValueDef><literal>algo</literal></validValueDef>
 			<validateFunction type="string" id="sapo">
 				<value>sapo</value>
@@ -33,6 +33,4 @@
 		
 	</testcase>
 
-	<validationRules>
-	</validationRules>
 </testsuite>

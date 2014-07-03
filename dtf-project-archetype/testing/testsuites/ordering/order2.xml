@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns="http://www.dextratech.com/testsuite" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dextratech.com/testsuite ../../../src/test/resources/testsuite-v2.0.xsd ">
+
+	<!-- Names must be valid for [a-zA-Z_$][a-zA-Z_$0-9\s]* -->
+
+	<name>probando probando orden de ejecucion</name>
+	
+	<testcase name="acuatro" url="/owners/find.html" run="true" success="true">
+	
+		<echo message="Entrando a Cuatro"/>
+		
+		<field name="campoUnico" locator="css=input#lastName">
+			<validValue>buscar esto</validValue>
+			<validate name="B">validando B</validate>
+			<validate name="C">validando C</validate>
+			<validate name="A">validando A</validate>
+		</field>
+		
+	</testcase>
+	
+	<testcase name="cinco" url="/owners/find.html" run="true" success="true">
+	
+		<echo message="Entrando a Cinco"/>
+		
+	</testcase>	
+	
+	<testcase name="seis" url="/owners/find.html" run="true" success="true">
+	
+		<echo message="Entrando a Seis"/>
+		
+	</testcase>	
+
+</testsuite>

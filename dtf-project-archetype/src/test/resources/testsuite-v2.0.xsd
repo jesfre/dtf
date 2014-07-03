@@ -45,7 +45,7 @@
 							</documentation>
 						</annotation>
 					</element>
-					<element name="combineValidations" type="ts:ValidationCombinationsType"></element>
+					<element name="combineValidations" type="ts:ValidationCombinationsType" maxOccurs="1" minOccurs="0"></element>
 				</sequence>
 				<attribute name="name" type="ts:elementName">
 
