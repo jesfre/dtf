@@ -20,7 +20,7 @@
   		<dtf-generator-maven-plugin.version>2.0.0</dtf-generator-maven-plugin.version>
   		
   		<!-- Properties to build the final package-->
-  		<final-package.location>${project.build.directory}</final-package.location>
+  		<final-package.location>${basedir}/../</final-package.location>
   		<final-package.filename>dtf-project-${project.version}.zip</final-package.filename>
   		<dtf-project-archetype.location>${basedir}/../dtf-project-archetype</dtf-project-archetype.location>
   </properties>
@@ -67,6 +67,10 @@
 							<echo>Copying "dtf-project-archetype" files to ${final-package.location}</echo>
 							<mkdir dir="${final-package.location}"/>
 							<zip destfile="${final-package.location}/${final-package.filename}" update="true">
+								<fileset dir="${dtf-project-archetype.location}/../">
+									<include name="LICENSE"/>
+									<include name="README.md"/>
+								</fileset>
 								<fileset dir="${dtf-project-archetype.location}/">
 									<exclude name="src/main/java*" />
 									<exclude name="src/main/java/**/*" />
