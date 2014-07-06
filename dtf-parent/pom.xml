@@ -21,7 +21,7 @@
   		
   		<!-- Properties to build the final package-->
   		<final-package.location>${project.build.directory}</final-package.location>
-  		<final-package.filename>dtf-project.zip</final-package.filename>
+  		<final-package.filename>dtf-project-${project.version}.zip</final-package.filename>
   		<dtf-project-archetype.location>${basedir}/../dtf-project-archetype</dtf-project-archetype.location>
   </properties>
   
