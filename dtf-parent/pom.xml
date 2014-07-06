@@ -36,6 +36,26 @@
 					<id>copy-to-archetype-lib</id>
 				</execution>
 				<execution>
+					<id>copy-parent-to-final-package</id>
+					<phase>install</phase>
+					<inherited>false</inherited>
+					<goals>
+						<goal>run</goal>
+					</goals>
+					<configuration>
+						<tasks>
+							<echo>Copying "dtf-parent" to ${final-package.location}</echo>
+							<copy todir="${dtf-project-archetype.location}/lib/com/dextratech/dtf/${project.artifactId}/${project.version}"
+								overwrite="true">
+								<fileset dir="${basedir}/">
+									<include name="pom.xml" />
+								</fileset>
+								<globmapper from="pom.xml" to="${project.artifactId}-${project.version}.pom"/>
+							</copy>
+						</tasks>
+					</configuration>
+				</execution>
+				<execution>
 					<id>copy-to-final-package</id>
 					<phase>install</phase>
 					<goals>

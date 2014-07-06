@@ -15,13 +15,13 @@ Developed by Dextra Technologies www.dextratech.com
 	
 	<testsuite name="ordering1xx" run="true" fileName="ordering/order1.xml"/>
 	
-	<testsuite name="ordering2Z" run="true" fileName="ordering/order2.xml"/>
+	<testsuite name="ordering2Z" run="false" fileName="ordering/order2.xml"/>
 	
-	<testsuite name="find-owners" run="true" fileName="findOwners_v2.xml" dbRestore="false" dbSnapshot="false"/>
+	<testsuite name="find-owners" run="false" fileName="findOwners_v2.xml" dbRestore="false" dbSnapshot="false"/>
 	
-	<testsuite name="ordering3F" run="true" fileName="ordering/order3.xml"/>
+	<testsuite name="ordering3F" run="false" fileName="ordering/order3.xml"/>
 	
-	<testsuite name="testing_folder" run="true" fileName="test-folfer/tf.xml" dbRestore="false" dbSnapshot="false"/>
+	<testsuite name="testing_folder" run="false" fileName="test-folfer/tf.xml" dbRestore="false" dbSnapshot="false"/>
 	
 	<testsuite name="testOnload" run="false" fileName="test-onload.xml" dbRestore="false" dbSnapshot="false"/>
 	
