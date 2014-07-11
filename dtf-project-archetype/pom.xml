@@ -190,33 +190,6 @@
 					-->
 				</executions>
 			</plugin>
-
-<!-- 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>dbunit-maven-plugin</artifactId>
-				<version>1.0-beta-3</version>
-				<configuration>
-					<dataTypeFactoryName>${dbunit.dataTypeFactoryName}</dataTypeFactoryName>
-					<driver>${jdbc.driverClassName}</driver>
-					<username>${jdbc.username}</username>
-					<password>${jdbc.password}</password>
-					<url>${jdbc.url}</url>
-					<src>${generated-db-snapshot-file}</src>
-					<dest>${generated-db-snapshot-file}</dest>
-					<type>${dbunit.operation.type}</type>
-					<schema>${dbunit.schema}</schema>
-					<transaction>true</transaction>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>${jdbc.groupId}</groupId>
-						<artifactId>${jdbc.artifactId}</artifactId>
-						<version>${jdbc.version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
- -->
 		</plugins>
 		<pluginManagement>
 			<plugins>

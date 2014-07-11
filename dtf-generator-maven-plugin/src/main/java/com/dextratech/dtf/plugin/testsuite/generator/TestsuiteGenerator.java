@@ -137,7 +137,7 @@ public class TestsuiteGenerator extends Html2JavaConverter {
 
 						log.debug("Processing [ " + fileName + " ]");
 
-						boolean isRunnable = tst.isRun() != null && tst.isRun();
+						boolean isRunnable = tst.isRun() == null || tst.isRun();
 						if (isRunnable == false) {
 							log.warn("[ " + fileName + " ] is not runnable.");
 							continue;

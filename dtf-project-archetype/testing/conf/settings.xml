@@ -11,13 +11,13 @@ Developed by Dextra Technologies www.dextratech.com
 	<timeout>5000</timeout>
 	<speed>500</speed>
 	
-	<testsuite name="validations" run="true" fileName="test-combinations/fields_and_validations.xml"/>
+	<testsuite name="find-owners" run="true" fileName="findOwners_v2.xml" dbRestore="false" dbSnapshot="false"/>
 	
-	<testsuite name="ordering1xx" run="true" fileName="ordering/order1.xml"/>
+	<testsuite name="validations" run="false" fileName="test-combinations/fields_and_validations.xml"/>
+	
+	<testsuite name="ordering1xx" run="false" fileName="ordering/order1.xml"/>
 	
 	<testsuite name="ordering2Z" run="false" fileName="ordering/order2.xml"/>
-	
-	<testsuite name="find-owners" run="false" fileName="findOwners_v2.xml" dbRestore="false" dbSnapshot="false"/>
 	
 	<testsuite name="ordering3F" run="false" fileName="ordering/order3.xml"/>
 	

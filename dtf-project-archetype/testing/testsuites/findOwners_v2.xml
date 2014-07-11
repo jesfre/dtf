@@ -22,12 +22,16 @@
 			<validateFunction type="string" id="sapo">
 				<value>sapo</value>
 			</validateFunction>
+			<validate name="blank" assertId="paraError"></validate>
 			<validate name="coco">coco</validate>
 		</field>
 		<captureScreenshot/>
 		<clickAndWait locator="xpath=//*[@id='add-owner-form']/div[6]/button"/>
 		<assertion type="assert">
 			<textPresent pattern="Owner Information"/>
+		</assertion>
+		<assertion type="assert" id="paraError">
+			<textPresent pattern="Este mensaje no sera encontrado"/>
 		</assertion>
 		<captureScreenshot pngFilename="despues_de-guardar.png"/>
 		

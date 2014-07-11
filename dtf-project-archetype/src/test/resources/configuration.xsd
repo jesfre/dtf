@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="xs3p.xsl"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.dextratech.com/dtf/configuration" xmlns:tns="http://www.dextratech.com/dtf/configuration" elementFormDefault="qualified">
 
     <element name="configuration" type="tns:configuration"></element>
